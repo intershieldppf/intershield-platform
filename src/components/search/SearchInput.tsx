@@ -6,8 +6,8 @@ type SearchInputProps = {
 function SearchIcon() {
   return (
     <svg
-      width="20"
-      height="20"
+      width="21"
+      height="21"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -22,13 +22,10 @@ function SearchIcon() {
   );
 }
 
-export function SearchInput({
-  value,
-  onChange,
-}: SearchInputProps) {
+export function SearchInput({ value, onChange }: SearchInputProps) {
   return (
     <div className="relative w-full">
-      <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+      <div className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-blue-600">
         <SearchIcon />
       </div>
 
@@ -39,26 +36,7 @@ export function SearchInput({
         placeholder="Digite marca, modelo e ano. Ex: BMW X3 2024"
         aria-label="Buscar veículo"
         autoComplete="off"
-        className="
-          h-[54px]
-          w-full
-          rounded-xl
-          border
-          border-slate-200
-          bg-white
-          pl-12
-          pr-12
-          text-[15px]
-          font-medium
-          text-slate-950
-          shadow-sm
-          outline-none
-          transition
-          placeholder:font-normal
-          placeholder:text-slate-400
-          focus:border-slate-400
-          focus:shadow-md
-        "
+        className="h-[58px] w-full rounded-[18px] border border-slate-200 bg-white pl-14 pr-12 text-[15px] font-medium text-slate-950 shadow-sm outline-none transition-all duration-200 placeholder:font-normal placeholder:text-slate-400 focus:border-blue-300 focus:ring-4 focus:ring-blue-50"
       />
 
       {value && (
@@ -66,17 +44,7 @@ export function SearchInput({
           type="button"
           onClick={() => onChange("")}
           aria-label="Limpar busca"
-          className="
-            absolute
-            right-4
-            top-1/2
-            -translate-y-1/2
-            text-xl
-            leading-none
-            text-slate-400
-            transition
-            hover:text-slate-900
-          "
+          className="absolute right-4 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full text-lg leading-none text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-900"
         >
           ×
         </button>
