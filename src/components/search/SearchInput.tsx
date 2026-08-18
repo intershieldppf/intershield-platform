@@ -33,10 +33,10 @@ export function SearchInput({ value, onChange }: SearchInputProps) {
         type="search"
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        placeholder="Digite marca, modelo e ano. Ex: BMW X3 2024"
-        aria-label="Buscar veículo"
+        placeholder="Busque seu veículo ou produto. Ex: BMW X3 2024, multimídia, coluna..."
+        aria-label="Buscar veículo ou produto"
         autoComplete="off"
-        className="h-[58px] w-full rounded-[18px] border border-slate-200 bg-white pl-14 pr-12 text-[15px] font-medium text-slate-950 shadow-sm outline-none transition-all duration-200 placeholder:font-normal placeholder:text-slate-400 focus:border-blue-300 focus:ring-4 focus:ring-blue-50"
+        className="h-[60px] w-full rounded-[18px] border border-slate-200 bg-white pl-14 pr-12 text-[15px] font-medium text-slate-950 shadow-sm outline-none transition-all duration-200 placeholder:font-normal placeholder:text-slate-400 focus:border-blue-300 focus:ring-4 focus:ring-blue-50"
       />
 
       {value && (
