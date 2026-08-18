@@ -1,0 +1,36 @@
+
+> intershield-platform@0.1.0 build
+> next build
+
+▲ Next.js 16.3.0 (Turbopack)
+✓ Running next.config.ts took 24ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 796ms
+  Running TypeScript ...
+  Finished TypeScript in 1781ms ...
+  Collecting page data using 14 workers ...
+  Generating static pages using 14 workers (0/9) ...
+  Generating static pages using 14 workers (2/9) 
+  Generating static pages using 14 workers (4/9) 
+  Generating static pages using 14 workers (6/9) 
+✓ Generating static pages using 14 workers (9/9) in 722ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin/importar
+├ ○ /admin/veiculos/imagens
+├ ƒ /api/admin/importar/matriz
+├ ƒ /api/admin/matrix
+├ ƒ /api/admin/veiculos/[vehicleId]/imagem
+├ ƒ /api/admin/veiculos/[vehicleId]/imagens
+├ ƒ /api/admin/veiculos/imagens
+├ ƒ /produto/[productSlug]
+└ ƒ /veiculo/[brandSlug]/[vehicleSlug]
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
