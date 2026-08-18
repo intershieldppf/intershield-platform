@@ -4,18 +4,15 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { SearchInput } from "@/components/search/SearchInput";
-import { SearchSuggestions } from "@/components/search/SearchSuggestions";
-import type { VehicleSearchResult } from "@/services/catalog/catalogService";
-import { LocalCatalogService } from "@/services/catalog/localCatalogService";
-
-const catalogService = new LocalCatalogService();
+import {
+  SearchSuggestions,
+  type ProductSearchSuggestion,
+} from "@/components/search/SearchSuggestions";
 
 export function VehicleBar() {
   const router = useRouter();
   const [query, setQuery] = useState("");
-  const [selectedVehicle, setSelectedVehicle] =
-    useState<VehicleSearchResult | null>(null);
-  const [suggestions, setSuggestions] = useState<VehicleSearchResult[]>([]);
+  const [suggestions, setSuggestions] = useState<ProductSearchSuggestion[]>([]);
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -28,39 +25,46 @@ export function VehicleBar() {
       return;
     }
 
-    let active = true;
+    const controller = new AbortController();
 
     const timer = window.setTimeout(async () => {
       try {
         setLoading(true);
 
-        const results = await catalogService.searchVehicles(term);
+        const response = await fetch(
+          `/api/catalogo/sugestoes?q=${encodeURIComponent(term)}`,
+          { signal: controller.signal },
+        );
 
-        if (!active) return;
+        if (!response.ok) {
+          throw new Error("Falha ao buscar produtos");
+        }
 
-        setSuggestions(results.slice(0, 5));
+        const data = (await response.json()) as {
+          suggestions?: ProductSearchSuggestion[];
+        };
+
+        setSuggestions(data.suggestions ?? []);
       } catch (error) {
-        console.error("Erro ao buscar veículos:", error);
-
-        if (active) {
+        if ((error as Error).name !== "AbortError") {
+          console.error("Erro ao buscar produtos:", error);
           setSuggestions([]);
         }
       } finally {
-        if (active) {
+        if (!controller.signal.aborted) {
           setLoading(false);
         }
       }
-    }, 250);
+    }, 180);
 
     return () => {
-      active = false;
       window.clearTimeout(timer);
+      controller.abort();
     };
   }, [query]);
 
   function handleQueryChange(value: string) {
     setQuery(value);
-    setSelectedVehicle(null);
     setIsOpen(value.trim().length >= 2);
   }
 
@@ -69,16 +73,15 @@ export function VehicleBar() {
     router.push(term ? `/catalogo?q=${encodeURIComponent(term)}` : "/catalogo");
   }
 
-  function handleSelect(vehicle: VehicleSearchResult) {
-    const value = `${vehicle.brand.name} ${vehicle.vehicleModel.name} ${vehicle.vehicle.yearStart}`;
-    setSelectedVehicle(vehicle);
-    setQuery(value);
+  function handleSelect(product: ProductSearchSuggestion) {
+    setQuery(product.title);
     setIsOpen(false);
-    goToCatalog(value);
+    goToCatalog(product.title);
   }
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    setIsOpen(false);
     goToCatalog(query);
   }
 
@@ -108,7 +111,7 @@ export function VehicleBar() {
 
             {isOpen && loading && (
               <div className="absolute left-0 right-0 top-[66px] z-50 rounded-[18px] border border-slate-200 bg-white px-4 py-3 text-sm text-slate-500 shadow-lg">
-                Buscando veículos...
+                Buscando produtos...
               </div>
             )}
 
@@ -124,14 +127,14 @@ export function VehicleBar() {
               query.trim().length >= 2 &&
               suggestions.length === 0 && (
                 <div className="absolute left-0 right-0 top-[66px] z-50 rounded-[18px] border border-slate-200 bg-white px-4 py-3 text-sm text-slate-500 shadow-lg">
-                  Nenhum veículo encontrado. Pressione Enter para buscar no catálogo completo.
+                  Nenhum anúncio com esse termo. Pressione Enter para buscar no catálogo completo.
                 </div>
               )}
           </form>
 
           <div className="mt-3 flex min-h-5 items-center justify-between gap-3 px-1">
             <p className="text-[12px] text-slate-500">
-              Não encontrou seu veículo?{" "}
+              Busque por veículo ou por termos como multimídia, coluna, concha e interior.{" "}
               <a
                 href="#suporte"
                 className="font-semibold text-slate-900 transition-colors hover:text-blue-600"
@@ -139,12 +142,6 @@ export function VehicleBar() {
                 Fale com a InterShield
               </a>
             </p>
-
-            {selectedVehicle && (
-              <p className="hidden text-[12px] font-semibold text-blue-600 sm:block">
-                {selectedVehicle.brand.name} {selectedVehicle.vehicleModel.name}
-              </p>
-            )}
           </div>
         </div>
       </div>
