@@ -16,15 +16,15 @@ export default function Home() {
 
       <main className="overflow-hidden">
         {/* LOGO INTERSHIELD */}
-        <section className="bg-white pb-1 pt-5">
+        <section className="bg-white py-3">
           <div className="flex items-center justify-center">
             <Image
               src="/intershield-shield-v2.png"
               alt="InterShield Películas"
-              width={340}
-              height={180}
+              width={460}
+              height={240}
               priority
-              className="h-auto w-[230px] object-contain sm:w-[260px]"
+              className="h-auto w-[300px] object-contain sm:w-[340px] lg:w-[380px]"
             />
           </div>
         </section>
