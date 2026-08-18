@@ -49,6 +49,19 @@ function decodeTags(mask: number) {
   return TAGS.filter(([bit]) => (mask & bit) === bit).map(([, label]) => label);
 }
 
+function resolveYears(title: string, yearStart: number | null, yearEnd: number | null) {
+  const fullYears = Array.from(title.matchAll(/\b20\d{2}\b/g), (match) => Number(match[0]));
+
+  if (fullYears.length >= 2) {
+    return {
+      yearStart: Math.min(...fullYears),
+      yearEnd: Math.max(...fullYears),
+    };
+  }
+
+  return { yearStart, yearEnd };
+}
+
 function mapRow(row: RawCatalogRow): StorefrontProduct {
   const [
     id,
@@ -65,6 +78,8 @@ function mapRow(row: RawCatalogRow): StorefrontProduct {
     variantValues,
   ] = row;
 
+  const resolvedYears = resolveYears(title, yearStart, yearEnd);
+
   return {
     id,
     title,
@@ -72,8 +87,8 @@ function mapRow(row: RawCatalogRow): StorefrontProduct {
     image: `https://http2.mlstatic.com/${image}`,
     sku,
     brand,
-    yearStart,
-    yearEnd,
+    yearStart: resolvedYears.yearStart,
+    yearEnd: resolvedYears.yearEnd,
     type,
     tags: decodeTags(tagMask),
     displayOrder,
