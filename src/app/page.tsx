@@ -15,8 +15,7 @@ export default function Home() {
       <Header />
 
       <main className="overflow-hidden">
-        {/* LOGO INTERSHIELD */}
-        <section className="bg-white py-3">
+        <section className="bg-white pb-0 pt-2 sm:pt-3">
           <div className="flex items-center justify-center">
             <Image
               src="/intershield-shield-v2.png"
@@ -24,18 +23,14 @@ export default function Home() {
               width={460}
               height={240}
               priority
-              className="h-auto w-[300px] object-contain sm:w-[340px] lg:w-[380px]"
+              className="h-auto w-[290px] object-contain sm:w-[330px] lg:w-[360px]"
             />
           </div>
         </section>
 
-        {/* BUSCA DO VEÍCULO */}
         <VehicleBar />
-
-        {/* HERO PRINCIPAL */}
         <HeroSection />
 
-        {/* RESTANTE DA HOME */}
         <div className="mx-auto max-w-7xl space-y-20 px-6 py-16 sm:px-8 lg:px-10 lg:py-24">
           <InfoSection />
           <FeatureSection />
