@@ -1,13 +1,24 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { MessageCircle, Search, SlidersHorizontal, X } from "lucide-react";
+import { Search, SlidersHorizontal, X } from "lucide-react";
 
-import type { StorefrontProduct } from "@/data/storefront/catalog";
+import {
+  storefrontProductSlug,
+  type StorefrontProduct,
+} from "@/data/storefront/catalog";
 
 const WHATSAPP_NUMBER = "5531997146624";
 const PAGE_SIZE = 24;
-const QUICK_FILTERS = ["Todos", "Interior", "Exterior", "Multimídia", "Colunas", "Universal"];
+const QUICK_FILTERS = [
+  "Todos",
+  "Interior",
+  "Exterior",
+  "Multimídia",
+  "Colunas",
+  "Universal",
+];
 
 function normalizeText(value: string) {
   return value
@@ -113,6 +124,7 @@ function scoreProduct(product: StorefrontProduct, query: string) {
 
 function formatPrice(price: number | null) {
   if (price === null) return "Consulte";
+
   return new Intl.NumberFormat("pt-BR", {
     style: "currency",
     currency: "BRL",
@@ -131,12 +143,6 @@ function compatibilityLabel(product: StorefrontProduct) {
   return [brand, years].filter(Boolean).join(" · ");
 }
 
-function whatsappLink(product: StorefrontProduct, query: string) {
-  const vehicleLine = query.trim() ? `\nMinha busca/veículo: ${query.trim()}` : "";
-  const text = `Olá! Vi este produto no catálogo da InterShield Películas:\n${product.title}${vehicleLine}\nQuero confirmar a compatibilidade e comprar pelo WhatsApp.`;
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
-}
-
 type CatalogClientProps = {
   products: StorefrontProduct[];
   initialQuery?: string;
@@ -153,8 +159,8 @@ export function CatalogClient({ products, initialQuery = "" }: CatalogClientProp
 
   const brands = useMemo(
     () =>
-      Array.from(new Set(products.map((product) => product.brand).filter(Boolean))).sort((a, b) =>
-        String(a).localeCompare(String(b), "pt-BR"),
+      Array.from(new Set(products.map((product) => product.brand).filter(Boolean))).sort(
+        (a, b) => String(a).localeCompare(String(b), "pt-BR"),
       ) as string[],
     [products],
   );
@@ -165,22 +171,34 @@ export function CatalogClient({ products, initialQuery = "" }: CatalogClientProp
       .filter((product) => tag === "Todos" || product.tags.includes(tag))
       .filter((product) => brand === "Todas" || product.brand === brand)
       .map((product) => ({ product, score: scoreProduct(product, query) }))
-      .filter((item): item is { product: StorefrontProduct; score: number } => item.score !== null);
+      .filter(
+        (item): item is { product: StorefrontProduct; score: number } =>
+          item.score !== null,
+      );
 
     if (query.trim()) {
       return scored
-        .sort((a, b) => b.score - a.score || a.product.displayOrder - b.product.displayOrder)
+        .sort(
+          (a, b) =>
+            b.score - a.score || a.product.displayOrder - b.product.displayOrder,
+        )
         .map((item) => item.product);
     }
 
     const result = scored.map((item) => item.product);
 
     if (sort === "menor-preco") {
-      return result.sort((a, b) => (a.price ?? Number.MAX_SAFE_INTEGER) - (b.price ?? Number.MAX_SAFE_INTEGER));
+      return result.sort(
+        (a, b) =>
+          (a.price ?? Number.MAX_SAFE_INTEGER) -
+          (b.price ?? Number.MAX_SAFE_INTEGER),
+      );
     }
+
     if (sort === "maior-preco") {
       return result.sort((a, b) => (b.price ?? 0) - (a.price ?? 0));
     }
+
     if (sort === "az") {
       return result.sort((a, b) => a.title.localeCompare(b.title, "pt-BR"));
     }
@@ -253,12 +271,14 @@ export function CatalogClient({ products, initialQuery = "" }: CatalogClientProp
       <section className="border-b border-slate-200 bg-white px-4 pb-6 pt-7 sm:px-8 lg:pb-8 lg:pt-10">
         <div className="mx-auto max-w-7xl">
           <div className="max-w-3xl">
-            <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-blue-600">Catálogo InterShield</p>
+            <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-blue-600">
+              Catálogo InterShield
+            </p>
             <h1 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl lg:text-[44px]">
               Encontre a proteção certa para o seu veículo
             </h1>
             <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-600 sm:text-[15px]">
-              Busque por marca, modelo e ano ou navegue por todo o catálogo. Os resultados compatíveis aparecem primeiro.
+              Busque por marca, modelo, ano ou produto. Os resultados mais relevantes aparecem primeiro.
             </p>
           </div>
         </div>
@@ -274,7 +294,7 @@ export function CatalogClient({ products, initialQuery = "" }: CatalogClientProp
                 onChange={(event) => setQuery(event.target.value)}
                 type="search"
                 autoComplete="off"
-                placeholder="Digite marca, modelo e ano. Ex: BMW X3 2024"
+                placeholder="Busque veículo ou produto. Ex: BMW X3 2024, multimídia..."
                 className="h-14 w-full rounded-2xl border border-slate-200 bg-white pl-12 pr-12 text-[15px] font-medium text-slate-950 shadow-sm outline-none transition placeholder:font-normal placeholder:text-slate-400 focus:border-blue-400 focus:ring-4 focus:ring-blue-50"
               />
               {query ? (
@@ -320,7 +340,11 @@ export function CatalogClient({ products, initialQuery = "" }: CatalogClientProp
             <div className="mt-3 grid gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4 lg:hidden">
               {filterControls}
               {hasFilters ? (
-                <button type="button" onClick={clearFilters} className="text-left text-sm font-semibold text-blue-600">
+                <button
+                  type="button"
+                  onClick={clearFilters}
+                  className="text-left text-sm font-semibold text-blue-600"
+                >
                   Limpar filtros
                 </button>
               ) : null}
@@ -352,7 +376,10 @@ export function CatalogClient({ products, initialQuery = "" }: CatalogClientProp
                 {query.trim() ? `Resultados para “${query.trim()}”` : "Todos os produtos"}
               </p>
               <p className="mt-1 text-xs text-slate-500">
-                {filteredProducts.length} {filteredProducts.length === 1 ? "produto encontrado" : "produtos encontrados"}
+                {filteredProducts.length}{" "}
+                {filteredProducts.length === 1
+                  ? "produto encontrado"
+                  : "produtos encontrados"}
               </p>
             </div>
             {query.trim() ? (
@@ -366,12 +393,18 @@ export function CatalogClient({ products, initialQuery = "" }: CatalogClientProp
             <div className="mt-5 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
               {visibleProducts.map((product) => {
                 const compatibility = compatibilityLabel(product);
+                const productHref = `/produto/${storefrontProductSlug(product)}`;
+
                 return (
                   <article
                     key={product.id}
                     className="group overflow-hidden rounded-[20px] border border-slate-200 bg-white shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md"
                   >
-                    <div className="relative aspect-square overflow-hidden bg-slate-50">
+                    <Link
+                      href={productHref}
+                      className="relative block aspect-square overflow-hidden bg-slate-50"
+                      aria-label={`Ver ${product.title}`}
+                    >
                       <img
                         src={product.image}
                         alt={product.title}
@@ -381,7 +414,7 @@ export function CatalogClient({ products, initialQuery = "" }: CatalogClientProp
                       <span className="absolute left-2 top-2 rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-blue-600 shadow-sm">
                         {product.type}
                       </span>
-                    </div>
+                    </Link>
 
                     <div className="flex min-h-[230px] flex-col p-3 sm:p-4">
                       {compatibility ? (
@@ -390,25 +423,26 @@ export function CatalogClient({ products, initialQuery = "" }: CatalogClientProp
                         </p>
                       ) : null}
 
-                      <h2 className="line-clamp-3 text-[13px] font-semibold leading-5 text-slate-900 sm:text-sm">
-                        {product.title}
-                      </h2>
+                      <Link href={productHref} className="hover:text-blue-600">
+                        <h2 className="line-clamp-3 text-[13px] font-semibold leading-5 text-slate-900 sm:text-sm">
+                          {product.title}
+                        </h2>
+                      </Link>
 
                       <div className="mt-auto pt-4">
                         <p className="text-lg font-bold tracking-tight text-slate-950 sm:text-xl">
                           {formatPrice(product.price)}
                         </p>
-                        <p className="mt-1 text-[10px] text-slate-400">SKU {product.sku ?? product.id}</p>
+                        <p className="mt-1 truncate text-[10px] text-slate-400">
+                          SKU {product.sku ?? product.id}
+                        </p>
 
-                        <a
-                          href={whatsappLink(product, query)}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="mt-3 inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-xl bg-slate-950 px-3 py-2 text-center text-[11px] font-semibold text-white transition hover:bg-blue-600 sm:text-xs"
+                        <Link
+                          href={productHref}
+                          className="mt-3 inline-flex min-h-10 w-full items-center justify-center rounded-xl border border-slate-200 bg-white px-3 py-2 text-center text-[11px] font-semibold text-slate-900 transition hover:border-blue-400 hover:bg-blue-50 hover:text-blue-600 sm:text-xs"
                         >
-                          <MessageCircle className="h-4 w-4 shrink-0" />
-                          Comprar
-                        </a>
+                          Ver produto
+                        </Link>
                       </div>
                     </div>
                   </article>
@@ -417,17 +451,20 @@ export function CatalogClient({ products, initialQuery = "" }: CatalogClientProp
             </div>
           ) : (
             <div className="mt-6 rounded-[26px] border border-slate-200 bg-slate-50 px-6 py-12 text-center">
-              <p className="text-xl font-bold text-slate-950">Não encontramos um resultado exato.</p>
+              <p className="text-xl font-bold text-slate-950">
+                Não encontramos um resultado exato.
+              </p>
               <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-slate-600">
                 Revise o modelo ou ano. Se o seu veículo não estiver no catálogo, fale com a InterShield para confirmarmos a disponibilidade.
               </p>
               <a
-                href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Olá! Não encontrei meu veículo no catálogo da InterShield. Minha busca foi: ${query}`)}`}
+                href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+                  `Olá! Não encontrei meu veículo no catálogo da InterShield. Minha busca foi: ${query}`,
+                )}`}
                 target="_blank"
                 rel="noreferrer"
-                className="mt-5 inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 text-sm font-semibold text-white transition hover:bg-blue-500"
+                className="mt-5 inline-flex h-12 items-center justify-center rounded-xl bg-blue-600 px-5 text-sm font-semibold text-white transition hover:bg-blue-500"
               >
-                <MessageCircle className="h-4 w-4" />
                 Consultar pelo WhatsApp
               </a>
             </div>
