@@ -96,6 +96,15 @@ function mapRow(row: RawCatalogRow): StorefrontProduct {
   };
 }
 
+function slugify(value: string) {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
 const rawCatalog = [
   ...(catalog1 as unknown as RawCatalogRow[]),
   ...(catalog2 as unknown as RawCatalogRow[]),
@@ -106,6 +115,20 @@ const rawCatalog = [
 export const storefrontCatalog = rawCatalog
   .map(mapRow)
   .sort((a, b) => a.displayOrder - b.displayOrder);
+
+export function storefrontProductSlug(product: StorefrontProduct) {
+  return `${slugify(product.title)}-${product.id.toLowerCase()}`;
+}
+
+export function findStorefrontProductBySlug(value: string) {
+  const normalized = value.toLowerCase();
+
+  return storefrontCatalog.find(
+    (product) =>
+      product.id.toLowerCase() === normalized ||
+      storefrontProductSlug(product) === normalized,
+  );
+}
 
 export const storefrontBrands = Array.from(
   new Set(storefrontCatalog.map((product) => product.brand).filter(Boolean)),
