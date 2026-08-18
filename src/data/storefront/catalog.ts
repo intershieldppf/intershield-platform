@@ -82,10 +82,10 @@ function mapRow(row: RawCatalogRow): StorefrontProduct {
 }
 
 const rawCatalog = [
-  ...(catalog1 as RawCatalogRow[]),
-  ...(catalog2 as RawCatalogRow[]),
-  ...(catalog3 as RawCatalogRow[]),
-  ...(catalog4 as RawCatalogRow[]),
+  ...(catalog1 as unknown as RawCatalogRow[]),
+  ...(catalog2 as unknown as RawCatalogRow[]),
+  ...(catalog3 as unknown as RawCatalogRow[]),
+  ...(catalog4 as unknown as RawCatalogRow[]),
 ];
 
 export const storefrontCatalog = rawCatalog
