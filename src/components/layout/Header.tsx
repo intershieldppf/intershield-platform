@@ -1,8 +1,7 @@
 import Link from "next/link";
 
 const navItems = [
-  { label: "Kits para veículos", href: "#kits" },
-  { label: "Motos", href: "#motos" },
+  { label: "PPF", href: "#kits" },
   { label: "Black Piano", href: "#blackpiano" },
   { label: "Como instalar", href: "#instalar" },
   { label: "Sobre", href: "#sobre" },
