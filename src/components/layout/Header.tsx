@@ -1,11 +1,11 @@
 import Link from "next/link";
 
 const navItems = [
-  { label: "PPF", href: "#kits" },
-  { label: "Black Piano", href: "#blackpiano" },
-  { label: "Como instalar", href: "#instalar" },
-  { label: "Sobre", href: "#sobre" },
-  { label: "Suporte", href: "#suporte" },
+  { label: "PPF", href: "/#kits" },
+  { label: "Black Piano", href: "/#blackpiano" },
+  { label: "Como instalar", href: "/#instalar" },
+  { label: "Sobre", href: "/#sobre" },
+  { label: "Suporte", href: "/#suporte" },
 ];
 
 export function Header() {
