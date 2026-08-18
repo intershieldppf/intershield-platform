@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 import { SearchInput } from "@/components/search/SearchInput";
 import { SearchSuggestions } from "@/components/search/SearchSuggestions";
@@ -10,6 +11,7 @@ import { LocalCatalogService } from "@/services/catalog/localCatalogService";
 const catalogService = new LocalCatalogService();
 
 export function VehicleBar() {
+  const router = useRouter();
   const [query, setQuery] = useState("");
   const [selectedVehicle, setSelectedVehicle] =
     useState<VehicleSearchResult | null>(null);
@@ -62,12 +64,22 @@ export function VehicleBar() {
     setIsOpen(value.trim().length >= 2);
   }
 
+  function goToCatalog(value: string) {
+    const term = value.trim();
+    router.push(term ? `/catalogo?q=${encodeURIComponent(term)}` : "/catalogo");
+  }
+
   function handleSelect(vehicle: VehicleSearchResult) {
+    const value = `${vehicle.brand.name} ${vehicle.vehicleModel.name} ${vehicle.vehicle.yearStart}`;
     setSelectedVehicle(vehicle);
-    setQuery(
-      `${vehicle.brand.name} ${vehicle.vehicleModel.name} ${vehicle.vehicle.yearStart}`
-    );
+    setQuery(value);
     setIsOpen(false);
+    goToCatalog(value);
+  }
+
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    goToCatalog(query);
   }
 
   return (
@@ -91,7 +103,7 @@ export function VehicleBar() {
             </h2>
           </div>
 
-          <div className="relative mt-6">
+          <form onSubmit={handleSubmit} className="relative mt-6">
             <SearchInput value={query} onChange={handleQueryChange} />
 
             {isOpen && loading && (
@@ -112,10 +124,10 @@ export function VehicleBar() {
               query.trim().length >= 2 &&
               suggestions.length === 0 && (
                 <div className="absolute left-0 right-0 top-[66px] z-50 rounded-[18px] border border-slate-200 bg-white px-4 py-3 text-sm text-slate-500 shadow-lg">
-                  Nenhum veículo encontrado.
+                  Nenhum veículo encontrado. Pressione Enter para buscar no catálogo completo.
                 </div>
               )}
-          </div>
+          </form>
 
           <div className="mt-3 flex min-h-5 items-center justify-between gap-3 px-1">
             <p className="text-[12px] text-slate-500">
