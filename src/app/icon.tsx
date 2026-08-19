@@ -7,34 +7,23 @@ export const size = {
 
 export const contentType = "image/png";
 
+const shieldPng =
+  "data:image/png;base64,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";
+
 export default function Icon() {
   return new ImageResponse(
     (
       <div
         style={{
-          position: "relative",
           display: "flex",
           width: "64px",
           height: "64px",
-          overflow: "hidden",
           alignItems: "center",
           justifyContent: "center",
-          background: "white",
+          background: "transparent",
         }}
       >
-        <img
-          src="https://www.intershield.com.br/intershield-shield-v2.png"
-          alt=""
-          width="192"
-          height="100"
-          style={{
-            position: "absolute",
-            left: "-64px",
-            top: "-14px",
-            width: "192px",
-            height: "auto",
-          }}
-        />
+        <img src={shieldPng} alt="" width="64" height="64" />
       </div>
     ),
     {
