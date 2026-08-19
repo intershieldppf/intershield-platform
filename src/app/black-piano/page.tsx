@@ -145,6 +145,44 @@ export default function BlackPianoPage() {
           </div>
         </section>
 
+        <section className="border-b border-slate-100 bg-white py-14 sm:py-16">
+          <div className="mx-auto grid max-w-[1180px] items-center gap-10 px-6 sm:px-8 lg:grid-cols-[1.08fr_0.92fr] lg:px-10">
+            <div className="max-w-[620px]">
+              <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-blue-600">Precisão em cada recorte</p>
+              <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-950 sm:text-[38px]">Corte computadorizado</h2>
+              <p className="mt-5 text-[15px] leading-8 text-slate-600">
+                Cada kit InterShield é desenvolvido a partir de moldes digitais e recortado em plotter computadorizada. O processo permite que o material acompanhe com precisão o formato de cada peça, entregando um encaixe mais limpo e padronizado.
+              </p>
+              <p className="mt-4 text-[15px] leading-8 text-slate-600">
+                O cliente recebe as peças já pré-cortadas e prontas para aplicação, reduzindo ajustes manuais e a necessidade de cortes diretamente sobre o veículo.
+              </p>
+              <div className="mt-7 grid gap-3 sm:grid-cols-3">
+                {["Moldes digitais", "Pré-corte específico", "Mais precisão na instalação"].map((item) => (
+                  <div key={item} className="rounded-[18px] border border-slate-200 bg-slate-50 px-4 py-4 text-[12px] font-semibold text-slate-700">
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="mx-auto w-full max-w-[360px]">
+              <div className="overflow-hidden rounded-[28px] border border-slate-200 bg-slate-950 p-2 shadow-[0_24px_60px_-32px_rgba(15,23,42,0.55)]">
+                <video
+                  controls
+                  playsInline
+                  preload="metadata"
+                  poster="/black-piano-antes-depois.png"
+                  className="aspect-[9/16] w-full rounded-[22px] bg-black object-cover"
+                >
+                  <source src="/coluna-black-piano-corte.mp4" type="video/mp4" />
+                  Seu navegador não suporta reprodução de vídeo.
+                </video>
+              </div>
+              <p className="mt-3 text-center text-[12px] leading-5 text-slate-500">Veja o processo de corte computadorizado de um kit InterShield.</p>
+            </div>
+          </div>
+        </section>
+
         <section className="bg-white py-14 sm:py-16">
           <div className="mx-auto max-w-[1320px] px-6 sm:px-8 lg:px-10">
             <div className="grid gap-5 lg:grid-cols-[0.72fr_1.28fr]">
