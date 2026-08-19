@@ -67,17 +67,17 @@ const benefits = [
 
 
 const glossPoints = [
-  "Mantém ou realça o brilho original",
-  "Excelente para Black Piano, painéis e consoles",
-  "Visual mais vivo e profundo",
-  "Proteção transparente e discreta",
+  "Maior nitidez para telas e painéis digitais",
+  "Cores mais vivas e contraste preservado",
+  "Mantém o brilho original de peças Black Piano",
+  "Ideal para quem prioriza a aparência original",
 ];
 
 const mattePoints = [
-  "Visual acetinado e sofisticado",
-  "Reduz reflexos na superfície",
-  "Ótima opção para um acabamento mais discreto",
-  "Mantém a proteção contra o desgaste diário",
+  "Reduz reflexos sob luz forte",
+  "Disfarça melhor marcas de dedo",
+  "Acabamento acetinado e mais discreto",
+  "Mais conforto visual em telas multimídia",
 ];
 
 export default function PpfPage() {
@@ -321,56 +321,138 @@ export default function PpfPage() {
           </div>
         </section>
 
-        <section className="bg-slate-50 py-14 sm:py-16">
+        <section className="border-t border-slate-100 bg-[linear-gradient(180deg,#ffffff_0%,#f7faff_100%)] py-16 sm:py-20">
           <div className="mx-auto max-w-[1320px] px-6 sm:px-8 lg:px-10">
-            <div className="mb-8 max-w-3xl">
-              <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-blue-600">Escolha o acabamento</p>
-              <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-950 sm:text-[38px]">PPF Gloss ou Fosco?</h2>
-              <p className="mt-4 text-sm leading-7 text-slate-600">
-                A proteção continua sendo o principal. O acabamento muda a forma como a superfície se apresenta visualmente.
+            <div className="max-w-[880px]">
+              <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-blue-600">
+                Escolha o acabamento
+              </p>
+              <h2 className="mt-3 text-3xl font-bold leading-tight tracking-[-0.03em] text-slate-950 sm:text-[44px]">
+                PPF Fosco ou Brilhante: qual combina com você?
+              </h2>
+              <p className="mt-5 max-w-[760px] text-[15px] leading-7 text-slate-600">
+                Nos dois acabamentos, o PPF continua protegendo a superfície contra o
+                desgaste do uso diário. A diferença está na maneira como a luz, as cores
+                e o acabamento original são percebidos.
               </p>
             </div>
 
-            <div className="grid gap-5 lg:grid-cols-2">
-              <article className="relative min-h-[410px] overflow-hidden rounded-[28px] bg-slate-950 p-7 text-white sm:p-8">
-                <Image src="/intershield-hero-bmw.png" alt="Exemplo de acabamento PPF Gloss" fill className="object-cover object-right opacity-45" />
-                <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,6,23,0.98)_0%,rgba(2,6,23,0.88)_45%,rgba(2,6,23,0.22)_100%)]" />
-                <div className="relative z-10 max-w-[360px]">
-                  <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-blue-400">Acabamento brilhante</p>
-                  <h3 className="mt-3 text-3xl font-bold">PPF <span className="text-blue-400">Gloss</span></h3>
-                  <p className="mt-4 text-sm leading-7 text-slate-300">
-                    Indicado para quem deseja manter ou realçar o brilho original da superfície, com aspecto mais vivo e profundo.
-                  </p>
-                  <ul className="mt-6 space-y-3">
-                    {glossPoints.map((point) => (
-                      <li key={point} className="flex gap-3 text-sm text-slate-200">
-                        <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-blue-400" />
-                        {point}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </article>
+            <div className="relative mt-10">
+              <div className="grid gap-6 lg:grid-cols-2">
+                <article className="overflow-hidden rounded-[30px] border border-slate-200 bg-white shadow-[0_24px_70px_-42px_rgba(15,23,42,0.55)]">
+                  <div className="relative h-[230px] overflow-hidden bg-slate-950 sm:h-[270px]">
+                    <Image
+                      src="/ppf-matte-multimedia-intershield.webp"
+                      alt="Tela multimídia com acabamento PPF fosco e menor reflexo"
+                      fill
+                      className="object-cover object-center transition duration-700 hover:scale-[1.02]"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-transparent to-transparent" />
+                    <div className="absolute bottom-5 left-5">
+                      <span className="rounded-full border border-white/20 bg-slate-950/70 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-blue-300 backdrop-blur">
+                        Menos reflexo
+                      </span>
+                      <h3 className="mt-3 text-3xl font-bold text-white">PPF Fosco</h3>
+                    </div>
+                  </div>
 
-              <article className="relative min-h-[410px] overflow-hidden rounded-[28px] bg-slate-950 p-7 text-white sm:p-8">
-                <Image src="/intershield-hero-bmw.png" alt="Exemplo de acabamento PPF Fosco" fill className="object-cover object-left grayscale opacity-38" />
-                <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,6,23,0.98)_0%,rgba(2,6,23,0.9)_48%,rgba(2,6,23,0.28)_100%)]" />
-                <div className="relative z-10 max-w-[360px]">
-                  <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-blue-400">Acabamento acetinado</p>
-                  <h3 className="mt-3 text-3xl font-bold">PPF <span className="text-blue-400">Fosco</span></h3>
-                  <p className="mt-4 text-sm leading-7 text-slate-300">
-                    Para quem prefere um visual mais discreto e sofisticado, com menos reflexo e aparência acetinada.
+                  <div className="p-6 sm:p-8">
+                    <p className="text-sm leading-7 text-slate-600">
+                      O acabamento fosco difunde a luz e reduz o reflexo percebido na
+                      superfície. É uma escolha funcional para telas e painéis que recebem
+                      muita iluminação, além de criar um visual acetinado e discreto.
+                    </p>
+                    <ul className="mt-6 space-y-3">
+                      {mattePoints.map((point) => (
+                        <li key={point} className="flex gap-3 text-sm text-slate-700">
+                          <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-blue-500" />
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="mt-6 rounded-[18px] border border-amber-200/70 bg-amber-50 px-4 py-3">
+                      <p className="text-[12px] leading-5 text-amber-900">
+                        <strong>Ponto de atenção:</strong> o efeito antirreflexo pode
+                        reduzir levemente a intensidade das cores e do brilho da tela.
+                      </p>
+                    </div>
+                  </div>
+                </article>
+
+                <article className="overflow-hidden rounded-[30px] border border-blue-200 bg-white shadow-[0_24px_70px_-42px_rgba(37,99,235,0.5)]">
+                  <div className="relative h-[230px] overflow-hidden bg-slate-950 sm:h-[270px]">
+                    <Image
+                      src="/ppf-gloss-multimedia-intershield.webp"
+                      alt="Tela multimídia com acabamento PPF brilhante e cores mais vivas"
+                      fill
+                      className="object-cover object-center transition duration-700 hover:scale-[1.02]"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-transparent to-transparent" />
+                    <div className="absolute bottom-5 left-5">
+                      <span className="rounded-full border border-white/20 bg-blue-600/85 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-white backdrop-blur">
+                        Maior nitidez
+                      </span>
+                      <h3 className="mt-3 text-3xl font-bold text-white">
+                        PPF Brilhante <span className="text-blue-300">(Gloss)</span>
+                      </h3>
+                    </div>
+                  </div>
+
+                  <div className="p-6 sm:p-8">
+                    <p className="text-sm leading-7 text-slate-600">
+                      O acabamento brilhante mantém a transparência, o contraste e a
+                      profundidade das cores. É indicado para preservar o aspecto original
+                      de telas, consoles e peças Black Piano.
+                    </p>
+                    <ul className="mt-6 space-y-3">
+                      {glossPoints.map((point) => (
+                        <li key={point} className="flex gap-3 text-sm text-slate-700">
+                          <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-blue-500" />
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="mt-6 rounded-[18px] border border-blue-100 bg-blue-50 px-4 py-3">
+                      <p className="text-[12px] leading-5 text-blue-950">
+                        <strong>Ponto de atenção:</strong> por preservar o brilho, esse
+                        acabamento reflete mais luz e pode evidenciar marcas de dedo.
+                      </p>
+                    </div>
+                  </div>
+                </article>
+              </div>
+
+              <div className="absolute left-1/2 top-[228px] z-10 hidden h-14 w-14 -translate-x-1/2 items-center justify-center rounded-full border-4 border-white bg-blue-600 text-sm font-black tracking-[0.08em] text-white shadow-lg lg:flex">
+                VS
+              </div>
+            </div>
+
+            <div className="mt-6 overflow-hidden rounded-[30px] border border-blue-500/30 bg-slate-950 p-6 text-white shadow-[0_28px_70px_-40px_rgba(37,99,235,0.75)] sm:p-8">
+              <div className="grid gap-7 lg:grid-cols-[1fr_auto] lg:items-center">
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-blue-400">
+                    Combinação inteligente
                   </p>
-                  <ul className="mt-6 space-y-3">
-                    {mattePoints.map((point) => (
-                      <li key={point} className="flex gap-3 text-sm text-slate-200">
-                        <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-blue-400" />
-                        {point}
-                      </li>
-                    ))}
-                  </ul>
+                  <h3 className="mt-3 text-2xl font-bold tracking-tight sm:text-3xl">
+                    Tela fosca e demais peças brilhantes? Você pode combinar.
+                  </h3>
+                  <p className="mt-3 max-w-[760px] text-sm leading-7 text-slate-300">
+                    O fosco pode trazer mais conforto visual à multimídia, enquanto o
+                    brilhante preserva o acabamento original de consoles e peças Black
+                    Piano. Quando houver essa opção no produto, informe sua preferência
+                    para receber a combinação adequada.
+                  </p>
                 </div>
-              </article>
+                <div className="flex flex-wrap items-center gap-3 lg:justify-end">
+                  <span className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-bold text-slate-100">
+                    Tela fosca
+                  </span>
+                  <span className="text-xl font-light text-blue-400">+</span>
+                  <span className="rounded-full border border-blue-400/30 bg-blue-500/10 px-4 py-2 text-xs font-bold text-blue-200">
+                    Demais peças brilhantes
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </section>
