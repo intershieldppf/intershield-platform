@@ -172,22 +172,36 @@ export default function PpfPage() {
                   key={item.title}
                   className="group relative min-h-[240px] overflow-hidden rounded-[26px] border border-slate-800 bg-[#040a18] p-7 text-white shadow-[0_20px_55px_-35px_rgba(15,23,42,0.75)] sm:p-8"
                 >
+                  {index === 2 && (
+                    <>
+                      <Image
+                        src="/ppf-high-resistance-intershield.webp"
+                        alt="Teste real de alta resistência do PPF em TPU"
+                        fill
+                        className="object-cover object-center transition duration-700 group-hover:scale-[1.03]"
+                      />
+                      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,6,23,0.28)_0%,rgba(2,6,23,0.58)_44%,rgba(2,6,23,0.97)_100%)]" />
+                    </>
+                  )}
+
                   <div className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full bg-blue-600/10 blur-3xl transition duration-500 group-hover:bg-blue-600/20" />
-                  <div className="relative flex items-start justify-between">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-blue-400/20 bg-blue-500/10 text-blue-400">
+                  <div className="relative z-10 flex items-start justify-between">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-blue-400/20 bg-slate-950/45 text-blue-400 backdrop-blur-sm">
                       <Icon kind={item.icon} />
                     </div>
-                    <span className="text-[11px] font-bold tracking-[0.18em] text-slate-600">
+                    <span className="text-[11px] font-bold tracking-[0.18em] text-slate-400">
                       0{index + 1}
                     </span>
                   </div>
-                  <h3 className="relative mt-8 text-[23px] font-bold leading-tight tracking-tight">
-                    {item.title}
+                  <h3 className="relative z-10 mt-8 text-[23px] font-bold leading-tight tracking-tight">
+                    {index === 2 ? "Alta resistência na prática" : item.title}
                   </h3>
-                  <p className="relative mt-4 max-w-[360px] text-sm leading-7 text-slate-300">
-                    {item.text}
+                  <p className="relative z-10 mt-4 max-w-[360px] text-sm leading-7 text-slate-300">
+                    {index === 2
+                      ? "O TPU combina elasticidade e resistência para absorver o desgaste do uso diário sem perder a transparência."
+                      : item.text}
                   </p>
-                  <div className="absolute bottom-0 left-0 h-[3px] w-0 bg-blue-500 transition-all duration-500 group-hover:w-full" />
+                  <div className="absolute bottom-0 left-0 z-10 h-[3px] w-0 bg-blue-500 transition-all duration-500 group-hover:w-full" />
                 </article>
               ))}
             </div>
