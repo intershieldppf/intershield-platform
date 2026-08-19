@@ -17,9 +17,13 @@ const QUICK_LINKS = [
 
 type VehicleBarProps = {
   embedded?: boolean;
+  quickLinks?: readonly { label: string; query: string }[];
 };
 
-export function VehicleBar({ embedded = false }: VehicleBarProps) {
+export function VehicleBar({
+  embedded = false,
+  quickLinks = QUICK_LINKS,
+}: VehicleBarProps) {
   const router = useRouter();
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState<ProductSearchSuggestion[]>([]);
@@ -169,7 +173,7 @@ export function VehicleBar({ embedded = false }: VehicleBarProps) {
           </div>
 
           <div className="mt-4 flex gap-2 overflow-x-auto pb-1 sm:justify-center">
-            {QUICK_LINKS.map((item) => (
+            {quickLinks.map((item) => (
               <button
                 key={item.label}
                 type="button"

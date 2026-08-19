@@ -1,99 +1,81 @@
+import Image from "next/image";
 import type { Metadata } from "next";
 
 import { Header } from "@/components/layout/Header";
 import { VehicleBar } from "@/components/search/VehicleBar";
 
 export const metadata: Metadata = {
-  title: "Black Piano | InterShield Películas",
+  title: "Acabamentos para Colunas | InterShield Películas",
   description:
-    "Conheça as opções de customização Black Piano, Preto Fosco e Fibra de Carbono 4D da InterShield Películas.",
+    "Conheça os acabamentos Black Piano, Preto Fosco Poroso e Fibra de Carbono 4D para colunas automotivas, produzidos com corte computadorizado.",
 };
 
-const finishCards = [
+const finishes = [
   {
-    title: "Black Piano",
+    number: "01",
     eyebrow: "Brilho intenso",
+    title: "Black Piano",
+    headline: "Brilho profundo para renovar o acabamento original",
     description:
-      "Acabamento preto brilhante, profundo e elegante. Ideal para renovar colunas de porta, soleiras e outros detalhes que perderam o visual original ou que receberão uma nova proposta estética.",
-    tags: ["Visual premium", "Brilho profundo", "Acabamento elegante"],
-    texture: "gloss",
+      "O Black Piano cria uma superfície preta, lisa e brilhante, indicada para renovar colunas que perderam o brilho ou para transformar peças com acabamento simples. O resultado é um visual elegante, uniforme e integrado às linhas do veículo.",
+    image: "/black-piano-card-gloss.webp",
+    alt: "Colunas automotivas com acabamento Black Piano brilhante",
+    points: [
+      "Aparência lisa, profunda e brilhante",
+      "Renova o visual sem substituir a peça",
+      "Combina com detalhes externos e internos",
+    ],
+    note:
+      "Por ter alto brilho, pode evidenciar poeira e marcas de toque com mais facilidade.",
   },
   {
-    title: "Preto Fosco",
-    eyebrow: "Textura porosa",
+    number: "02",
+    eyebrow: "Discreto e uniforme",
+    title: "Preto Fosco Poroso",
+    headline: "Menos reflexo e uma textura mais sóbria",
     description:
-      "Acabamento mais discreto, uniforme e moderno. A superfície porosa reduz reflexos e entrega um visual sóbrio para quem prefere uma customização menos chamativa.",
-    tags: ["Textura porosa", "Visual discreto", "Acabamento moderno"],
-    texture: "matte",
+      "O Preto Fosco Poroso troca o brilho intenso por uma aparência mais discreta. Sua textura ajuda a reduzir reflexos e torna marcas de toque menos evidentes, criando um acabamento moderno para quem prefere colunas com visual sóbrio.",
+    image: "/black-piano-card-matte.webp",
+    alt: "Colunas automotivas com acabamento preto fosco poroso",
+    points: [
+      "Textura porosa com baixa reflexão de luz",
+      "Marcas de toque ficam menos aparentes",
+      "Visual discreto e fácil de combinar",
+    ],
+    note:
+      "O acabamento é propositalmente texturizado e não apresenta o aspecto liso do Black Piano.",
   },
   {
+    number: "03",
+    eyebrow: "Estilo esportivo",
     title: "Fibra de Carbono 4D",
-    eyebrow: "Visual esportivo",
+    headline: "Textura e profundidade para uma personalização marcante",
     description:
-      "Efeito visual inspirado em fibra de carbono, com textura e profundidade marcantes. Uma opção para quem deseja personalização mais esportiva em colunas, soleiras e detalhes internos.",
-    tags: ["Efeito 4D", "Estilo esportivo", "Personalização"],
-    texture: "carbon",
+      "A Fibra de Carbono 4D reproduz o desenho e a profundidade visual associados à fibra de carbono. É uma escolha mais expressiva para colunas, soleiras e detalhes que pedem uma identidade esportiva sem a necessidade de substituir o componente original.",
+    image: "/black-piano-card-carbon.webp",
+    alt: "Colunas automotivas com acabamento visual de fibra de carbono 4D",
+    points: [
+      "Trama com efeito visual de profundidade",
+      "Personalização de aparência esportiva",
+      "Aplicação sobre a superfície original",
+    ],
+    note:
+      "Trata-se de um acabamento automotivo com efeito visual inspirado em fibra de carbono, não de uma peça fabricada em carbono real.",
   },
 ] as const;
 
-function FeatureIcon({ type }: { type: "spark" | "target" | "shield" }) {
-  if (type === "target") {
-    return (
-      <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.8">
-        <circle cx="12" cy="12" r="7" />
-        <circle cx="12" cy="12" r="2.5" />
-        <path d="M12 2v3M12 19v3M2 12h3M19 12h3" />
-      </svg>
-    );
-  }
-
-  if (type === "shield") {
-    return (
-      <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.8">
-        <path d="M12 3 19 6v5c0 4.6-2.9 7.8-7 10-4.1-2.2-7-5.4-7-10V6l7-3Z" />
-        <path d="m9 12 2 2 4-5" />
-      </svg>
-    );
-  }
-
+function CheckIcon() {
   return (
-    <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.8">
-      <path d="M12 2l1.2 4.1L17 8l-3.8 1.9L12 14l-1.2-4.1L7 8l3.8-1.9L12 2Z" />
-      <path d="M18.5 13.5l.7 2.3 2.3.7-2.3.7-.7 2.3-.7-2.3-2.3-.7 2.3-.7.7-2.3Z" />
+    <svg
+      viewBox="0 0 24 24"
+      className="h-5 w-5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      aria-hidden="true"
+    >
+      <path d="m5 12 4 4L19 6" />
     </svg>
-  );
-}
-
-function FinishVisual({ texture }: { texture: "gloss" | "matte" | "carbon" }) {
-  if (texture === "matte") {
-    return (
-      <div className="relative flex h-[270px] items-center justify-center overflow-hidden rounded-[24px] border border-slate-200 bg-[radial-gradient(circle_at_40%_35%,#4b5563_0%,#27272a_35%,#09090b_72%)]">
-        <div className="absolute inset-0 opacity-50 [background-image:radial-gradient(circle,rgba(255,255,255,0.2)_0.7px,transparent_0.8px)] [background-size:4px_4px]" />
-        <div className="relative h-[190px] w-[190px] rounded-full border-2 border-blue-500 bg-[radial-gradient(circle_at_38%_32%,#52525b_0%,#27272a_40%,#09090b_78%)] shadow-[0_24px_55px_-30px_rgba(37,99,235,0.65)]">
-          <div className="absolute inset-0 rounded-full opacity-45 [background-image:radial-gradient(circle,rgba(255,255,255,0.22)_0.6px,transparent_0.8px)] [background-size:4px_4px]" />
-        </div>
-      </div>
-    );
-  }
-
-  if (texture === "carbon") {
-    return (
-      <div className="relative h-[270px] overflow-hidden rounded-[24px] border border-slate-200 bg-slate-950">
-        <div className="absolute inset-0 [background-image:linear-gradient(135deg,rgba(255,255,255,0.13)_25%,transparent_25%,transparent_50%,rgba(255,255,255,0.13)_50%,rgba(255,255,255,0.13)_75%,transparent_75%,transparent),linear-gradient(45deg,rgba(59,130,246,0.08)_25%,transparent_25%,transparent_50%,rgba(59,130,246,0.08)_50%,rgba(59,130,246,0.08)_75%,transparent_75%,transparent)] [background-position:0_0,6px_6px] [background-size:12px_12px]" />
-        <div className="absolute left-[12%] top-[15%] h-[210px] w-[31%] skew-x-[-4deg] rounded-xl border border-white/10 bg-black/25 shadow-[inset_0_0_35px_rgba(255,255,255,0.06)]" />
-        <div className="absolute left-[51%] top-[15%] h-[210px] w-[31%] skew-x-[-4deg] rounded-xl border border-white/10 bg-black/25 shadow-[inset_0_0_35px_rgba(255,255,255,0.06)]" />
-        <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-blue-950/30 to-transparent" />
-      </div>
-    );
-  }
-
-  return (
-    <div className="relative h-[270px] overflow-hidden rounded-[24px] border border-slate-200 bg-[linear-gradient(135deg,#f8fafc_0%,#dbeafe_42%,#94a3b8_100%)]">
-      <div className="absolute inset-y-0 left-[13%] w-[30%] skew-x-[-4deg] rounded-xl border border-white/40 bg-[linear-gradient(100deg,#020617_0%,#111827_28%,#030712_52%,#334155_68%,#020617_100%)] shadow-[inset_18px_0_28px_rgba(255,255,255,0.06),0_18px_40px_-20px_rgba(15,23,42,0.8)]" />
-      <div className="absolute inset-y-0 left-[50%] w-[30%] skew-x-[-4deg] rounded-xl border border-white/40 bg-[linear-gradient(100deg,#020617_0%,#0f172a_32%,#030712_55%,#475569_70%,#020617_100%)] shadow-[inset_18px_0_28px_rgba(255,255,255,0.06),0_18px_40px_-20px_rgba(15,23,42,0.8)]" />
-      <div className="absolute inset-x-0 top-[26%] h-px bg-white/45" />
-      <div className="absolute left-[15%] top-8 h-20 w-[18%] rotate-[-7deg] bg-white/10 blur-xl" />
-    </div>
   );
 }
 
@@ -105,63 +87,87 @@ export default function BlackPianoPage() {
       <main className="overflow-hidden">
         <section className="relative overflow-hidden border-b border-slate-100 bg-[linear-gradient(110deg,#ffffff_0%,#f7faff_50%,#e9f2ff_100%)]">
           <div className="mx-auto grid min-h-[520px] max-w-[1320px] items-center gap-10 px-6 py-14 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:px-10 lg:py-16">
-            <div className="relative z-10 max-w-[590px]">
+            <div className="relative z-10 max-w-[600px]">
               <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-blue-600">
-                Customização automotiva
+                Personalização automotiva
               </p>
               <h1 className="mt-4 text-[46px] font-bold leading-[1.02] tracking-[-0.04em] text-slate-950 sm:text-[62px]">
-                Black Piano, Fosco e <span className="text-blue-600">Fibra de Carbono 4D</span>
+                Acabamentos para <span className="text-blue-600">colunas</span>
               </h1>
-              <p className="mt-6 max-w-[560px] text-[16px] leading-8 text-slate-600">
-                A InterShield desenvolve soluções de customização automotiva para renovar ou transformar acabamentos do veículo com visual limpo, moderno e bem acabado.
+              <p className="mt-6 max-w-[570px] text-[16px] leading-8 text-slate-600">
+                Renove ou personalize as colunas do seu veículo com kits pré-cortados em Black Piano, Preto Fosco Poroso ou Fibra de Carbono 4D.
               </p>
-              <p className="mt-3 max-w-[560px] text-[15px] leading-7 text-slate-600">
-                Esses materiais são normalmente utilizados em colunas de porta, soleiras personalizadas, consoles e outros detalhes internos e externos.
+              <p className="mt-3 max-w-[570px] text-[15px] leading-7 text-slate-600">
+                Cada opção muda a aparência da peça de um jeito diferente, enquanto o corte computadorizado acompanha o formato específico do veículo para entregar um acabamento mais limpo e preciso.
               </p>
 
-              <div className="mt-8 grid gap-3 sm:grid-cols-3">
-                {[
-                  ["Acabamento premium", "spark"],
-                  ["Encaixe preciso", "target"],
-                  ["Customização sob medida", "shield"],
-                ].map(([label, icon]) => (
-                  <div key={label} className="rounded-[20px] border border-blue-100 bg-white/80 p-4 shadow-sm backdrop-blur">
-                    <div className="text-blue-600">
-                      <FeatureIcon type={icon as "spark" | "target" | "shield"} />
-                    </div>
-                    <p className="mt-3 text-[12px] font-bold leading-5 text-slate-950">{label}</p>
-                  </div>
-                ))}
+              <div className="mt-8 flex flex-wrap gap-2.5">
+                {["Black Piano", "Preto Fosco Poroso", "Fibra de Carbono 4D"].map(
+                  (item) => (
+                    <span
+                      key={item}
+                      className="rounded-full border border-blue-100 bg-white/80 px-4 py-2 text-[11px] font-bold text-slate-700 shadow-sm backdrop-blur"
+                    >
+                      {item}
+                    </span>
+                  ),
+                )}
               </div>
             </div>
 
-            <div className="relative min-h-[390px] overflow-hidden rounded-[30px] border border-white/70 bg-[linear-gradient(135deg,#dbeafe_0%,#f8fafc_38%,#cbd5e1_100%)] shadow-[0_30px_80px_-35px_rgba(37,99,235,0.45)] lg:min-h-[440px]">
-              <div className="absolute inset-y-[8%] left-[8%] w-[32%] skew-x-[-4deg] rounded-[22px] border border-white/60 bg-[linear-gradient(100deg,#4b5563_0%,#71717a_48%,#52525b_100%)] shadow-[0_24px_55px_-28px_rgba(15,23,42,0.55)]" />
-              <div className="absolute inset-y-[8%] left-[49%] w-[32%] skew-x-[-4deg] rounded-[22px] border border-white/40 bg-[linear-gradient(100deg,#020617_0%,#111827_26%,#020617_51%,#334155_70%,#020617_100%)] shadow-[inset_16px_0_24px_rgba(255,255,255,0.06),0_24px_55px_-28px_rgba(15,23,42,0.75)]" />
-              <div className="absolute left-[13%] top-[13%] rounded-full bg-slate-950/75 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-white">Antes</div>
-              <div className="absolute left-[58%] top-[13%] rounded-full bg-blue-600 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-white">Depois</div>
-              <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white/65 to-transparent" />
+            <div className="relative min-h-[390px] overflow-hidden rounded-[30px] border border-white/70 bg-slate-950 shadow-[0_30px_80px_-35px_rgba(37,99,235,0.45)] lg:min-h-[440px]">
+              <Image
+                src="/black-piano-antes-depois.png"
+                alt="Comparação de colunas automotivas antes e depois da renovação do acabamento"
+                fill
+                priority
+                className="object-cover object-center"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/35 via-transparent to-white/5" />
+              <div className="absolute bottom-4 right-4 h-[132px] w-[132px] overflow-hidden rounded-[20px] border-4 border-white bg-white shadow-[0_18px_45px_-18px_rgba(15,23,42,0.7)] sm:bottom-5 sm:right-5 sm:h-[170px] sm:w-[170px]">
+                <Image
+                  src="/black-piano-vinil.webp"
+                  alt="Detalhe do material de acabamento automotivo"
+                  fill
+                  className="object-cover"
+                />
+              </div>
             </div>
           </div>
         </section>
 
-        <section className="border-b border-slate-100 bg-white py-14 sm:py-16">
-          <div className="mx-auto grid max-w-[1180px] items-center gap-10 px-6 sm:px-8 lg:grid-cols-[1.08fr_0.92fr] lg:px-10">
+        <section className="border-b border-slate-100 bg-white py-16 sm:py-20">
+          <div className="mx-auto grid max-w-[1180px] items-center gap-10 px-6 sm:px-8 lg:grid-cols-[1.04fr_0.96fr] lg:gap-16 lg:px-10">
             <div className="max-w-[620px]">
-              <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-blue-600">Precisão em cada recorte</p>
-              <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-950 sm:text-[38px]">Corte computadorizado</h2>
+              <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-blue-600">
+                O primeiro passo
+              </p>
+              <h2 className="mt-3 text-3xl font-bold leading-tight tracking-[-0.03em] text-slate-950 sm:text-[44px]">
+                Corte computadorizado para cada veículo
+              </h2>
               <p className="mt-5 text-[15px] leading-8 text-slate-600">
-                Cada kit InterShield é desenvolvido a partir de moldes digitais e recortado em plotter computadorizada. O processo permite que o material acompanhe com precisão o formato de cada peça, entregando um encaixe mais limpo e padronizado.
+                Antes de pensar no acabamento, é preciso garantir o encaixe. Cada kit InterShield é desenvolvido a partir de moldes digitais e recortado em plotter computadorizada para acompanhar as linhas e medidas das colunas de cada modelo.
               </p>
               <p className="mt-4 text-[15px] leading-8 text-slate-600">
-                O cliente recebe as peças já pré-cortadas e prontas para aplicação, reduzindo ajustes manuais e a necessidade de cortes diretamente sobre o veículo.
+                Você recebe as peças pré-cortadas e prontas para aplicação. Isso reduz ajustes manuais, evita cortes desnecessários diretamente sobre o veículo e ajuda a manter um resultado mais limpo e padronizado.
               </p>
+
               <div className="mt-7 grid gap-3 sm:grid-cols-3">
-                {["Moldes digitais", "Pré-corte específico", "Mais precisão na instalação"].map((item) => (
-                  <div key={item} className="rounded-[18px] border border-slate-200 bg-slate-50 px-4 py-4 text-[12px] font-semibold text-slate-700">
-                    {item}
-                  </div>
-                ))}
+                {["Molde digital", "Recorte específico", "Encaixe mais preciso"].map(
+                  (item, index) => (
+                    <div
+                      key={item}
+                      className="rounded-[18px] border border-blue-100 bg-blue-50/60 px-4 py-4"
+                    >
+                      <span className="text-[10px] font-bold tracking-[0.18em] text-blue-600">
+                        0{index + 1}
+                      </span>
+                      <p className="mt-2 text-[12px] font-bold leading-5 text-slate-800">
+                        {item}
+                      </p>
+                    </div>
+                  ),
+                )}
               </div>
             </div>
 
@@ -178,100 +184,165 @@ export default function BlackPianoPage() {
                   Seu navegador não suporta reprodução de vídeo.
                 </video>
               </div>
-              <p className="mt-3 text-center text-[12px] leading-5 text-slate-500">Veja o processo de corte computadorizado de um kit InterShield.</p>
+              <p className="mt-3 text-center text-[12px] leading-5 text-slate-500">
+                Veja como o kit para colunas é produzido com corte computadorizado.
+              </p>
             </div>
           </div>
         </section>
 
-        <section className="bg-white py-14 sm:py-16">
-          <div className="mx-auto max-w-[1320px] px-6 sm:px-8 lg:px-10">
-            <div className="grid gap-5 lg:grid-cols-[0.72fr_1.28fr]">
-              <div className="grid gap-4">
-                <article className="rounded-[26px] bg-slate-950 p-7 text-white">
-                  <div className="text-blue-400"><FeatureIcon type="shield" /></div>
-                  <h2 className="mt-5 text-2xl font-bold tracking-tight">Customização sem trocar a peça</h2>
-                  <p className="mt-4 text-sm leading-7 text-slate-300">
-                    O vinil cria um novo acabamento sobre a superfície original, permitindo renovar o visual sem a necessidade de substituir o componente do veículo.
-                  </p>
-                </article>
-
-                <article className="rounded-[26px] bg-slate-950 p-7 text-white">
-                  <div className="text-blue-400"><FeatureIcon type="target" /></div>
-                  <h2 className="mt-5 text-2xl font-bold tracking-tight">Onde é mais utilizado?</h2>
-                  <p className="mt-4 text-sm leading-7 text-slate-300">
-                    Principalmente em colunas de porta e soleiras personalizadas, além de consoles e outros detalhes internos e externos do veículo.
-                  </p>
-                </article>
-
-                <article className="rounded-[26px] bg-slate-950 p-7 text-white">
-                  <div className="text-blue-400"><FeatureIcon type="spark" /></div>
-                  <h2 className="mt-5 text-2xl font-bold tracking-tight">Pode melhorar áreas desgastadas</h2>
-                  <p className="mt-4 text-sm leading-7 text-slate-300">
-                    Em muitas situações, o novo acabamento ajuda a esconder marcas visuais e renovar superfícies que já perderam brilho ou apresentam desgaste do uso diário.
-                  </p>
-                </article>
+        {finishes.map((finish, index) => (
+          <section
+            id={finish.title.toLowerCase().replaceAll(" ", "-")}
+            key={finish.title}
+            className={
+              index % 2 === 0
+                ? "border-b border-slate-100 bg-[linear-gradient(180deg,#ffffff_0%,#f7faff_100%)] py-16 sm:py-20"
+                : "border-b border-slate-800 bg-slate-950 py-16 text-white sm:py-20"
+            }
+          >
+            <div className="mx-auto grid max-w-[1220px] items-center gap-10 px-6 sm:px-8 lg:grid-cols-2 lg:gap-16 lg:px-10">
+              <div
+                className={`relative min-h-[330px] overflow-hidden rounded-[30px] border shadow-[0_28px_70px_-38px_rgba(15,23,42,0.65)] sm:min-h-[420px] ${
+                  index % 2 === 1
+                    ? "border-white/15 lg:order-2"
+                    : "border-slate-200"
+                }`}
+              >
+                <Image
+                  src={finish.image}
+                  alt={finish.alt}
+                  fill
+                  className="object-cover object-center transition duration-700 hover:scale-[1.025]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/65 via-transparent to-transparent" />
+                <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between gap-4">
+                  <span className="rounded-full border border-white/20 bg-slate-950/70 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-blue-300 backdrop-blur">
+                    {finish.eyebrow}
+                  </span>
+                  <span className="text-[11px] font-bold tracking-[0.2em] text-white/70">
+                    {finish.number}
+                  </span>
+                </div>
               </div>
 
-              <article className="rounded-[30px] border border-slate-200 bg-slate-50 p-7 sm:p-8 lg:p-10">
-                <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-blue-600">Nosso modelo de customização</p>
-                <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-950 sm:text-[38px]">Kits desenvolvidos para cada veículo</h2>
-                <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-600">
-                  Na InterShield, desenvolvemos kits pré-cortados para acompanhar o formato original de cada peça. Isso proporciona encaixe mais preciso, acabamento limpo e reduz a necessidade de cortes diretamente sobre o veículo.
+              <div className={index % 2 === 1 ? "lg:order-1" : ""}>
+                <p
+                  className={`text-[11px] font-bold uppercase tracking-[0.28em] ${
+                    index % 2 === 1 ? "text-blue-400" : "text-blue-600"
+                  }`}
+                >
+                  Acabamento {finish.number}
+                </p>
+                <h2 className="mt-3 text-4xl font-bold tracking-[-0.035em] sm:text-[48px]">
+                  {finish.title}
+                </h2>
+                <h3
+                  className={`mt-4 text-xl font-bold leading-snug sm:text-2xl ${
+                    index % 2 === 1 ? "text-slate-200" : "text-slate-800"
+                  }`}
+                >
+                  {finish.headline}
+                </h3>
+                <p
+                  className={`mt-5 text-[15px] leading-8 ${
+                    index % 2 === 1 ? "text-slate-300" : "text-slate-600"
+                  }`}
+                >
+                  {finish.description}
                 </p>
 
-                <div className="mt-8 grid gap-5 md:grid-cols-3">
-                  {finishCards.map((item) => (
-                    <article key={item.title} className="overflow-hidden rounded-[26px] border border-slate-200 bg-white p-4 shadow-sm">
-                      <FinishVisual texture={item.texture} />
-                      <div className="px-2 pb-2 pt-5">
-                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-blue-600">{item.eyebrow}</p>
-                        <h3 className="mt-2 text-xl font-bold text-slate-950">{item.title}</h3>
-                        <p className="mt-3 text-[13px] leading-6 text-slate-600">{item.description}</p>
-                        <div className="mt-4 flex flex-wrap gap-2">
-                          {item.tags.map((tag) => (
-                            <span key={tag} className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-[10px] font-semibold text-slate-600">
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </article>
+                <ul className="mt-7 space-y-3">
+                  {finish.points.map((point) => (
+                    <li key={point} className="flex items-center gap-3 text-sm">
+                      <span
+                        className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${
+                          index % 2 === 1
+                            ? "bg-blue-500/15 text-blue-300"
+                            : "bg-blue-50 text-blue-600"
+                        }`}
+                      >
+                        <CheckIcon />
+                      </span>
+                      <span className={index % 2 === 1 ? "text-slate-200" : "text-slate-700"}>
+                        {point}
+                      </span>
+                    </li>
                   ))}
-                </div>
-              </article>
-            </div>
-          </div>
-        </section>
+                </ul>
 
-        <section className="border-t border-slate-100 bg-slate-50 py-12 sm:py-14">
-          <div className="mx-auto max-w-[1320px] px-6 sm:px-8 lg:px-10">
-            <div className="grid gap-4 md:grid-cols-4">
-              {[
-                ["Visual renovado", "Transforme superfícies já marcadas ou mude completamente o estilo da peça."],
-                ["Personalização exclusiva", "Escolha entre brilho intenso, fosco discreto ou o efeito esportivo da fibra 4D."],
-                ["Acabamento preciso", "Kits desenhados para acompanhar as linhas e formatos de cada veículo."],
-                ["Aplicação mais limpa", "O pré-corte ajuda a reduzir ajustes e cortes diretamente sobre a peça original."],
-              ].map(([title, text]) => (
-                <div key={title} className="rounded-[24px] border border-blue-100 bg-white p-6 shadow-sm">
-                  <div className="text-blue-600"><FeatureIcon type="spark" /></div>
-                  <h3 className="mt-4 text-base font-bold text-slate-950">{title}</h3>
-                  <p className="mt-2 text-[13px] leading-6 text-slate-600">{text}</p>
+                <div
+                  className={`mt-7 rounded-[20px] border px-5 py-4 ${
+                    index % 2 === 1
+                      ? "border-white/10 bg-white/5"
+                      : "border-blue-100 bg-blue-50/65"
+                  }`}
+                >
+                  <p
+                    className={`text-[12px] leading-6 ${
+                      index % 2 === 1 ? "text-slate-300" : "text-slate-600"
+                    }`}
+                  >
+                    <strong className={index % 2 === 1 ? "text-white" : "text-slate-950"}>
+                      Importante:
+                    </strong>{" "}
+                    {finish.note}
+                  </p>
                 </div>
-              ))}
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        ))}
 
-        <section className="border-t border-slate-100 bg-white pt-8">
-          <div className="mx-auto max-w-4xl px-6 text-center sm:px-8">
-            <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-blue-600">Encontre seu kit</p>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-950 sm:text-[38px]">Busque a customização compatível com o seu veículo</h2>
-            <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-slate-600">
-              Digite marca, modelo, ano ou termos como coluna, soleira, Black Piano, fosco ou fibra de carbono para encontrar os produtos disponíveis.
-            </p>
-          </div>
-          <div className="mt-5">
-            <VehicleBar />
+        <section className="relative overflow-hidden border-t border-blue-500/20 bg-slate-950 py-14 text-white sm:py-16">
+          <div className="pointer-events-none absolute -left-20 top-1/2 h-72 w-72 -translate-y-1/2 rounded-full bg-blue-600/20 blur-3xl" />
+          <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-blue-500/15 blur-3xl" />
+
+          <div className="relative mx-auto grid max-w-[1220px] gap-9 px-6 sm:px-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-center lg:gap-12 lg:px-10">
+            <div>
+              <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-blue-400">
+                Encontre seu kit
+              </p>
+              <h2 className="mt-4 max-w-[520px] text-3xl font-bold leading-tight tracking-[-0.035em] sm:text-[44px]">
+                O acabamento certo para suas colunas começa aqui.
+              </h2>
+              <p className="mt-5 max-w-[520px] text-sm leading-7 text-slate-300">
+                Digite a marca, o modelo, o ano ou o acabamento desejado. A busca mostra os kits compatíveis disponíveis no catálogo da InterShield Películas.
+              </p>
+
+              <div className="mt-7 grid max-w-[520px] gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+                {["Recorte sob medida", "Três acabamentos", "Busca por veículo"].map(
+                  (item) => (
+                    <div
+                      key={item}
+                      className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-[11px] font-semibold text-slate-200"
+                    >
+                      <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-blue-400" />
+                      {item}
+                    </div>
+                  ),
+                )}
+              </div>
+            </div>
+
+            <div className="rounded-[30px] border border-white/15 bg-white p-2 text-slate-950 shadow-[0_30px_90px_-42px_rgba(37,99,235,0.75)] sm:p-3">
+              <div className="px-5 pt-5 sm:px-6 sm:pt-6">
+                <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-blue-600">
+                  Busca rápida
+                </p>
+                <h3 className="mt-2 text-xl font-bold tracking-tight text-slate-950 sm:text-2xl">
+                  Digite seu veículo ou o acabamento desejado
+                </h3>
+              </div>
+              <VehicleBar
+                embedded
+                quickLinks={[
+                  { label: "Black Piano", query: "Black Piano" },
+                  { label: "Preto Fosco", query: "Preto Fosco" },
+                  { label: "Fibra de Carbono", query: "Fibra de Carbono" },
+                ]}
+              />
+            </div>
           </div>
         </section>
       </main>

@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const navItems = [
   { label: "PPF", href: "/ppf" },
-  { label: "Black Piano", href: "/black-piano" },
+  { label: "Acabamentos para colunas", href: "/black-piano" },
   { label: "Como instalar", href: "/#instalar" },
   { label: "Sobre", href: "/#sobre" },
   { label: "Suporte", href: "/#suporte" },
