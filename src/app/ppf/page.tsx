@@ -95,22 +95,25 @@ export default function PpfPage() {
               <h1 className="mt-4 text-[48px] font-bold leading-[0.98] tracking-[-0.04em] text-slate-950 sm:text-[64px]">
                 O que é <span className="text-blue-600">PPF?</span>
               </h1>
-              <p className="mt-6 max-w-[520px] text-[16px] leading-8 text-slate-600">
-                PPF é uma película transparente desenvolvida para proteger as superfícies do veículo contra riscos, atritos e marcas do uso diário.
+              <p className="mt-6 max-w-[560px] text-[16px] leading-8 text-slate-600">
+                PPF é a sigla de Paint Protection Film. Trata-se de uma película
+                transparente aplicada sobre áreas sensíveis do veículo para criar uma
+                barreira de proteção sem mudar a cor ou o acabamento original.
               </p>
-              <p className="mt-3 max-w-[520px] text-[15px] leading-7 text-slate-600">
-                Na InterShield Películas, trabalhamos com PPF em TPU de 190 micras: resistente, flexível e praticamente imperceptível após a instalação.
+              <p className="mt-3 max-w-[560px] text-[15px] leading-7 text-slate-600">
+                Na prática, o contato com unhas, chaves, objetos e os atritos do dia a
+                dia atingem primeiro o PPF, ajudando a reduzir riscos e marcas diretamente
+                na peça original.
               </p>
-
-              <div className="mt-8 grid gap-3 sm:grid-cols-3">
-                {benefits.map((item) => (
-                  <div key={item.title} className="rounded-[20px] border border-blue-100 bg-white/80 p-4 shadow-sm backdrop-blur">
-                    <div className="text-blue-600">
-                      <Icon kind={item.icon} />
-                    </div>
-                    <p className="mt-3 text-[12px] font-bold leading-5 text-slate-950">{item.title}</p>
-                  </div>
-                ))}
+              <p className="mt-3 max-w-[560px] text-[15px] leading-7 text-slate-600">
+                Ele pode proteger telas multimídia, painéis, consoles, peças Black Piano,
+                colunas de porta e outras superfícies internas ou externas do veículo.
+              </p>
+              <div className="mt-5 max-w-[560px] rounded-[18px] border border-blue-100 bg-white/75 px-5 py-4 shadow-sm backdrop-blur">
+                <p className="text-[14px] leading-7 text-slate-700">
+                  Na InterShield Películas, utilizamos PPF em TPU de 190 micras:
+                  resistente, flexível e praticamente imperceptível depois de instalado.
+                </p>
               </div>
             </div>
 
