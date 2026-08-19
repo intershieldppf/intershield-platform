@@ -19,6 +19,15 @@ export const metadata: Metadata = {
   title: "InterShield Películas",
   description:
     "Proteção e customização automotiva premium para carros e motos.",
+  icons: {
+    icon: [
+      {
+        url: "/intershield-favicon-v3.svg?v=3",
+        type: "image/svg+xml",
+      },
+    ],
+    shortcut: "/intershield-favicon-v3.svg?v=3",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
