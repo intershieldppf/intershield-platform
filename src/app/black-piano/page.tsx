@@ -194,17 +194,13 @@ export default function BlackPianoPage() {
           <section
             id={finish.title.toLowerCase().replaceAll(" ", "-")}
             key={finish.title}
-            className={
-              index % 2 === 0
-                ? "border-b border-slate-100 bg-[linear-gradient(180deg,#ffffff_0%,#f7faff_100%)] py-16 sm:py-20"
-                : "border-b border-slate-800 bg-slate-950 py-16 text-white sm:py-20"
-            }
+            className="border-b border-slate-100 bg-white py-16 sm:py-20"
           >
             <div className="mx-auto grid max-w-[1220px] items-center gap-10 px-6 sm:px-8 lg:grid-cols-2 lg:gap-16 lg:px-10">
               <div
                 className={`relative min-h-[330px] overflow-hidden rounded-[30px] border shadow-[0_28px_70px_-38px_rgba(15,23,42,0.65)] sm:min-h-[420px] ${
                   index % 2 === 1
-                    ? "border-white/15 lg:order-2"
+                    ? "border-slate-200 lg:order-2"
                     : "border-slate-200"
                 }`}
               >
@@ -227,9 +223,7 @@ export default function BlackPianoPage() {
 
               <div className={index % 2 === 1 ? "lg:order-1" : ""}>
                 <p
-                  className={`text-[11px] font-bold uppercase tracking-[0.28em] ${
-                    index % 2 === 1 ? "text-blue-400" : "text-blue-600"
-                  }`}
+                  className="text-[11px] font-bold uppercase tracking-[0.28em] text-blue-600"
                 >
                   Acabamento {finish.number}
                 </p>
@@ -237,16 +231,12 @@ export default function BlackPianoPage() {
                   {finish.title}
                 </h2>
                 <h3
-                  className={`mt-4 text-xl font-bold leading-snug sm:text-2xl ${
-                    index % 2 === 1 ? "text-slate-200" : "text-slate-800"
-                  }`}
+                  className="mt-4 text-xl font-bold leading-snug text-slate-800 sm:text-2xl"
                 >
                   {finish.headline}
                 </h3>
                 <p
-                  className={`mt-5 text-[15px] leading-8 ${
-                    index % 2 === 1 ? "text-slate-300" : "text-slate-600"
-                  }`}
+                  className="mt-5 text-[15px] leading-8 text-slate-600"
                 >
                   {finish.description}
                 </p>
@@ -255,15 +245,11 @@ export default function BlackPianoPage() {
                   {finish.points.map((point) => (
                     <li key={point} className="flex items-center gap-3 text-sm">
                       <span
-                        className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${
-                          index % 2 === 1
-                            ? "bg-blue-500/15 text-blue-300"
-                            : "bg-blue-50 text-blue-600"
-                        }`}
+                        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-50 text-blue-600"
                       >
                         <CheckIcon />
                       </span>
-                      <span className={index % 2 === 1 ? "text-slate-200" : "text-slate-700"}>
+                      <span className="text-slate-700">
                         {point}
                       </span>
                     </li>
@@ -271,18 +257,12 @@ export default function BlackPianoPage() {
                 </ul>
 
                 <div
-                  className={`mt-7 rounded-[20px] border px-5 py-4 ${
-                    index % 2 === 1
-                      ? "border-white/10 bg-white/5"
-                      : "border-blue-100 bg-blue-50/65"
-                  }`}
+                  className="mt-7 rounded-[20px] border border-blue-100 bg-blue-50/65 px-5 py-4"
                 >
                   <p
-                    className={`text-[12px] leading-6 ${
-                      index % 2 === 1 ? "text-slate-300" : "text-slate-600"
-                    }`}
+                    className="text-[12px] leading-6 text-slate-600"
                   >
-                    <strong className={index % 2 === 1 ? "text-white" : "text-slate-950"}>
+                    <strong className="text-slate-950">
                       Importante:
                     </strong>{" "}
                     {finish.note}
