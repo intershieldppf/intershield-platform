@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 const navItems = [
-  { label: "PPF", href: "/#kits" },
+  { label: "PPF", href: "/ppf" },
   { label: "Black Piano", href: "/#blackpiano" },
   { label: "Como instalar", href: "/#instalar" },
   { label: "Sobre", href: "/#sobre" },
