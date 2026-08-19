@@ -14,7 +14,8 @@ import {
   storefrontCatalog,
   storefrontProductSlug,
 } from "@/data/storefront/catalog";
-import { storefrontProductDetails } from "@/data/storefront/productDetails";
+import { buildStorefrontProductDetails } from "@/data/storefront/productDetails";
+import { getMarketplaceProductSource } from "@/data/storefront/marketplaceProductData.server";
 
 const WHATSAPP_NUMBER = "5531997146624";
 
@@ -33,21 +34,6 @@ function formatPrice(price: number | null) {
   }).format(price);
 }
 
-function compatibilityLabel(
-  brand: string | null,
-  yearStart: number | null,
-  yearEnd: number | null,
-) {
-  const years =
-    yearStart && yearEnd
-      ? yearStart === yearEnd
-        ? String(yearStart)
-        : `${yearStart} a ${yearEnd}`
-      : null;
-
-  return [brand, years].filter(Boolean).join(" · ");
-}
-
 export default async function ProductPage({ params }: ProductPageProps) {
   const { productSlug } = await params;
   const product = findStorefrontProductBySlug(productSlug);
@@ -56,12 +42,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
     notFound();
   }
 
-  const details = storefrontProductDetails[product.id];
-  const images = details?.gallery?.length ? details.gallery : [product.image];
-  const compatibility =
-    details?.compatibility ??
-    compatibilityLabel(product.brand, product.yearStart, product.yearEnd) ??
-    "Consulte a compatibilidade";
+  const marketplaceSource = await getMarketplaceProductSource(product.id);
+  const details = buildStorefrontProductDetails(product, marketplaceSource);
+  const images = details.gallery.length ? details.gallery : [product.image];
+  const compatibility = details.compatibility;
 
   const whatsappText = [
     "Olá! Quero comprar este produto da InterShield Películas:",
@@ -114,7 +98,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
               {images.length > 1 ? (
                 <div className="mt-3 flex gap-2 overflow-x-auto pb-1">
-                  {images.slice(0, 6).map((image, index) => (
+                  {images.slice(0, 8).map((image, index) => (
                     <div
                       key={`${image}-${index}`}
                       className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-white p-1.5 sm:h-20 sm:w-20"
@@ -149,17 +133,13 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 {product.title}
               </h1>
 
-              <p className="mt-3 text-sm font-medium text-slate-500">
-                {compatibility}
-              </p>
+              <p className="mt-3 text-sm font-medium text-slate-500">{compatibility}</p>
 
               <div className="mt-6 border-y border-slate-200 py-6">
                 <p className="text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
                   {formatPrice(product.price)}
                 </p>
-                <p className="mt-2 text-xs text-slate-500">
-                  SKU {product.sku ?? product.id}
-                </p>
+                <p className="mt-2 text-xs text-slate-500">SKU {product.sku ?? product.id}</p>
               </div>
 
               {product.variantValues.length > 0 ? (
@@ -201,11 +181,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 </div>
                 <div className="rounded-2xl border border-slate-200 bg-white p-4">
                   <PackageCheck className="h-5 w-5 text-blue-600" />
-                  <p className="mt-2 text-xs font-semibold text-slate-800">Kit sob medida</p>
+                  <p className="mt-2 text-xs font-semibold text-slate-800">Kit conforme anúncio</p>
                 </div>
                 <div className="rounded-2xl border border-slate-200 bg-white p-4">
                   <Sparkles className="h-5 w-5 text-blue-600" />
-                  <p className="mt-2 text-xs font-semibold text-slate-800">Acabamento premium</p>
+                  <p className="mt-2 text-xs font-semibold text-slate-800">Acabamento automotivo</p>
                 </div>
               </div>
             </div>
@@ -215,102 +195,113 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
       <section className="border-t border-slate-200 bg-slate-50 px-4 py-10 sm:px-8 lg:py-14">
         <div className="mx-auto max-w-7xl">
-          {details ? (
-            <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
-              <div className="rounded-[26px] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-                <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-blue-600">
-                  Sobre este produto
-                </p>
-                <h2 className="mt-3 text-2xl font-bold tracking-tight text-slate-950">
-                  Proteção desenvolvida para o seu veículo
-                </h2>
-
-                <div className="mt-6 space-y-4 text-sm leading-7 text-slate-600">
-                  {details.intro.map((paragraph) => (
-                    <p key={paragraph}>{paragraph}</p>
-                  ))}
-                </div>
-
-                <div className="mt-8">
-                  <h3 className="text-lg font-bold text-slate-950">Benefícios</h3>
-                  <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                    {details.benefits.map((benefit) => (
-                      <div key={benefit} className="flex gap-2.5 text-sm leading-6 text-slate-700">
-                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-blue-600" />
-                        <span>{benefit}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              <div className="space-y-6">
-                <div className="rounded-[26px] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-                  <h2 className="text-xl font-bold text-slate-950">Conteúdo do kit</h2>
-                  <div className="mt-5 space-y-3">
-                    {details.kitContents.map((item) => (
-                      <div key={item} className="flex gap-2.5 text-sm leading-6 text-slate-700">
-                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-blue-600" />
-                        <span>{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="rounded-[26px] bg-slate-950 p-6 text-white shadow-sm sm:p-8">
-                  <h2 className="text-xl font-bold">Informações técnicas</h2>
-                  <dl className="mt-5 space-y-4 text-sm">
-                    <div className="flex justify-between gap-4 border-b border-white/10 pb-3">
-                      <dt className="text-slate-400">Compatibilidade</dt>
-                      <dd className="text-right font-semibold">{details.compatibility}</dd>
-                    </div>
-                    {details.material ? (
-                      <div className="flex justify-between gap-4 border-b border-white/10 pb-3">
-                        <dt className="text-slate-400">Material</dt>
-                        <dd className="text-right font-semibold">{details.material}</dd>
-                      </div>
-                    ) : null}
-                    {details.thickness ? (
-                      <div className="flex justify-between gap-4 border-b border-white/10 pb-3">
-                        <dt className="text-slate-400">Espessura</dt>
-                        <dd className="text-right font-semibold">{details.thickness}</dd>
-                      </div>
-                    ) : null}
-                    {details.warranty ? (
-                      <div className="flex justify-between gap-4">
-                        <dt className="text-slate-400">Garantia</dt>
-                        <dd className="text-right font-semibold">{details.warranty}</dd>
-                      </div>
-                    ) : null}
-                  </dl>
-                </div>
-              </div>
-
-              <div className="rounded-[26px] border border-slate-200 bg-white p-6 shadow-sm sm:p-8 lg:col-span-2">
-                <h2 className="text-xl font-bold text-slate-950">Instalação</h2>
-                <div className="mt-5 grid gap-4 sm:grid-cols-2">
-                  {details.installation.map((step, index) => (
-                    <div key={step} className="rounded-2xl bg-slate-50 p-4">
-                      <span className="text-xs font-bold text-blue-600">0{index + 1}</span>
-                      <p className="mt-2 text-sm leading-6 text-slate-700">{step}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          ) : (
+          <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
             <div className="rounded-[26px] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
               <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-blue-600">
-                Informações do produto
+                Sobre este produto
               </p>
-              <h2 className="mt-3 text-2xl font-bold text-slate-950">
-                Consulte todos os detalhes com a InterShield
+              <h2 className="mt-3 text-2xl font-bold tracking-tight text-slate-950">
+                Informações específicas do anúncio
               </h2>
-              <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-600">
-                Estamos trazendo as descrições completas da nossa base de anúncios para o site. Enquanto isso, confirme pelo WhatsApp os itens do kit, acabamento e compatibilidade exata deste produto.
-              </p>
+
+              <div className="mt-6 space-y-4 text-sm leading-7 text-slate-600">
+                {details.intro.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+              </div>
+
+              <div className="mt-8">
+                <h3 className="text-lg font-bold text-slate-950">Benefícios</h3>
+                <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                  {details.benefits.map((benefit) => (
+                    <div key={benefit} className="flex gap-2.5 text-sm leading-6 text-slate-700">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-blue-600" />
+                      <span>{benefit}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
-          )}
+
+            <div className="space-y-6">
+              <div className="rounded-[26px] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+                <h2 className="text-xl font-bold text-slate-950">Conteúdo do kit</h2>
+                <div className="mt-5 space-y-3">
+                  {details.kitContents.map((item) => (
+                    <div key={item} className="flex gap-2.5 text-sm leading-6 text-slate-700">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-blue-600" />
+                      <span>{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="rounded-[26px] bg-slate-950 p-6 text-white shadow-sm sm:p-8">
+                <h2 className="text-xl font-bold">Informações técnicas</h2>
+                <dl className="mt-5 space-y-4 text-sm">
+                  <div className="flex justify-between gap-4 border-b border-white/10 pb-3">
+                    <dt className="text-slate-400">Compatibilidade</dt>
+                    <dd className="text-right font-semibold">{details.compatibility}</dd>
+                  </div>
+                  {details.material ? (
+                    <div className="flex justify-between gap-4 border-b border-white/10 pb-3">
+                      <dt className="text-slate-400">Material</dt>
+                      <dd className="text-right font-semibold">{details.material}</dd>
+                    </div>
+                  ) : null}
+                  {details.thickness ? (
+                    <div className="flex justify-between gap-4 border-b border-white/10 pb-3">
+                      <dt className="text-slate-400">Espessura</dt>
+                      <dd className="text-right font-semibold">{details.thickness}</dd>
+                    </div>
+                  ) : null}
+                  {details.warranty ? (
+                    <div className="flex justify-between gap-4">
+                      <dt className="text-slate-400">Garantia</dt>
+                      <dd className="text-right font-semibold">{details.warranty}</dd>
+                    </div>
+                  ) : null}
+                </dl>
+              </div>
+            </div>
+
+            <div className="rounded-[26px] border border-slate-200 bg-white p-6 shadow-sm sm:p-8 lg:col-span-2">
+              <h2 className="text-xl font-bold text-slate-950">Instalação</h2>
+              <div className="mt-5 grid gap-4 sm:grid-cols-2">
+                {details.installation.map((step, index) => (
+                  <div key={`${step}-${index}`} className="rounded-2xl bg-slate-50 p-4">
+                    <span className="text-xs font-bold text-blue-600">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <p className="mt-2 text-sm leading-6 text-slate-700">{step}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {details.fullDescription ? (
+              <div className="rounded-[26px] border border-slate-200 bg-white p-6 shadow-sm sm:p-8 lg:col-span-2">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <h2 className="text-xl font-bold text-slate-950">Descrição completa</h2>
+                  <span className="rounded-full bg-blue-50 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-blue-700">
+                    Dados do anúncio
+                  </span>
+                </div>
+                <div className="mt-5 whitespace-pre-line text-sm leading-7 text-slate-600">
+                  {details.fullDescription}
+                </div>
+              </div>
+            ) : (
+              <div className="rounded-[26px] border border-amber-200 bg-amber-50 p-6 sm:p-8 lg:col-span-2">
+                <p className="text-sm font-semibold text-amber-900">
+                  Este anúncio ainda não possui descrição completa na planilha de origem.
+                </p>
+                <p className="mt-2 text-sm leading-6 text-amber-800">
+                  A página continua disponível com os dados de catálogo e informações padronizadas. Para detalhes adicionais, confirme pelo WhatsApp.
+                </p>
+              </div>
+            )}
+          </div>
         </div>
       </section>
 
