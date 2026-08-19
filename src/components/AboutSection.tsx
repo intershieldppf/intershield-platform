@@ -12,7 +12,7 @@ export function AboutSection() {
           veículo
         </>
       }
-      description="A InterShield Películas nasceu da paixão por carros e do compromisso com a excelência. Unimos tecnologia, materiais de alta performance e atenção aos detalhes para entregar proteção automotiva com acabamento premium."
+      description="A InterShield Películas nasceu da paixão por carros e do compromisso com a excelência. Unimos tecnologia, materiais de alta performance e atenção aos detalhes para desenvolver kits de proteção e acabamento com padrão premium."
     >
       <div className="space-y-8">
         <div className="grid gap-6 lg:grid-cols-[1fr_0.95fr] lg:items-center">
@@ -57,7 +57,7 @@ export function AboutSection() {
                 <span className="font-semibold text-blue-600">
                   elevar o padrão da proteção automotiva
                 </span>{" "}
-                com materiais de verdade, aplicação cuidadosa e acabamento premium.
+                com materiais selecionados, recortes precisos e acabamento premium.
               </p>
             </div>
           </div>
@@ -103,7 +103,7 @@ export function AboutSection() {
 
           <div className="rounded-[26px] border border-slate-200 bg-white p-7 shadow-sm">
             <p className="text-sm font-semibold uppercase tracking-[0.28em] text-blue-500">
-              Material de verdade
+              Materiais selecionados
             </p>
             <div className="mt-4 h-1 w-14 rounded-full bg-blue-500" />
             <p className="mt-5 text-[16px] leading-8 text-slate-700">

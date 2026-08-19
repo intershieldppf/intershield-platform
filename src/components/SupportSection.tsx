@@ -7,11 +7,11 @@ export function SupportSection() {
       <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
         <div>
           <p className="text-sm uppercase tracking-[0.3em] text-sky-600">
-            Suporte VIP
+            Atendimento InterShield
           </p>
 
           <h2 className="mt-3 text-3xl font-semibold text-slate-950 sm:text-4xl">
-            Suporte rápido pelo WhatsApp.
+            Escolha o kit certo com ajuda especializada.
           </h2>
 
           <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-600">

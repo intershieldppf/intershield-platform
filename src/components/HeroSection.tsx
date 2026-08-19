@@ -67,7 +67,7 @@ export function HeroSection() {
               href="/catalogo"
               className="inline-flex h-14 items-center justify-center gap-6 rounded-xl bg-blue-600 px-7 text-[14px] font-semibold text-white transition hover:bg-blue-500"
             >
-              Buscar veículos
+              Explorar o catálogo
               <span className="text-xl">→</span>
             </Link>
 
