@@ -1,3 +1,5 @@
+import { PlatformIcon } from "@/components/ui/PlatformIcon";
+
 export function SupportSection() {
   return (
     <section
@@ -26,9 +28,7 @@ export function SupportSection() {
             Contato
           </p>
 
-          <p className="mt-5 text-2xl font-semibold">
-            (31) 99714-6624
-          </p>
+          <p className="mt-5 text-2xl font-semibold">(31) 99714-6624</p>
 
           <p className="mt-2 text-sm text-slate-300">
             Atendimento via WhatsApp para vendas, compatibilidade e suporte.
@@ -38,8 +38,9 @@ export function SupportSection() {
             href="https://wa.me/5531997146624"
             target="_blank"
             rel="noreferrer"
-            className="mt-6 inline-flex w-full items-center justify-center rounded-2xl bg-sky-500 px-5 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-white transition hover:bg-sky-400"
+            className="mt-6 inline-flex w-full items-center justify-center gap-3 rounded-2xl bg-[#25D366] px-5 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-white transition hover:bg-[#20bd5a]"
           >
+            <PlatformIcon name="whatsapp" className="h-5 w-5" />
             Iniciar conversa
           </a>
 
@@ -55,7 +56,15 @@ export function SupportSection() {
                 rel="noreferrer"
                 className="flex items-center justify-between text-sm text-slate-300 transition hover:text-white"
               >
-                <span>Instagram</span>
+                <span className="flex items-center gap-3">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[radial-gradient(circle_at_30%_110%,#fdf497_0%,#fdf497_5%,#fd5949_45%,#d6249f_60%,#285AEB_90%)] text-white">
+                    <PlatformIcon
+                      name="instagram"
+                      className="h-[18px] w-[18px]"
+                    />
+                  </span>
+                  Instagram
+                </span>
                 <span className="font-semibold text-white">
                   @intershieldpeliculas
                 </span>
@@ -67,7 +76,12 @@ export function SupportSection() {
                 rel="noreferrer"
                 className="flex items-center justify-between text-sm text-slate-300 transition hover:text-white"
               >
-                <span>TikTok</span>
+                <span className="flex items-center gap-3">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-black text-white">
+                    <PlatformIcon name="tiktok" className="h-[18px] w-[18px]" />
+                  </span>
+                  TikTok
+                </span>
                 <span className="font-semibold text-white">
                   @intershieldppf
                 </span>

@@ -1,7 +1,12 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 
-type ChannelIconType = "catalog" | "whatsapp" | "mercado-livre" | "shopee" | "tiktok";
+import {
+  PlatformIcon,
+  type PlatformIconName,
+} from "@/components/ui/PlatformIcon";
+
+type ChannelIconType = PlatformIconName;
 
 const whatsappUrl =
   "https://wa.me/5531997146624?text=Ol%C3%A1%21%20Vim%20pelo%20site%20da%20InterShield%20e%20quero%20encontrar%20um%20kit%20para%20o%20meu%20ve%C3%ADculo.";
@@ -56,58 +61,6 @@ const marketplaces = [
   },
 ] as const;
 
-function ChannelIcon({ type }: { type: ChannelIconType }) {
-  if (type === "catalog") {
-    return (
-      <svg viewBox="0 0 24 24" className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
-        <rect x="3" y="3" width="7" height="7" rx="1.5" />
-        <rect x="14" y="3" width="7" height="7" rx="1.5" />
-        <rect x="3" y="14" width="7" height="7" rx="1.5" />
-        <rect x="14" y="14" width="7" height="7" rx="1.5" />
-      </svg>
-    );
-  }
-
-  if (type === "whatsapp") {
-    return (
-      <svg viewBox="0 0 24 24" className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 9.1 9.1 0 0 1-3.8-.9L3 21l1.9-5A8.5 8.5 0 1 1 21 11.5Z" />
-        <path d="M8.4 8.3c.3 2.8 2.5 5 5.3 5.3" />
-        <path d="M13.9 13.6c.5 0 .9-.2 1.2-.5l.7-.8" />
-      </svg>
-    );
-  }
-
-  if (type === "mercado-livre") {
-    return (
-      <svg viewBox="0 0 24 24" className="h-8 w-8" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <path d="m3 11 3.2-3.2a2.5 2.5 0 0 1 3.5 0l1 1" />
-        <path d="m21 11-3.2-3.2a2.5 2.5 0 0 0-3.5 0l-4.1 4.1a1.7 1.7 0 0 1-2.4-2.4l2.7-2.7" />
-        <path d="m5 13 5.7 5.7a1.4 1.4 0 0 0 2-2" />
-        <path d="m8 16 2.7 2.7a1.4 1.4 0 0 0 2-2" />
-        <path d="m13 17 1 1a1.4 1.4 0 0 0 2-2l-4-4" />
-        <path d="m16 14 1 1a1.4 1.4 0 0 0 2-2l-2-2" />
-      </svg>
-    );
-  }
-
-  if (type === "shopee") {
-    return (
-      <svg viewBox="0 0 24 24" className="h-8 w-8" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <path d="M5 8h14l-1 13H6L5 8Z" />
-        <path d="M9 8V6a3 3 0 0 1 6 0v2" />
-        <path d="M14.5 12.2c-.5-.4-1.1-.7-1.9-.7-1 0-1.7.5-1.7 1.2 0 1.9 4.1.8 4.1 3.4 0 .9-.8 1.6-2.1 1.6-.9 0-1.7-.3-2.3-.8" />
-      </svg>
-    );
-  }
-
-  return (
-    <svg viewBox="0 0 24 24" className="h-8 w-8" fill="currentColor" aria-hidden="true">
-      <path d="M15.7 3c.3 2.4 1.7 3.9 4.3 4.1v3.1c-1.5.1-2.9-.3-4.2-1.2v6.1c0 4.1-4.5 6.7-8.1 4.7-3.8-2.1-3.1-7.9 1.1-9.1.8-.2 1.6-.3 2.4-.1v3.2c-.4-.1-.8-.1-1.2 0-1.7.4-2.1 2.8-.6 3.6 1.7 1 3.3-.3 3.3-1.9V3h3Z" />
-    </svg>
-  );
-}
-
 function IconBox({ type }: { type: ChannelIconType }) {
   const styles: Record<ChannelIconType, string> = {
     catalog: "bg-blue-600 text-white",
@@ -118,8 +71,13 @@ function IconBox({ type }: { type: ChannelIconType }) {
   };
 
   return (
-    <div className={`flex h-16 w-16 items-center justify-center rounded-[20px] shadow-sm ${styles[type]}`}>
-      <ChannelIcon type={type} />
+    <div
+      className={`flex h-16 w-16 items-center justify-center rounded-[20px] shadow-sm ${styles[type]}`}
+    >
+      <PlatformIcon
+        name={type}
+        className={type === "mercado-livre" ? "h-9 w-12" : "h-8 w-8"}
+      />
     </div>
   );
 }
@@ -138,9 +96,16 @@ function ChannelAction({
 
   if (external) {
     return (
-      <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={className}
+      >
         {children}
-        <span className="text-lg transition-transform duration-300 group-hover:translate-x-1">→</span>
+        <span className="text-lg transition-transform duration-300 group-hover:translate-x-1">
+          →
+        </span>
       </a>
     );
   }
@@ -148,20 +113,29 @@ function ChannelAction({
   return (
     <Link href={href} className={className}>
       {children}
-      <span className="text-lg transition-transform duration-300 group-hover:translate-x-1">→</span>
+      <span className="text-lg transition-transform duration-300 group-hover:translate-x-1">
+        →
+      </span>
     </Link>
   );
 }
 
 export function MarketplaceSection() {
   return (
-    <section id="marketplaces" className="scroll-mt-24" aria-labelledby="marketplaces-title">
+    <section
+      id="marketplaces"
+      className="scroll-mt-24"
+      aria-labelledby="marketplaces-title"
+    >
       <div className="mb-10 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
         <div className="max-w-2xl">
           <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-blue-600">
             Onde comprar
           </p>
-          <h2 id="marketplaces-title" className="mt-3 text-3xl font-bold tracking-tight text-slate-950 sm:text-[38px]">
+          <h2
+            id="marketplaces-title"
+            className="mt-3 text-3xl font-bold tracking-tight text-slate-950 sm:text-[38px]"
+          >
             Escolha como comprar seu kit InterShield
           </h2>
         </div>
