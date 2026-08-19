@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
+import { SiteFooter } from "@/components/layout/SiteFooter";
+
 import "./globals.css";
 
 const geistSans = Geist({
@@ -18,7 +20,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "InterShield Películas",
   description:
-    "Proteção e customização automotiva premium para carros e motos.",
+    "Proteção e acabamento automotivo premium com kits desenvolvidos para cada veículo.",
   icons: {
     icon: [
       {
@@ -38,6 +40,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="flex min-h-full flex-col font-sans">
         {children}
+        <SiteFooter />
       </body>
     </html>
   );
