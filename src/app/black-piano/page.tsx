@@ -177,7 +177,6 @@ export default function BlackPianoPage() {
                   controls
                   playsInline
                   preload="metadata"
-                  poster="/black-piano-antes-depois.png"
                   className="aspect-[9/16] w-full rounded-[22px] bg-black object-cover"
                 >
                   <source src="/coluna-black-piano-corte.mp4" type="video/mp4" />
