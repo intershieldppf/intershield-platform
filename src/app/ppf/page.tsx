@@ -65,24 +65,6 @@ const benefits = [
   },
 ];
 
-const layerItems = [
-  {
-    title: "Camada autorregenerativa",
-    text: "Camada superior responsável por ajudar a reduzir pequenas marcas superficiais.",
-  },
-  {
-    title: "Filme TPU",
-    text: "Estrutura resistente e flexível que forma a principal barreira de proteção.",
-  },
-  {
-    title: "Adesivo",
-    text: "Camada que permite a fixação uniforme da película sobre a superfície.",
-  },
-  {
-    title: "Superfície do veículo",
-    text: "A peça original permanece protegida contra o desgaste do uso diário.",
-  },
-];
 
 const glossPoints = [
   "Mantém ou realça o brilho original",
@@ -247,70 +229,89 @@ export default function PpfPage() {
             </div>
 
             <article className="mt-5 overflow-hidden rounded-[32px] border border-blue-100 bg-white p-5 shadow-[0_28px_80px_-48px_rgba(37,99,235,0.5)] sm:p-8 lg:p-10">
-              <div className="grid gap-8 lg:grid-cols-[0.88fr_1.12fr] lg:items-center lg:gap-12">
-                <div className="relative overflow-hidden rounded-[28px] border border-blue-100 bg-[radial-gradient(circle_at_50%_36%,#ffffff_0%,#eff6ff_48%,#dbeafe_100%)] p-5 sm:p-7">
-                  <div className="pointer-events-none absolute left-6 top-6 h-24 w-24 rounded-full border border-blue-200/60" />
-                  <div className="pointer-events-none absolute bottom-8 right-8 h-32 w-32 rounded-full border border-blue-200/40" />
-
-                  <div className="relative z-10">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-blue-600">
-                      Estrutura PPF TPU
-                    </p>
-                    <h3 className="mt-2 text-2xl font-bold tracking-tight text-slate-950">
-                      Por dentro da proteção
-                    </h3>
-                  </div>
-
-                  <Image
-                    src="/ppf-layer-system-intershield.webp"
-                    alt="Ilustração das quatro camadas do PPF em TPU"
-                    width={1254}
-                    height={1254}
-                    className="relative z-10 mx-auto mt-2 h-auto w-full max-w-[520px] object-contain"
-                  />
-
-                  <div className="relative z-10 -mt-2 flex flex-wrap gap-2">
-                    <span className="rounded-full border border-blue-200 bg-white/85 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-blue-700">
-                      4 camadas
-                    </span>
-                    <span className="rounded-full border border-blue-200 bg-white/85 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-blue-700">
-                      TPU 190 micras
-                    </span>
+              <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:items-center lg:gap-14">
+                <div className="relative mx-auto w-full max-w-[360px] overflow-hidden rounded-[28px] border border-slate-800 bg-slate-950 shadow-[0_28px_70px_-30px_rgba(15,23,42,0.9)]">
+                  <video
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    controls
+                    preload="metadata"
+                    poster="/ppf-auto-regeneracao-poster.webp"
+                    aria-label="Demonstração real da autorregeneração do PPF com aplicação de calor"
+                    className="aspect-[9/16] w-full object-cover"
+                  >
+                    <source src="/ppf-auto-regeneracao-intershield.mp4" type="video/mp4" />
+                    Seu navegador não oferece suporte à reprodução deste vídeo.
+                  </video>
+                  <div className="pointer-events-none absolute left-4 top-4 rounded-full border border-white/20 bg-slate-950/75 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-white backdrop-blur">
+                    Demonstração real
                   </div>
                 </div>
 
                 <div>
                   <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-blue-600">
-                    Tecnologia InterShield
+                    Tecnologia autorregenerativa
                   </p>
-                  <h3 className="mt-3 text-3xl font-bold tracking-tight text-slate-950 sm:text-[38px]">
-                    Cada camada, uma função
+                  <h3 className="mt-3 max-w-[720px] text-3xl font-bold leading-tight tracking-[-0.03em] text-slate-950 sm:text-[42px]">
+                    Como funciona a autorregeneração do PPF
                   </h3>
-                  <p className="mt-4 max-w-[620px] text-sm leading-7 text-slate-600">
-                    As camadas trabalham juntas como um único sistema de proteção,
-                    mantendo transparência, flexibilidade e aderência uniforme.
+                  <p className="mt-5 max-w-[720px] text-[15px] leading-7 text-slate-600">
+                    O PPF possui uma camada superior desenvolvida para reagir ao calor.
+                    Quando surgem micro-riscos, o aquecimento aumenta temporariamente a
+                    mobilidade desse revestimento, permitindo que ele se reorganize e
+                    reduza visualmente as marcas superficiais.
                   </p>
 
-                  <div className="mt-7 space-y-3">
-                    {layerItems.map((item, index) => (
+                  <div className="mt-8 grid gap-3 sm:grid-cols-3">
+                    {[
+                      {
+                        title: "Micro-riscos",
+                        text: "Marcas leves atingem a camada superficial do PPF.",
+                      },
+                      {
+                        title: "Ação do calor",
+                        text: "O calor ativa a mobilidade do revestimento autorregenerativo.",
+                      },
+                      {
+                        title: "Regeneração",
+                        text: "A camada se reorganiza e recupera a uniformidade visual.",
+                      },
+                    ].map((step, index) => (
                       <div
-                        key={item.title}
-                        className="group grid grid-cols-[44px_1fr] gap-4 rounded-[20px] border border-slate-200 bg-slate-50/80 p-4 transition duration-300 hover:border-blue-200 hover:bg-blue-50/70 sm:p-5"
+                        key={step.title}
+                        className="rounded-[20px] border border-blue-100 bg-blue-50/55 p-4"
                       >
-                        <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-950 text-[11px] font-bold tracking-[0.12em] text-blue-300 transition group-hover:bg-blue-600 group-hover:text-white">
+                        <span className="text-[10px] font-bold tracking-[0.16em] text-blue-600">
                           0{index + 1}
-                        </div>
-                        <div>
-                          <h4 className="text-sm font-bold text-slate-950">
-                            {item.title}
-                          </h4>
-                          <p className="mt-1 text-[13px] leading-6 text-slate-600">
-                            {item.text}
-                          </p>
-                        </div>
+                        </span>
+                        <h4 className="mt-3 text-sm font-bold text-slate-950">
+                          {step.title}
+                        </h4>
+                        <p className="mt-2 text-[12px] leading-5 text-slate-600">
+                          {step.text}
+                        </p>
                       </div>
                     ))}
                   </div>
+
+                  <div className="mt-6 rounded-[22px] border border-slate-200 bg-slate-50 p-5">
+                    <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-blue-600">
+                      O que o vídeo demonstra
+                    </p>
+                    <p className="mt-3 text-sm leading-7 text-slate-600">
+                      Primeiro, uma escova provoca micro-riscos sobre a superfície
+                      protegida. Em seguida, a aplicação de água quente ativa a camada
+                      autorregenerativa. A comparação final mostra a redução das marcas e
+                      a recuperação visual do acabamento.
+                    </p>
+                  </div>
+
+                  <p className="mt-5 border-l-2 border-blue-500 pl-4 text-[12px] leading-6 text-slate-500">
+                    A autorregeneração atua em micro-riscos e marcas leves. Cortes,
+                    perfurações ou danos que atravessam o filme não são reparados pelo calor.
+                  </p>
                 </div>
               </div>
             </article>
