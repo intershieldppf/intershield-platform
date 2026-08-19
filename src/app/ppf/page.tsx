@@ -134,14 +134,13 @@ export default function PpfPage() {
 
             <div className="relative min-h-[390px] overflow-hidden rounded-[30px] border border-white/70 bg-slate-950 shadow-[0_30px_80px_-35px_rgba(37,99,235,0.45)] lg:min-h-[440px]">
               <Image
-                src="/intershield-hero-bmw.png"
-                alt="Veículo protegido com PPF InterShield"
+                src="/ppf-resistance-test-intershield.webp"
+                alt="Teste real de resistência do PPF em TPU"
                 fill
                 priority
-                className="object-cover object-center opacity-80"
+                className="object-cover object-center"
               />
-              <div className="absolute inset-0 bg-[linear-gradient(120deg,rgba(2,6,23,0.15),rgba(37,99,235,0.08)_42%,rgba(255,255,255,0.34))]" />
-              <div className="absolute -right-16 top-20 h-[310px] w-[620px] rotate-[-18deg] rounded-[42px] border border-white/70 bg-[linear-gradient(120deg,rgba(255,255,255,0.06),rgba(191,219,254,0.38),rgba(255,255,255,0.08))] shadow-[inset_0_0_45px_rgba(255,255,255,0.22)] backdrop-blur-[1px]" />
+              <div className="absolute inset-0 bg-[linear-gradient(120deg,rgba(2,6,23,0.08),rgba(37,99,235,0.05)_48%,rgba(2,6,23,0.12))]" />
               <div className="absolute bottom-6 left-6 rounded-full border border-white/20 bg-slate-950/70 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.18em] text-white backdrop-blur">
                 TPU 190 micras
               </div>
