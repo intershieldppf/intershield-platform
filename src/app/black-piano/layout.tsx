@@ -9,9 +9,9 @@ export default function BlackPianoLayout({ children }: { children: ReactNode }) 
         }
 
         .black-piano-page main > section:first-child > div > div:nth-child(2) {
-          background-image: url('/black-piano-before-after.svg') !important;
+          background-image: url('/black-piano-antes-depois.png') !important;
           background-size: cover !important;
-          background-position: center 45% !important;
+          background-position: center center !important;
           background-repeat: no-repeat !important;
           background-color: #ffffff !important;
         }
