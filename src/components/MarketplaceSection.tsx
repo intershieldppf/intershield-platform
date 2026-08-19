@@ -6,7 +6,7 @@ import {
   type PlatformIconName,
 } from "@/components/ui/PlatformIcon";
 
-type ChannelIconType = PlatformIconName;
+type ChannelIconType = Exclude<PlatformIconName, "instagram">;
 
 const whatsappUrl =
   "https://wa.me/5531997146624?text=Ol%C3%A1%21%20Vim%20pelo%20site%20da%20InterShield%20e%20quero%20encontrar%20um%20kit%20para%20o%20meu%20ve%C3%ADculo.";
