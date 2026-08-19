@@ -170,8 +170,27 @@ export default function PpfPage() {
               {benefits.map((item, index) => (
                 <article
                   key={item.title}
-                  className="group relative min-h-[240px] overflow-hidden rounded-[26px] border border-slate-800 bg-[#040a18] p-7 text-white shadow-[0_20px_55px_-35px_rgba(15,23,42,0.75)] sm:p-8"
+                  className="group relative min-h-[280px] overflow-hidden rounded-[26px] border border-slate-800 bg-[#040a18] p-7 text-white shadow-[0_20px_55px_-35px_rgba(15,23,42,0.75)] sm:p-8"
                 >
+                  {index === 1 && (
+                    <>
+                      <Image
+                        src="/ppf-self-healing-before-after.webp"
+                        alt=""
+                        fill
+                        aria-hidden="true"
+                        className="scale-110 object-cover object-center opacity-35 blur-md"
+                      />
+                      <Image
+                        src="/ppf-self-healing-before-after.webp"
+                        alt="Comparação antes e depois da autorregeneração do PPF após receber calor"
+                        fill
+                        className="object-contain object-center"
+                      />
+                      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,6,23,0.02)_0%,rgba(2,6,23,0.12)_40%,rgba(2,6,23,0.96)_76%,rgba(2,6,23,1)_100%)]" />
+                    </>
+                  )}
+
                   {index === 2 && (
                     <>
                       <Image
@@ -185,14 +204,20 @@ export default function PpfPage() {
                   )}
 
                   <div className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full bg-blue-600/10 blur-3xl transition duration-500 group-hover:bg-blue-600/20" />
-                  <div className="relative z-10 flex items-start justify-between">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-blue-400/20 bg-slate-950/45 text-blue-400 backdrop-blur-sm">
-                      <Icon kind={item.icon} />
+
+                  {index === 1 ? (
+                    <div className="relative z-10 h-12" />
+                  ) : (
+                    <div className="relative z-10 flex items-start justify-between">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-blue-400/20 bg-slate-950/45 text-blue-400 backdrop-blur-sm">
+                        <Icon kind={item.icon} />
+                      </div>
+                      <span className="text-[11px] font-bold tracking-[0.18em] text-slate-400">
+                        0{index + 1}
+                      </span>
                     </div>
-                    <span className="text-[11px] font-bold tracking-[0.18em] text-slate-400">
-                      0{index + 1}
-                    </span>
-                  </div>
+                  )}
+
                   <h3 className="relative z-10 mt-8 text-[23px] font-bold leading-tight tracking-tight">
                     {index === 2 ? "Alta resistência na prática" : item.title}
                   </h3>
