@@ -14,15 +14,15 @@ function HomeLogo({ label }: { label: string }) {
     <Link
       href="/#top"
       aria-label={label}
-      className="flex shrink-0 items-center justify-center transition-opacity hover:opacity-75"
+      className="relative flex h-[42px] w-[42px] shrink-0 items-center justify-center overflow-hidden transition-opacity hover:opacity-75"
     >
       <Image
         src="/intershield-shield-v2.png"
-        alt="InterShield Películas"
+        alt="Escudo InterShield"
         width={460}
         height={240}
         priority
-        className="h-auto w-[82px] object-contain sm:w-[100px] lg:w-[118px]"
+        className="pointer-events-none absolute left-1/2 top-[-9px] h-auto w-[126px] max-w-none -translate-x-1/2 object-contain"
       />
     </Link>
   );
@@ -32,7 +32,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/95 backdrop-blur-xl">
       <div className="mx-auto flex h-[68px] max-w-[1320px] items-center gap-3 px-3 sm:gap-5 sm:px-6 lg:gap-8 lg:px-8">
-        <div className="flex w-[88px] shrink-0 justify-center sm:w-[108px] lg:w-[132px]">
+        <div className="flex w-[56px] shrink-0 justify-center sm:w-[72px] lg:w-[88px]">
           <HomeLogo label="Ir para o início do site" />
         </div>
 
@@ -50,7 +50,7 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="flex w-[88px] shrink-0 justify-center sm:w-[108px] lg:w-[132px]">
+        <div className="flex w-[56px] shrink-0 justify-center sm:w-[72px] lg:w-[88px]">
           <HomeLogo label="Voltar ao início do site" />
         </div>
       </div>
