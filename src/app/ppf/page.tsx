@@ -152,7 +152,7 @@ export default function PpfPage() {
           <div className="mx-auto max-w-[1320px] px-6 sm:px-8 lg:px-10">
             <div>
               <h2 className="max-w-[980px] text-4xl font-bold leading-[1.04] tracking-[-0.035em] text-slate-950 sm:text-[52px]">
-                Três tecnologias. <span className="text-blue-600">Uma proteção completa.</span>
+                Proteção que <span className="text-blue-600">preserva, regenera e resiste.</span>
               </h2>
             </div>
 
@@ -182,8 +182,8 @@ export default function PpfPage() {
                         fill
                         className="object-cover object-center transition duration-700 group-hover:scale-[1.03]"
                       />
-                      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,6,23,0.04)_0%,rgba(2,6,23,0.16)_38%,rgba(2,6,23,0.84)_64%,rgba(2,6,23,0.98)_100%)]" />
-                      <div className="absolute bottom-0 left-1/2 top-0 w-px -translate-x-1/2 bg-blue-400/70 shadow-[0_0_16px_rgba(96,165,250,0.85)]" />
+                      <div className="absolute inset-y-0 left-0 w-1/2 bg-white/[0.035]" />
+                      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,6,23,0.02)_0%,rgba(2,6,23,0.08)_48%,rgba(2,6,23,0.88)_70%,rgba(2,6,23,0.99)_100%)]" />
                       <span className="absolute left-3 top-3 z-10 rounded-lg border border-white/30 bg-white/92 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-950 shadow-sm backdrop-blur-sm">
                         Antes
                       </span>
@@ -208,7 +208,7 @@ export default function PpfPage() {
                   <div className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full bg-blue-600/10 blur-3xl transition duration-500 group-hover:bg-blue-600/20" />
 
                   {index === 1 ? (
-                    <div className="relative z-10 h-[120px]" />
+                    <div className="relative z-10" />
                   ) : (
                     <div className="relative z-10 flex items-start justify-between">
                       <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-blue-400/20 bg-slate-950/45 text-blue-400 backdrop-blur-sm">
@@ -220,14 +220,27 @@ export default function PpfPage() {
                     </div>
                   )}
 
-                  <h3 className="relative z-10 mt-8 text-[23px] font-bold leading-tight tracking-tight">
-                    {index === 2 ? "Alta resistência na prática" : item.title}
-                  </h3>
-                  <p className="relative z-10 mt-4 max-w-[360px] text-sm leading-7 text-slate-300">
-                    {index === 2
-                      ? "O TPU combina elasticidade e resistência para absorver o desgaste do uso diário sem perder a transparência."
-                      : item.text}
-                  </p>
+                  {index === 1 ? (
+                    <div className="absolute inset-x-0 bottom-0 z-10 px-7 pb-4 sm:px-8">
+                      <h3 className="text-[23px] font-bold leading-tight tracking-tight">
+                        {item.title}
+                      </h3>
+                      <p className="mt-4 max-w-[360px] text-sm leading-7 text-slate-300">
+                        {item.text}
+                      </p>
+                    </div>
+                  ) : (
+                    <>
+                      <h3 className="relative z-10 mt-8 text-[23px] font-bold leading-tight tracking-tight">
+                        {index === 2 ? "Alta resistência na prática" : item.title}
+                      </h3>
+                      <p className="relative z-10 mt-4 max-w-[360px] text-sm leading-7 text-slate-300">
+                        {index === 2
+                          ? "O TPU combina elasticidade e resistência para absorver o desgaste do uso diário sem perder a transparência."
+                          : item.text}
+                      </p>
+                    </>
+                  )}
                   <div className="absolute bottom-0 left-0 z-10 h-[3px] w-0 bg-blue-500 transition-all duration-500 group-hover:w-full" />
                 </article>
               ))}
