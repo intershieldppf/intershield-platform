@@ -38,7 +38,7 @@ export default function BlackPianoLayout({ children }: { children: ReactNode }) 
           display: none !important;
         }
 
-        .black-piano-page main > section:nth-child(2) > div > div > article > div > article:nth-child(1) > div:first-child {
+        .black-piano-page main > section:nth-child(3) > div > div > article > div > article:nth-child(1) > div:first-child {
           background-image: url('/black-piano-card-gloss.webp') !important;
           background-size: cover !important;
           background-position: center center !important;
@@ -46,7 +46,7 @@ export default function BlackPianoLayout({ children }: { children: ReactNode }) 
           background-color: #f8fafc !important;
         }
 
-        .black-piano-page main > section:nth-child(2) > div > div > article > div > article:nth-child(2) > div:first-child {
+        .black-piano-page main > section:nth-child(3) > div > div > article > div > article:nth-child(2) > div:first-child {
           background-image: url('/black-piano-card-matte.webp') !important;
           background-size: cover !important;
           background-position: center center !important;
@@ -54,7 +54,7 @@ export default function BlackPianoLayout({ children }: { children: ReactNode }) 
           background-color: #18181b !important;
         }
 
-        .black-piano-page main > section:nth-child(2) > div > div > article > div > article:nth-child(3) > div:first-child {
+        .black-piano-page main > section:nth-child(3) > div > div > article > div > article:nth-child(3) > div:first-child {
           background-image: url('/black-piano-card-carbon.webp') !important;
           background-size: cover !important;
           background-position: center center !important;
@@ -62,7 +62,7 @@ export default function BlackPianoLayout({ children }: { children: ReactNode }) 
           background-color: #0f172a !important;
         }
 
-        .black-piano-page main > section:nth-child(2) > div > div > article > div > article > div:first-child > div {
+        .black-piano-page main > section:nth-child(3) > div > div > article > div > article > div:first-child > div {
           display: none !important;
         }
 
