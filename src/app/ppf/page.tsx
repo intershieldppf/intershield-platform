@@ -150,20 +150,10 @@ export default function PpfPage() {
 
         <section className="border-y border-slate-100 bg-slate-50/70 py-16 sm:py-20">
           <div className="mx-auto max-w-[1320px] px-6 sm:px-8 lg:px-10">
-            <div className="grid gap-6 lg:grid-cols-[0.86fr_1.14fr] lg:items-end">
-              <div>
-                <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-blue-600">
-                  Como o PPF protege
-                </p>
-                <h2 className="mt-3 max-w-[620px] text-3xl font-bold tracking-tight text-slate-950 sm:text-[42px]">
-                  Proteção que trabalha em conjunto
-                </h2>
-              </div>
-              <p className="max-w-[620px] text-[15px] leading-7 text-slate-600 lg:justify-self-end">
-                O resultado não depende de uma única película. Cada camada do PPF
-                cumpre uma função específica para proteger, absorver impactos leves
-                e preservar o acabamento original do veículo.
-              </p>
+            <div>
+              <h2 className="max-w-[980px] text-4xl font-bold leading-[1.04] tracking-[-0.035em] text-slate-950 sm:text-[52px]">
+                Três tecnologias. <span className="text-blue-600">Uma proteção completa.</span>
+              </h2>
             </div>
 
             <div className="mt-10 grid gap-4 lg:grid-cols-3">
@@ -185,22 +175,22 @@ export default function PpfPage() {
                   )}
 
                   {index === 1 && (
-                    <div className="absolute inset-x-0 top-0 h-[132px] overflow-hidden border-b border-blue-500/40">
+                    <>
                       <Image
-                        src="/ppf-self-healing-horizontal.webp"
-                        alt="Comparação antes e depois da autorregeneração do PPF após receber calor"
+                        src="/ppf-self-healing-premium.webp"
+                        alt="Comparação real antes e depois da autorregeneração do PPF após receber calor"
                         fill
-                        className="object-cover object-center"
+                        className="object-cover object-center transition duration-700 group-hover:scale-[1.03]"
                       />
-                      <div className="absolute bottom-0 left-1/2 top-0 w-px -translate-x-1/2 bg-blue-400/80 shadow-[0_0_16px_rgba(96,165,250,0.9)]" />
-                      <span className="absolute left-3 top-3 rounded-lg border border-white/20 bg-white/90 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-950 shadow-sm">
+                      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,6,23,0.04)_0%,rgba(2,6,23,0.16)_38%,rgba(2,6,23,0.84)_64%,rgba(2,6,23,0.98)_100%)]" />
+                      <div className="absolute bottom-0 left-1/2 top-0 w-px -translate-x-1/2 bg-blue-400/70 shadow-[0_0_16px_rgba(96,165,250,0.85)]" />
+                      <span className="absolute left-3 top-3 z-10 rounded-lg border border-white/30 bg-white/92 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-950 shadow-sm backdrop-blur-sm">
                         Antes
                       </span>
-                      <span className="absolute right-3 top-3 rounded-lg border border-white/20 bg-white/90 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-950 shadow-sm">
+                      <span className="absolute right-3 top-3 z-10 rounded-lg border border-white/30 bg-white/92 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-950 shadow-sm backdrop-blur-sm">
                         Depois
                       </span>
-                      <div className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-[#040a18] to-transparent" />
-                    </div>
+                    </>
                   )}
 
                   {index === 2 && (
@@ -218,7 +208,7 @@ export default function PpfPage() {
                   <div className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full bg-blue-600/10 blur-3xl transition duration-500 group-hover:bg-blue-600/20" />
 
                   {index === 1 ? (
-                    <div className="relative z-10 h-[100px]" />
+                    <div className="relative z-10 h-[120px]" />
                   ) : (
                     <div className="relative z-10 flex items-start justify-between">
                       <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-blue-400/20 bg-slate-950/45 text-blue-400 backdrop-blur-sm">
