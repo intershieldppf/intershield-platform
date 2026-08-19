@@ -38,7 +38,7 @@ export function AboutSection() {
             <div className="relative min-h-[430px] overflow-hidden border-b border-blue-100 bg-slate-50 sm:min-h-[540px] lg:min-h-[620px] lg:border-b-0 lg:border-r">
               <Image
                 src="/intershield-fundadores-clean.webp"
-                alt="Pedro Dutra e Pedro Ian, fundadores da InterShield Películas"
+                alt="Pedro Ian e Pedro Dutra, fundadores da InterShield Películas"
                 fill
                 className="object-cover object-top"
                 sizes="(max-width: 1024px) 100vw, 46vw"
@@ -49,7 +49,7 @@ export function AboutSection() {
                   Fundadores
                 </p>
                 <p className="mt-2 text-xl font-bold text-white">
-                  Pedro Dutra e Pedro Ian
+                  Pedro Ian e Pedro Dutra
                 </p>
               </div>
             </div>
