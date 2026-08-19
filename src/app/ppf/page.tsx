@@ -172,6 +172,18 @@ export default function PpfPage() {
                   key={item.title}
                   className="group relative min-h-[320px] overflow-hidden rounded-[26px] border border-slate-800 bg-[#040a18] p-7 text-white shadow-[0_20px_55px_-35px_rgba(15,23,42,0.75)] sm:p-8"
                 >
+                  {index === 0 && (
+                    <>
+                      <Image
+                        src="/ppf-invisible-protection-multimedia.webp"
+                        alt="Multimídia automotiva moderna preservada com proteção transparente"
+                        fill
+                        className="object-cover object-center transition duration-700 group-hover:scale-[1.03]"
+                      />
+                      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,6,23,0.16)_0%,rgba(2,6,23,0.58)_44%,rgba(2,6,23,0.97)_100%)]" />
+                    </>
+                  )}
+
                   {index === 1 && (
                     <div className="absolute inset-x-0 top-0 h-[132px] overflow-hidden border-b border-blue-500/40">
                       <Image
