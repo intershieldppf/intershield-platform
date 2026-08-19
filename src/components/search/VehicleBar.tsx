@@ -15,7 +15,11 @@ const QUICK_LINKS = [
   { label: "Black Piano", query: "Black Piano" },
 ];
 
-export function VehicleBar() {
+type VehicleBarProps = {
+  embedded?: boolean;
+};
+
+export function VehicleBar({ embedded = false }: VehicleBarProps) {
   const router = useRouter();
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState<ProductSearchSuggestion[]>([]);
@@ -94,23 +98,35 @@ export function VehicleBar() {
   return (
     <section
       id="buscar-veiculo"
-      className="scroll-mt-24 border-b border-slate-100 bg-white"
+      className={
+        embedded
+          ? "scroll-mt-24 bg-transparent"
+          : "scroll-mt-24 border-b border-slate-100 bg-white"
+      }
     >
-      <div className="mx-auto max-w-5xl px-5 pb-7 pt-3 sm:px-8 sm:pb-8 sm:pt-4">
+      <div
+        className={
+          embedded
+            ? "mx-auto max-w-5xl px-5 pb-6 pt-3 sm:px-6 sm:pb-7 sm:pt-4"
+            : "mx-auto max-w-5xl px-5 pb-7 pt-3 sm:px-8 sm:pb-8 sm:pt-4"
+        }
+      >
         <div className="mx-auto max-w-3xl">
-          <div className="text-center">
-            <div className="flex items-center justify-center gap-4">
-              <span className="hidden h-px w-10 bg-slate-300 sm:block" />
-              <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-blue-600">
-                Encontre seu veículo
-              </p>
-              <span className="hidden h-px w-10 bg-slate-300 sm:block" />
-            </div>
+          {!embedded && (
+            <div className="text-center">
+              <div className="flex items-center justify-center gap-4">
+                <span className="hidden h-px w-10 bg-slate-300 sm:block" />
+                <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-blue-600">
+                  Encontre seu veículo
+                </p>
+                <span className="hidden h-px w-10 bg-slate-300 sm:block" />
+              </div>
 
-            <h2 className="mt-3 text-2xl font-bold tracking-tight text-slate-950 sm:text-[30px]">
-              Encontre a proteção ideal para o seu veículo
-            </h2>
-          </div>
+              <h2 className="mt-3 text-2xl font-bold tracking-tight text-slate-950 sm:text-[30px]">
+                Encontre a proteção ideal para o seu veículo
+              </h2>
+            </div>
+          )}
 
           <form onSubmit={handleSubmit} className="relative mt-5">
             <SearchInput value={query} onChange={handleQueryChange} />

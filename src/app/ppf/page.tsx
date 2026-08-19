@@ -457,16 +457,51 @@ export default function PpfPage() {
           </div>
         </section>
 
-        <section className="border-t border-slate-100 bg-white pt-8">
-          <div className="mx-auto max-w-4xl px-6 text-center sm:px-8">
-            <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-blue-600">Encontre seu kit</p>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-950 sm:text-[38px]">Busque a proteção compatível com o seu veículo</h2>
-            <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-slate-600">
-              Digite marca, modelo, ano ou o nome da peça que deseja proteger. Você será direcionado para os produtos compatíveis do nosso catálogo.
-            </p>
-          </div>
-          <div className="mt-5">
-            <VehicleBar />
+        <section className="relative overflow-hidden border-t border-blue-500/20 bg-slate-950 py-14 text-white sm:py-16">
+          <div className="pointer-events-none absolute -left-20 top-1/2 h-72 w-72 -translate-y-1/2 rounded-full bg-blue-600/20 blur-3xl" />
+          <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-blue-500/15 blur-3xl" />
+
+          <div className="relative mx-auto grid max-w-[1220px] gap-9 px-6 sm:px-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-center lg:gap-12 lg:px-10">
+            <div>
+              <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-blue-400">
+                Encontre seu kit
+              </p>
+              <h2 className="mt-4 max-w-[520px] text-3xl font-bold leading-tight tracking-[-0.035em] sm:text-[44px]">
+                A proteção certa para o seu veículo começa aqui.
+              </h2>
+              <p className="mt-5 max-w-[520px] text-sm leading-7 text-slate-300">
+                Digite a marca, o modelo, o ano ou a peça que deseja proteger. A busca
+                mostra os kits compatíveis disponíveis no catálogo da InterShield Películas.
+              </p>
+
+              <div className="mt-7 grid max-w-[520px] gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+                {[
+                  "Recorte sob medida",
+                  "Interior e exterior",
+                  "Busca por veículo",
+                ].map((item) => (
+                  <div
+                    key={item}
+                    className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-[11px] font-semibold text-slate-200"
+                  >
+                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-blue-400" />
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-[30px] border border-white/15 bg-white p-2 text-slate-950 shadow-[0_30px_90px_-42px_rgba(37,99,235,0.75)] sm:p-3">
+              <div className="px-5 pt-5 sm:px-6 sm:pt-6">
+                <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-blue-600">
+                  Busca rápida
+                </p>
+                <h3 className="mt-2 text-xl font-bold tracking-tight text-slate-950 sm:text-2xl">
+                  Digite seu veículo ou a peça desejada
+                </h3>
+              </div>
+              <VehicleBar embedded />
+            </div>
           </div>
         </section>
       </main>
