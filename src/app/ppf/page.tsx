@@ -170,25 +170,25 @@ export default function PpfPage() {
               {benefits.map((item, index) => (
                 <article
                   key={item.title}
-                  className="group relative min-h-[280px] overflow-hidden rounded-[26px] border border-slate-800 bg-[#040a18] p-7 text-white shadow-[0_20px_55px_-35px_rgba(15,23,42,0.75)] sm:p-8"
+                  className="group relative min-h-[320px] overflow-hidden rounded-[26px] border border-slate-800 bg-[#040a18] p-7 text-white shadow-[0_20px_55px_-35px_rgba(15,23,42,0.75)] sm:p-8"
                 >
                   {index === 1 && (
-                    <>
+                    <div className="absolute inset-x-0 top-0 h-[132px] overflow-hidden border-b border-blue-500/40">
                       <Image
-                        src="/ppf-self-healing-before-after.webp"
-                        alt=""
-                        fill
-                        aria-hidden="true"
-                        className="scale-110 object-cover object-center opacity-35 blur-md"
-                      />
-                      <Image
-                        src="/ppf-self-healing-before-after.webp"
+                        src="/ppf-self-healing-horizontal.webp"
                         alt="Comparação antes e depois da autorregeneração do PPF após receber calor"
                         fill
-                        className="object-contain object-center"
+                        className="object-cover object-center"
                       />
-                      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,6,23,0.02)_0%,rgba(2,6,23,0.12)_40%,rgba(2,6,23,0.96)_76%,rgba(2,6,23,1)_100%)]" />
-                    </>
+                      <div className="absolute bottom-0 left-1/2 top-0 w-px -translate-x-1/2 bg-blue-400/80 shadow-[0_0_16px_rgba(96,165,250,0.9)]" />
+                      <span className="absolute left-3 top-3 rounded-lg border border-white/20 bg-white/90 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-950 shadow-sm">
+                        Antes
+                      </span>
+                      <span className="absolute right-3 top-3 rounded-lg border border-white/20 bg-white/90 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-950 shadow-sm">
+                        Depois
+                      </span>
+                      <div className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-[#040a18] to-transparent" />
+                    </div>
                   )}
 
                   {index === 2 && (
@@ -206,7 +206,7 @@ export default function PpfPage() {
                   <div className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full bg-blue-600/10 blur-3xl transition duration-500 group-hover:bg-blue-600/20" />
 
                   {index === 1 ? (
-                    <div className="relative z-10 h-12" />
+                    <div className="relative z-10 h-[100px]" />
                   ) : (
                     <div className="relative z-10 flex items-start justify-between">
                       <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-blue-400/20 bg-slate-950/45 text-blue-400 backdrop-blur-sm">
