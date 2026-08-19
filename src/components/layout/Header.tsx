@@ -3,7 +3,9 @@ import Link from "next/link";
 
 const navItems = [
   { label: "PPF", href: "/ppf" },
+  { label: "PPF Camaleão", href: "" },
   { label: "Acabamentos para colunas", href: "/black-piano" },
+  { label: "Catálogo", href: "/catalogo" },
   { label: "Como instalar", href: "/#instalar" },
   { label: "Sobre", href: "/#sobre" },
   { label: "Suporte", href: "/#suporte" },
@@ -37,17 +39,28 @@ export function Header() {
         </div>
 
         <nav className="flex min-w-0 flex-1 items-center justify-start gap-8 overflow-x-auto whitespace-nowrap text-[13px] font-semibold text-slate-700 sm:justify-center sm:gap-9 lg:gap-12 xl:gap-14">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="group relative flex h-[68px] shrink-0 items-center transition-colors duration-200 hover:text-blue-600"
-            >
-              {item.label}
+          {navItems.map((item) =>
+            item.href ? (
+              <Link
+                key={item.label}
+                href={item.href}
+                className="group relative flex h-[68px] shrink-0 items-center transition-colors duration-200 hover:text-blue-600"
+              >
+                {item.label}
 
-              <span className="absolute bottom-0 left-1/2 h-[2px] w-0 -translate-x-1/2 rounded-full bg-blue-600 transition-all duration-300 group-hover:w-full" />
-            </Link>
-          ))}
+                <span className="absolute bottom-0 left-1/2 h-[2px] w-0 -translate-x-1/2 rounded-full bg-blue-600 transition-all duration-300 group-hover:w-full" />
+              </Link>
+            ) : (
+              <span
+                key={item.label}
+                aria-disabled="true"
+                title="Em breve"
+                className="relative flex h-[68px] shrink-0 cursor-default items-center text-slate-400"
+              >
+                {item.label}
+              </span>
+            ),
+          )}
         </nav>
 
         <div className="flex w-[56px] shrink-0 justify-center sm:w-[72px] lg:w-[88px]">
