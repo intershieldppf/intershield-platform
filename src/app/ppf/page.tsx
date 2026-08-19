@@ -148,63 +148,115 @@ export default function PpfPage() {
           </div>
         </section>
 
-        <section className="bg-white py-14 sm:py-16">
-          <div className="mx-auto grid max-w-[1320px] gap-5 px-6 sm:px-8 lg:grid-cols-[0.74fr_1.26fr] lg:px-10">
-            <div className="grid gap-4">
-              <article className="rounded-[26px] bg-slate-950 p-7 text-white">
-                <div className="text-blue-400"><Icon kind="shield" /></div>
-                <h2 className="mt-5 text-2xl font-bold tracking-tight">Proteção sem mudar o visual</h2>
-                <p className="mt-4 text-sm leading-7 text-slate-300">
-                  Por ser transparente, o PPF acompanha o acabamento da peça sem deixar aspecto de adesivo. Ele ajuda a preservar a cor e o acabamento original do veículo.
+        <section className="border-y border-slate-100 bg-slate-50/70 py-16 sm:py-20">
+          <div className="mx-auto max-w-[1320px] px-6 sm:px-8 lg:px-10">
+            <div className="grid gap-6 lg:grid-cols-[0.86fr_1.14fr] lg:items-end">
+              <div>
+                <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-blue-600">
+                  Como o PPF protege
                 </p>
-              </article>
-
-              <article className="rounded-[26px] bg-slate-950 p-7 text-white">
-                <div className="text-blue-400"><Icon kind="car" /></div>
-                <h2 className="mt-5 text-2xl font-bold tracking-tight">Por que usar PPF?</h2>
-                <p className="mt-4 text-sm leading-7 text-slate-300">
-                  Chaves, unhas, anéis, objetos, limpeza e o contato frequente das mãos podem marcar superfícies sensíveis. O PPF ajuda a evitar esse desgaste precoce e a conservar o veículo por mais tempo.
-                </p>
-              </article>
-
-              <article className="rounded-[26px] bg-slate-950 p-7 text-white">
-                <div className="text-blue-400"><Icon kind="spark" /></div>
-                <h2 className="mt-5 text-2xl font-bold tracking-tight">Pode melhorar áreas já marcadas?</h2>
-                <p className="mt-4 text-sm leading-7 text-slate-300">
-                  Em riscos leves ou marcas superficiais, a aplicação pode ajudar a suavizar visualmente algumas imperfeições e deixar a superfície mais uniforme. Danos profundos não são removidos pelo PPF.
-                </p>
-              </article>
+                <h2 className="mt-3 max-w-[620px] text-3xl font-bold tracking-tight text-slate-950 sm:text-[42px]">
+                  Proteção que trabalha em conjunto
+                </h2>
+              </div>
+              <p className="max-w-[620px] text-[15px] leading-7 text-slate-600 lg:justify-self-end">
+                O resultado não depende de uma única película. Cada camada do PPF
+                cumpre uma função específica para proteger, absorver impactos leves
+                e preservar o acabamento original do veículo.
+              </p>
             </div>
 
-            <article className="overflow-hidden rounded-[30px] border border-slate-200 bg-slate-50 p-7 sm:p-8 lg:p-10">
-              <div className="max-w-2xl">
-                <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-blue-600">Tecnologia InterShield</p>
-                <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-950 sm:text-[38px]">Engenharia em camadas</h2>
-                <p className="mt-4 text-sm leading-7 text-slate-600">
-                  O PPF combina diferentes camadas para criar uma proteção resistente, transparente e adequada às superfícies do veículo.
-                </p>
-              </div>
+            <div className="mt-10 grid gap-4 lg:grid-cols-3">
+              {benefits.map((item, index) => (
+                <article
+                  key={item.title}
+                  className="group relative min-h-[240px] overflow-hidden rounded-[26px] border border-slate-800 bg-[#040a18] p-7 text-white shadow-[0_20px_55px_-35px_rgba(15,23,42,0.75)] sm:p-8"
+                >
+                  <div className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full bg-blue-600/10 blur-3xl transition duration-500 group-hover:bg-blue-600/20" />
+                  <div className="relative flex items-start justify-between">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-blue-400/20 bg-blue-500/10 text-blue-400">
+                      <Icon kind={item.icon} />
+                    </div>
+                    <span className="text-[11px] font-bold tracking-[0.18em] text-slate-600">
+                      0{index + 1}
+                    </span>
+                  </div>
+                  <h3 className="relative mt-8 text-[23px] font-bold leading-tight tracking-tight">
+                    {item.title}
+                  </h3>
+                  <p className="relative mt-4 max-w-[360px] text-sm leading-7 text-slate-300">
+                    {item.text}
+                  </p>
+                  <div className="absolute bottom-0 left-0 h-[3px] w-0 bg-blue-500 transition-all duration-500 group-hover:w-full" />
+                </article>
+              ))}
+            </div>
 
-              <div className="mt-10 grid items-center gap-10 lg:grid-cols-[1fr_0.9fr]">
-                <div className="relative mx-auto h-[330px] w-full max-w-[520px]">
-                  <div className="absolute left-[7%] top-[4%] h-[125px] w-[82%] -rotate-3 rounded-[24px] border border-blue-200 bg-white/75 shadow-[0_20px_45px_-30px_rgba(37,99,235,0.7)] backdrop-blur" />
-                  <div className="absolute left-[10%] top-[25%] h-[125px] w-[82%] rotate-2 rounded-[24px] border border-blue-200 bg-blue-50/80 shadow-[0_20px_45px_-30px_rgba(37,99,235,0.7)]" />
-                  <div className="absolute left-[7%] top-[47%] h-[125px] w-[82%] -rotate-2 rounded-[24px] border border-blue-300 bg-blue-600/70 shadow-[0_25px_50px_-30px_rgba(37,99,235,0.9)]" />
-                  <div className="absolute left-[10%] top-[69%] h-[125px] w-[82%] rotate-1 rounded-[24px] border border-slate-700 bg-[linear-gradient(135deg,#111827,#334155)] shadow-[0_30px_55px_-28px_rgba(15,23,42,0.85)]" />
+            <article className="mt-5 overflow-hidden rounded-[32px] border border-blue-100 bg-white p-5 shadow-[0_28px_80px_-48px_rgba(37,99,235,0.5)] sm:p-8 lg:p-10">
+              <div className="grid gap-8 lg:grid-cols-[0.88fr_1.12fr] lg:items-center lg:gap-12">
+                <div className="relative overflow-hidden rounded-[28px] border border-blue-100 bg-[radial-gradient(circle_at_50%_36%,#ffffff_0%,#eff6ff_48%,#dbeafe_100%)] p-5 sm:p-7">
+                  <div className="pointer-events-none absolute left-6 top-6 h-24 w-24 rounded-full border border-blue-200/60" />
+                  <div className="pointer-events-none absolute bottom-8 right-8 h-32 w-32 rounded-full border border-blue-200/40" />
+
+                  <div className="relative z-10">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-blue-600">
+                      Estrutura PPF TPU
+                    </p>
+                    <h3 className="mt-2 text-2xl font-bold tracking-tight text-slate-950">
+                      Por dentro da proteção
+                    </h3>
+                  </div>
+
+                  <Image
+                    src="/ppf-layer-system-intershield.webp"
+                    alt="Ilustração das quatro camadas do PPF em TPU"
+                    width={1254}
+                    height={1254}
+                    className="relative z-10 mx-auto mt-2 h-auto w-full max-w-[520px] object-contain"
+                  />
+
+                  <div className="relative z-10 -mt-2 flex flex-wrap gap-2">
+                    <span className="rounded-full border border-blue-200 bg-white/85 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-blue-700">
+                      4 camadas
+                    </span>
+                    <span className="rounded-full border border-blue-200 bg-white/85 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-blue-700">
+                      TPU 190 micras
+                    </span>
+                  </div>
                 </div>
 
-                <div className="space-y-5">
-                  {layerItems.map((item, index) => (
-                    <div key={item.title} className="flex gap-4">
-                      <div className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-blue-200 bg-white text-[11px] font-bold text-blue-600">
-                        0{index + 1}
+                <div>
+                  <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-blue-600">
+                    Tecnologia InterShield
+                  </p>
+                  <h3 className="mt-3 text-3xl font-bold tracking-tight text-slate-950 sm:text-[38px]">
+                    Cada camada, uma função
+                  </h3>
+                  <p className="mt-4 max-w-[620px] text-sm leading-7 text-slate-600">
+                    As camadas trabalham juntas como um único sistema de proteção,
+                    mantendo transparência, flexibilidade e aderência uniforme.
+                  </p>
+
+                  <div className="mt-7 space-y-3">
+                    {layerItems.map((item, index) => (
+                      <div
+                        key={item.title}
+                        className="group grid grid-cols-[44px_1fr] gap-4 rounded-[20px] border border-slate-200 bg-slate-50/80 p-4 transition duration-300 hover:border-blue-200 hover:bg-blue-50/70 sm:p-5"
+                      >
+                        <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-950 text-[11px] font-bold tracking-[0.12em] text-blue-300 transition group-hover:bg-blue-600 group-hover:text-white">
+                          0{index + 1}
+                        </div>
+                        <div>
+                          <h4 className="text-sm font-bold text-slate-950">
+                            {item.title}
+                          </h4>
+                          <p className="mt-1 text-[13px] leading-6 text-slate-600">
+                            {item.text}
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <h3 className="text-sm font-bold text-slate-950">{item.title}</h3>
-                        <p className="mt-1 text-[13px] leading-6 text-slate-600">{item.text}</p>
-                      </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
             </article>
