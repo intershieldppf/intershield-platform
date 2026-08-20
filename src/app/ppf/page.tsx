@@ -235,12 +235,10 @@ export default function PpfPage() {
               <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:items-center lg:gap-14">
                 <div className="relative mx-auto w-full max-w-[360px] overflow-hidden rounded-[28px] border border-slate-800 bg-slate-950 shadow-[0_28px_70px_-30px_rgba(15,23,42,0.9)]">
                   <video
-                    autoPlay
-                    muted
                     loop
                     playsInline
                     controls
-                    preload="metadata"
+                    preload="auto"
                     poster="/ppf-auto-regeneracao-poster.webp"
                     aria-label="Demonstração real da autorregeneração do PPF com aplicação de calor"
                     className="aspect-[9/16] w-full object-cover"
