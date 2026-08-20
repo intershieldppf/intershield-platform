@@ -121,12 +121,10 @@ export function FeatureSection() {
               className="h-full w-full object-cover"
               src="/corte-ppf-plotter.mp4"
               poster="/corte-ppf-plotter-poster.webp"
-              autoPlay
-              muted
               loop
               playsInline
               controls
-              preload="metadata"
+              preload="auto"
               aria-label="Vídeo real da plotter recortando a película"
             />
           </div>
