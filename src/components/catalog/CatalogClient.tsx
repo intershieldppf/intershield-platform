@@ -9,6 +9,7 @@ import {
   storefrontProductSlug,
   type StorefrontProduct,
 } from "@/data/storefront/catalog";
+import { getPurchaseBenefitKind } from "@/lib/purchaseBenefits";
 
 const PAGE_SIZE = 24;
 const QUICK_FILTERS = [
@@ -392,6 +393,7 @@ export function CatalogClient({ products, initialQuery = "" }: CatalogClientProp
               {visibleProducts.map((product) => {
                 const compatibility = compatibilityLabel(product);
                 const productHref = `/produto/${storefrontProductSlug(product)}`;
+                const purchaseBenefitKind = getPurchaseBenefitKind(product);
 
                 return (
                   <article
@@ -426,6 +428,12 @@ export function CatalogClient({ products, initialQuery = "" }: CatalogClientProp
                           {product.title}
                         </h2>
                       </Link>
+
+                      <p className="mt-3 w-fit rounded-full bg-blue-50 px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.08em] text-blue-700 sm:text-[10px]">
+                        {purchaseBenefitKind === "ppf-kit"
+                          ? "Kit de aplicação completo"
+                          : "Espátula de brinde"}
+                      </p>
 
                       <div className="mt-auto pt-4">
                         <p className="text-lg font-bold tracking-tight text-slate-950 sm:text-xl">

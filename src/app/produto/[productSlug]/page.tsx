@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 
 import { CustomKitNotice } from "@/components/CustomKitNotice";
+import { PurchaseBenefitNotice } from "@/components/PurchaseBenefitNotice";
 import {
   findStorefrontProductBySlug,
   storefrontCatalog,
@@ -17,6 +18,7 @@ import {
 } from "@/data/storefront/catalog";
 import { buildStorefrontProductDetails } from "@/data/storefront/productDetails";
 import { getMarketplaceProductSource } from "@/data/storefront/marketplaceProductData.server";
+import { getPurchaseBenefitKind } from "@/lib/purchaseBenefits";
 
 const WHATSAPP_NUMBER = "5531997146624";
 
@@ -47,6 +49,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const details = buildStorefrontProductDetails(product, marketplaceSource);
   const images = details.gallery.length ? details.gallery : [product.image];
   const compatibility = details.compatibility;
+  const purchaseBenefitKind = getPurchaseBenefitKind(product);
+  const isPpfKit = purchaseBenefitKind === "ppf-kit";
 
   const whatsappText = [
     "Olá! Quero comprar este produto da InterShield Películas:",
@@ -161,6 +165,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 </div>
               ) : null}
 
+              <PurchaseBenefitNotice
+                compact
+                kind={purchaseBenefitKind}
+                className="mt-6"
+              />
+
               <a
                 href={whatsappUrl}
                 target="_blank"
@@ -182,7 +192,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 </div>
                 <div className="rounded-2xl border border-slate-200 bg-white p-4">
                   <PackageCheck className="h-5 w-5 text-blue-600" />
-                  <p className="mt-2 text-xs font-semibold text-slate-800">Kit conforme anúncio</p>
+                  <p className="mt-2 text-xs font-semibold text-slate-800">
+                    {isPpfKit ? "Kit de aplicação completo" : "Espátula de brinde"}
+                  </p>
                 </div>
                 <div className="rounded-2xl border border-slate-200 bg-white p-4">
                   <Sparkles className="h-5 w-5 text-blue-600" />
@@ -232,7 +244,14 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
             <div className="space-y-6">
               <div className="rounded-[26px] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-                <h2 className="text-xl font-bold text-slate-950">Conteúdo do kit</h2>
+                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-blue-600">
+                  {isPpfKit ? "Kit completo incluso" : "Brinde incluso"}
+                </p>
+                <h2 className="mt-2 text-xl font-bold text-slate-950">
+                  {isPpfKit
+                    ? "O que acompanha seu kit PPF"
+                    : "O que acompanha seu acabamento"}
+                </h2>
                 <div className="mt-5 space-y-3">
                   {details.kitContents.map((item) => (
                     <div key={item} className="flex gap-2.5 text-sm leading-6 text-slate-700">

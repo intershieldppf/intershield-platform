@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 
 import { Header } from "@/components/layout/Header";
+import { PurchaseBenefitNotice } from "@/components/PurchaseBenefitNotice";
 import { VehicleBar } from "@/components/search/VehicleBar";
 
 export const metadata: Metadata = {
@@ -452,6 +453,12 @@ export default function PpfPage() {
                 </div>
               </div>
             </div>
+          </div>
+        </section>
+
+        <section className="border-t border-slate-100 bg-white py-14 sm:py-18">
+          <div className="mx-auto max-w-[1320px] px-6 sm:px-8 lg:px-10">
+            <PurchaseBenefitNotice kind="ppf-kit" />
           </div>
         </section>
 

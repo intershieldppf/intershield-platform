@@ -72,7 +72,8 @@ export function HeroSection() {
           <ul className="mt-7 flex flex-wrap gap-x-6 gap-y-3 text-[12px] font-medium text-slate-200 sm:text-[13px]">
             {[
               "Corte computadorizado",
-              "Películas de alta performance",
+              "Kit completo nos produtos PPF",
+              "Espátula de brinde nos adesivos",
               "Envio para todo o Brasil",
             ].map((benefit) => (
               <li key={benefit} className="flex items-center gap-2">
