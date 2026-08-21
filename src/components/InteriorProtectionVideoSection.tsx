@@ -104,7 +104,7 @@ export function InteriorProtectionVideoSection() {
                 controls
                 playsInline
                 preload="metadata"
-                poster="/protecao-interior-intershield-poster.webp"
+                poster="/protecao-interior-intershield-capa.png"
                 aria-label="Aplicação do PPF InterShield no console e nas superfícies internas de um veículo"
                 className="h-full w-full object-cover"
               >
