@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+
+import { CustomKitNotice } from "@/components/CustomKitNotice";
 import { LocalCatalogService } from "@/services/catalog/localCatalogService";
 
 type VehiclePageProps = {
@@ -104,25 +106,36 @@ export default async function VehiclePage({ params }: VehiclePageProps) {
             </Link>
           </div>
 
-          <div className="grid gap-5 md:grid-cols-2">
-            {productsWithTypes.map(({ product, productType }) => (
-              <article key={product.id} className="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm transition hover:border-sky-300">
-                <div className="space-y-4">
-                  <div>
-                    <p className="text-xs uppercase tracking-[0.35em] text-slate-500">{productType?.name ?? "Categoria"}</p>
-                    <h3 className="mt-2 text-xl font-semibold text-slate-950">{product.name}</h3>
+          {productsWithTypes.length > 0 ? (
+            <div className="grid gap-5 md:grid-cols-2">
+              {productsWithTypes.map(({ product, productType }) => (
+                <article key={product.id} className="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm transition hover:border-sky-300">
+                  <div className="space-y-4">
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.35em] text-slate-500">{productType?.name ?? "Categoria"}</p>
+                      <h3 className="mt-2 text-xl font-semibold text-slate-950">{product.name}</h3>
+                    </div>
+                    <p className="text-sm leading-7 text-slate-600">{product.shortDescription}</p>
                   </div>
-                  <p className="text-sm leading-7 text-slate-600">{product.shortDescription}</p>
-                </div>
-                <Link
-                  href={`/produto/${product.slug}`}
-                  className="mt-6 inline-flex items-center justify-center rounded-2xl bg-sky-600 px-5 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-white transition hover:bg-sky-500"
-                >
-                  Ver produto
-                </Link>
-              </article>
-            ))}
-          </div>
+                  <Link
+                    href={`/produto/${product.slug}`}
+                    className="mt-6 inline-flex items-center justify-center rounded-2xl bg-sky-600 px-5 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-white transition hover:bg-sky-500"
+                  >
+                    Ver produto
+                  </Link>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <p className="rounded-3xl border border-slate-200 bg-white p-6 text-sm leading-7 text-slate-600">
+              Ainda não há um kit publicado para esta seleção.
+            </p>
+          )}
+
+          <CustomKitNotice
+            compact
+            context={`${brand.name} ${vehicleModel.name} ${vehicle.yearStart}–${vehicle.yearEnd}`}
+          />
         </section>
       </div>
     </main>

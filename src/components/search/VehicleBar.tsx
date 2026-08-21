@@ -2,12 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { MessageCircle } from "lucide-react";
 
 import { SearchInput } from "@/components/search/SearchInput";
 import {
   SearchSuggestions,
   type ProductSearchSuggestion,
 } from "@/components/search/SearchSuggestions";
+import { buildCustomKitWhatsappUrl } from "@/lib/customKitContact";
 
 const QUICK_LINKS = [
   { label: "Proteção interna", query: "PPF Interior" },
@@ -168,9 +170,36 @@ export function VehicleBar({
                   !loading &&
                   query.trim().length >= 2 &&
                   suggestions.length === 0 && (
-                    <div className="absolute left-0 right-0 top-[68px] z-50 rounded-[18px] border border-slate-200 bg-white px-4 py-3 text-sm text-slate-500 shadow-lg">
-                      Nenhum anúncio com esse termo. Pressione Enter para buscar
-                      no catálogo completo.
+                    <div className="absolute left-0 right-0 top-[68px] z-50 rounded-[18px] border border-slate-200 bg-white p-4 shadow-xl">
+                      <p className="text-sm font-bold text-slate-950">
+                        Não encontramos uma opção exata.
+                      </p>
+                      <p className="mt-1 text-xs leading-5 text-slate-600">
+                        Veja o catálogo completo ou fale conosco. Consultamos o
+                        sistema e verificamos a combinação de peças para o seu
+                        veículo.
+                      </p>
+                      <div className="mt-3 flex flex-col gap-2 sm:flex-row">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setIsOpen(false);
+                            goToCatalog(query);
+                          }}
+                          className="inline-flex h-10 items-center justify-center rounded-xl border border-slate-200 px-4 text-xs font-bold text-slate-800 transition hover:border-blue-300 hover:text-blue-600"
+                        >
+                          Buscar no catálogo
+                        </button>
+                        <a
+                          href={buildCustomKitWhatsappUrl(`Busca: ${query.trim()}`)}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 text-xs font-bold text-white transition hover:bg-blue-500"
+                        >
+                          <MessageCircle className="h-4 w-4" />
+                          Consultar pelo WhatsApp
+                        </a>
+                      </div>
                     </div>
                   )}
               </div>

@@ -1,6 +1,9 @@
 import { PlatformIcon } from "@/components/ui/PlatformIcon";
+import { buildCustomKitWhatsappUrl } from "@/lib/customKitContact";
 
 export function SupportSection() {
+  const whatsappUrl = buildCustomKitWhatsappUrl("Atendimento pelo site");
+
   return (
     <section
       id="suporte"
@@ -13,13 +16,13 @@ export function SupportSection() {
           </p>
 
           <h2 className="mt-3 text-3xl font-semibold text-slate-950 sm:text-4xl">
-            Escolha o kit certo com ajuda especializada.
+            Não encontrou o kit ou quer outra combinação?
           </h2>
 
           <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-600">
-            Nossa equipe está pronta para ajudar você a escolher o melhor kit,
-            confirmar a compatibilidade com seu veículo e esclarecer dúvidas
-            sobre instalação e acabamentos.
+            Envie a marca, o modelo, o ano e as peças que deseja proteger. Nossa
+            equipe consulta o sistema, verifica a combinação disponível e
+            encaminha você para a opção correta.
           </p>
         </div>
 
@@ -35,13 +38,13 @@ export function SupportSection() {
           </p>
 
           <a
-            href="https://wa.me/5531997146624"
+            href={whatsappUrl}
             target="_blank"
             rel="noreferrer"
             className="mt-6 inline-flex w-full items-center justify-center gap-3 rounded-2xl bg-[#25D366] px-5 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-white transition hover:bg-[#20bd5a]"
           >
             <PlatformIcon name="whatsapp" className="h-5 w-5" />
-            Iniciar conversa
+            Consultar meu kit
           </a>
 
           <div className="mt-6 border-t border-white/10 pt-5">
