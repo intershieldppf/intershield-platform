@@ -1,15 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Search, SlidersHorizontal, X } from "lucide-react";
 
+import { CustomKitNotice } from "@/components/CustomKitNotice";
 import {
   storefrontProductSlug,
   type StorefrontProduct,
 } from "@/data/storefront/catalog";
 
-const WHATSAPP_NUMBER = "5531997146624";
 const PAGE_SIZE = 24;
 const QUICK_FILTERS = [
   "Todos",
@@ -155,7 +155,9 @@ export function CatalogClient({ products, initialQuery = "" }: CatalogClientProp
   const [brand, setBrand] = useState("Todas");
   const [sort, setSort] = useState("destaques");
   const [showMobileFilters, setShowMobileFilters] = useState(false);
-  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  const filterKey = JSON.stringify([query, type, tag, brand, sort]);
+  const [pagination, setPagination] = useState({ key: "", count: PAGE_SIZE });
+  const visibleCount = pagination.key === filterKey ? pagination.count : PAGE_SIZE;
 
   const brands = useMemo(
     () =>
@@ -205,10 +207,6 @@ export function CatalogClient({ products, initialQuery = "" }: CatalogClientProp
 
     return result.sort((a, b) => a.displayOrder - b.displayOrder);
   }, [products, query, type, tag, brand, sort]);
-
-  useEffect(() => {
-    setVisibleCount(PAGE_SIZE);
-  }, [query, type, tag, brand, sort]);
 
   const visibleProducts = filteredProducts.slice(0, visibleCount);
   const hasMore = visibleCount < filteredProducts.length;
@@ -450,31 +448,27 @@ export function CatalogClient({ products, initialQuery = "" }: CatalogClientProp
               })}
             </div>
           ) : (
-            <div className="mt-6 rounded-[26px] border border-slate-200 bg-slate-50 px-6 py-12 text-center">
-              <p className="text-xl font-bold text-slate-950">
-                Não encontramos um resultado exato.
-              </p>
-              <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-slate-600">
-                Revise o modelo ou ano. Se o seu veículo não estiver no catálogo, fale com a InterShield para confirmarmos a disponibilidade.
-              </p>
-              <a
-                href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-                  `Olá! Não encontrei meu veículo no catálogo da InterShield. Minha busca foi: ${query}`,
-                )}`}
-                target="_blank"
-                rel="noreferrer"
-                className="mt-5 inline-flex h-12 items-center justify-center rounded-xl bg-blue-600 px-5 text-sm font-semibold text-white transition hover:bg-blue-500"
-              >
-                Consultar pelo WhatsApp
-              </a>
-            </div>
+            <CustomKitNotice
+              context={query.trim() ? `Busca: ${query.trim()}` : undefined}
+              className="mt-6"
+            />
           )}
+
+          {visibleProducts.length > 0 ? (
+            <CustomKitNotice
+              compact
+              context={query.trim() ? `Busca: ${query.trim()}` : undefined}
+              className="mt-8"
+            />
+          ) : null}
 
           {hasMore ? (
             <div className="mt-8 flex justify-center">
               <button
                 type="button"
-                onClick={() => setVisibleCount((current) => current + PAGE_SIZE)}
+                onClick={() =>
+                  setPagination({ key: filterKey, count: visibleCount + PAGE_SIZE })
+                }
                 className="h-12 rounded-xl border border-slate-200 bg-white px-6 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-blue-300 hover:text-blue-600"
               >
                 Carregar mais produtos

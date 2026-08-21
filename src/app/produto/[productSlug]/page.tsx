@@ -9,6 +9,7 @@ import {
   Sparkles,
 } from "lucide-react";
 
+import { CustomKitNotice } from "@/components/CustomKitNotice";
 import {
   findStorefrontProductBySlug,
   storefrontCatalog,
@@ -188,6 +189,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   <p className="mt-2 text-xs font-semibold text-slate-800">Acabamento automotivo</p>
                 </div>
               </div>
+
+              <CustomKitNotice
+                compact
+                context={`${product.title} · ${compatibility}`}
+                className="mt-4"
+              />
             </div>
           </div>
         </div>
