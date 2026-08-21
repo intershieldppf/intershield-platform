@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 import { AboutSection } from "@/components/AboutSection";
 import { FeatureSection } from "@/components/FeatureSection";
 import { Header } from "@/components/layout/Header";
@@ -8,7 +6,6 @@ import { InfoSection } from "@/components/InfoSection";
 import { InteriorProtectionVideoSection } from "@/components/InteriorProtectionVideoSection";
 import { MarketplaceSection } from "@/components/MarketplaceSection";
 import { SupportSection } from "@/components/SupportSection";
-import { VehicleBar } from "@/components/search/VehicleBar";
 
 export default function Home() {
   return (
@@ -16,20 +13,6 @@ export default function Home() {
       <Header />
 
       <main className="overflow-hidden">
-        <section className="bg-white pb-0 pt-2 sm:pt-3">
-          <div className="flex items-center justify-center">
-            <Image
-              src="/intershield-shield-v2.png"
-              alt="InterShield Películas"
-              width={460}
-              height={240}
-              priority
-              className="h-auto w-[290px] object-contain sm:w-[330px] lg:w-[360px]"
-            />
-          </div>
-        </section>
-
-        <VehicleBar />
         <HeroSection />
         <InteriorProtectionVideoSection />
 
