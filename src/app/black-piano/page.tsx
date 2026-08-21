@@ -2,6 +2,7 @@ import Image from "next/image";
 import type { Metadata } from "next";
 
 import { Header } from "@/components/layout/Header";
+import { PurchaseBenefitNotice } from "@/components/PurchaseBenefitNotice";
 import { VehicleBar } from "@/components/search/VehicleBar";
 
 export const metadata: Metadata = {
@@ -187,6 +188,12 @@ export default function BlackPianoPage() {
                 Veja como o kit para colunas é produzido com corte computadorizado.
               </p>
             </div>
+          </div>
+        </section>
+
+        <section className="border-b border-slate-100 bg-slate-50/70 py-12 sm:py-14">
+          <div className="mx-auto max-w-[1220px] px-6 sm:px-8 lg:px-10">
+            <PurchaseBenefitNotice kind="adhesive-gift" />
           </div>
         </section>
 

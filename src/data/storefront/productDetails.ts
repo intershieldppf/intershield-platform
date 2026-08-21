@@ -1,5 +1,6 @@
 import type { StorefrontProduct } from "./catalog";
 import type { MarketplaceProductSource } from "./marketplaceImport";
+import { addPurchaseExtras } from "@/lib/purchaseBenefits";
 
 export type StorefrontProductDetails = {
   gallery: string[];
@@ -353,7 +354,10 @@ function generatedFullDescription(product: StorefrontProduct) {
   const application =
     specific?.application ??
     (areas.length ? areas.join(", ") : "a área indicada no anúncio");
-  const contents = specific?.kitContents ?? fallbackKitContents(product);
+  const contents = addPurchaseExtras(
+    product,
+    specific?.kitContents ?? fallbackKitContents(product),
+  );
 
   if (product.type === "Black Piano") {
     const notes = specific?.notes ?? [
@@ -588,6 +592,9 @@ export function buildStorefrontProductDetails(
   const gallery = Array.from(
     new Set([...(source?.images ?? []), product.image].filter(Boolean)),
   );
+  const baseKitContents = parsedKit.length
+    ? parsedKit
+    : (specific?.kitContents ?? fallbackKitContents(product));
 
   return {
     gallery,
@@ -595,9 +602,7 @@ export function buildStorefrontProductDetails(
     benefits: parsedBenefits.length
       ? parsedBenefits
       : fallbackBenefits(product),
-    kitContents: parsedKit.length
-      ? parsedKit
-      : (specific?.kitContents ?? fallbackKitContents(product)),
+    kitContents: addPurchaseExtras(product, baseKitContents),
     installation: parsedInstallation.length
       ? parsedInstallation
       : fallbackInstallation(product),

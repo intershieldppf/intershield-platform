@@ -8,6 +8,7 @@ const categories = [
     description:
       "Películas transparentes pré-cortadas para multimídias, painéis, consoles e outras superfícies sensíveis ao contato e ao desgaste do uso diário.",
     details: "Multimídia • Painel • Console",
+    purchaseBenefit: "Kit de aplicação completo incluso",
     href: "/ppf",
     action: "Conhecer o PPF",
     number: "01",
@@ -19,6 +20,7 @@ const categories = [
     description:
       "Kits em TPU transparente para pintura, soleiras, conchas e pontos sujeitos a atritos, riscos leves e marcas do uso cotidiano.",
     details: "Pintura • Soleiras • Conchas",
+    purchaseBenefit: "Kit de aplicação completo incluso",
     href: "/ppf",
     action: "Ver proteção exterior",
     number: "02",
@@ -30,6 +32,7 @@ const categories = [
     description:
       "Opções em Black Piano, Preto Fosco Poroso e Fibra de Carbono 4D, produzidas com recorte específico para cada modelo.",
     details: "Black Piano • Fosco • Fibra 4D",
+    purchaseBenefit: "Espátula de aplicação de brinde",
     href: "/black-piano",
     action: "Conhecer os acabamentos",
     number: "03",
@@ -89,6 +92,10 @@ export function InfoSection() {
                 </p>
                 <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
                   {category.details}
+                </p>
+
+                <p className="mt-4 w-fit rounded-full border border-blue-400/20 bg-blue-500/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-blue-300">
+                  {category.purchaseBenefit}
                 </p>
 
                 <Link
