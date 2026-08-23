@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import {
   CheckCircle2,
   ChevronLeft,
-  MessageCircle,
   PackageCheck,
   ShieldCheck,
   Sparkles,
@@ -11,6 +10,7 @@ import {
 
 import { CustomKitNotice } from "@/components/CustomKitNotice";
 import { PurchaseBenefitNotice } from "@/components/PurchaseBenefitNotice";
+import { ProductCheckoutActions } from "@/components/product/ProductCheckoutActions";
 import {
   findStorefrontProductBySlug,
   storefrontCatalog,
@@ -52,17 +52,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const purchaseBenefitKind = getPurchaseBenefitKind(product);
   const isPpfKit = purchaseBenefitKind === "ppf-kit";
 
-  const whatsappText = [
-    "Olá! Quero comprar este produto da InterShield Películas:",
-    "",
-    `Produto: ${product.title}`,
-    `SKU: ${product.sku ?? product.id}`,
-    `Compatibilidade: ${compatibility}`,
-    "",
-    "Gostaria de confirmar a compatibilidade e finalizar a compra.",
-  ].join("\n");
-
-  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappText)}`;
+  const checkoutEnabled =
+    process.env.CHECKOUT_ENABLED === "true" &&
+    Boolean(process.env.MELHOR_ENVIO_TOKEN);
 
   const relatedProducts = storefrontCatalog
     .filter(
@@ -147,43 +139,21 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 <p className="mt-2 text-xs text-slate-500">SKU {product.sku ?? product.id}</p>
               </div>
 
-              {product.variantValues.length > 0 ? (
-                <div className="mt-6">
-                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">
-                    Opções disponíveis
-                  </p>
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {product.variantValues.map((value) => (
-                      <span
-                        key={value}
-                        className="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-800"
-                      >
-                        {value}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ) : null}
-
               <PurchaseBenefitNotice
                 compact
                 kind={purchaseBenefitKind}
                 className="mt-6"
               />
 
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="mt-7 inline-flex h-14 w-full items-center justify-center gap-2 rounded-2xl bg-blue-600 px-5 text-sm font-bold text-white shadow-sm transition hover:bg-blue-500"
-              >
-                <MessageCircle className="h-5 w-5" />
-                Comprar pelo WhatsApp
-              </a>
-
-              <p className="mt-3 text-center text-xs leading-5 text-slate-500">
-                Atendimento direto para confirmar a compatibilidade antes da compra.
-              </p>
+              <ProductCheckoutActions
+                productId={product.id}
+                productTitle={product.title}
+                sku={product.sku ?? product.id}
+                compatibility={compatibility}
+                variants={product.variantValues}
+                whatsappNumber={WHATSAPP_NUMBER}
+                checkoutEnabled={checkoutEnabled}
+              />
 
               <div className="mt-6 grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
                 <div className="rounded-2xl border border-slate-200 bg-white p-4">
