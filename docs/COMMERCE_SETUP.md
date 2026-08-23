@@ -27,3 +27,5 @@ Antes de ativar cobranças reais, ainda são necessários:
 2. credenciais de teste do Mercado Pago;
 3. endpoint de webhook com validação de assinatura e idempotência;
 4. teste completo de pedido, frete, pagamento e retorno ao site.
+
+Ambiente Preview utilizado para validar a integração Sandbox antes da ativação em produção.
