@@ -11,6 +11,7 @@ import {
 import { CustomKitNotice } from "@/components/CustomKitNotice";
 import { PurchaseBenefitNotice } from "@/components/PurchaseBenefitNotice";
 import { ProductCheckoutActions } from "@/components/product/ProductCheckoutActions";
+import { ProductGallery } from "@/components/product/ProductGallery";
 import {
   findStorefrontProductBySlug,
   storefrontCatalog,
@@ -18,7 +19,10 @@ import {
 } from "@/data/storefront/catalog";
 import { buildStorefrontProductDetails } from "@/data/storefront/productDetails";
 import { getMarketplaceProductSource } from "@/data/storefront/marketplaceProductData.server";
-import { getPurchaseBenefitKind } from "@/lib/purchaseBenefits";
+import {
+  addStandardBenefitImage,
+  getPurchaseBenefitKind,
+} from "@/lib/purchaseBenefits";
 
 const WHATSAPP_NUMBER = "5531997146624";
 
@@ -47,7 +51,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   const marketplaceSource = await getMarketplaceProductSource(product.id);
   const details = buildStorefrontProductDetails(product, marketplaceSource);
-  const images = details.gallery.length ? details.gallery : [product.image];
+  const sourceImages = details.gallery.length ? details.gallery : [product.image];
+  const images = addStandardBenefitImage(product, sourceImages);
   const compatibility = details.compatibility;
   const purchaseBenefitKind = getPurchaseBenefitKind(product);
   const isPpfKit = purchaseBenefitKind === "ppf-kit";
@@ -84,32 +89,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       <section className="px-4 py-6 sm:px-8 lg:py-10">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-8 lg:grid-cols-[1.08fr_0.92fr] lg:gap-12">
-            <div>
-              <div className="flex aspect-square items-center justify-center overflow-hidden rounded-[26px] border border-slate-200 bg-slate-50 p-4 sm:p-8">
-                <img
-                  src={images[0]}
-                  alt={product.title}
-                  className="h-full w-full object-contain"
-                />
-              </div>
-
-              {images.length > 1 ? (
-                <div className="mt-3 flex gap-2 overflow-x-auto pb-1">
-                  {images.slice(0, 8).map((image, index) => (
-                    <div
-                      key={`${image}-${index}`}
-                      className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-white p-1.5 sm:h-20 sm:w-20"
-                    >
-                      <img
-                        src={image}
-                        alt={`${product.title} - imagem ${index + 1}`}
-                        className="h-full w-full object-contain"
-                      />
-                    </div>
-                  ))}
-                </div>
-              ) : null}
-            </div>
+            <ProductGallery key={product.id} name={product.title} images={images} />
 
             <div className="lg:pt-2">
               <div className="flex flex-wrap gap-2">
