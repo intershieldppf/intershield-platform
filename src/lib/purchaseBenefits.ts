@@ -5,6 +5,11 @@ type ProductPurchaseSummary = {
 
 export type PurchaseBenefitKind = "ppf-kit" | "adhesive-gift";
 
+const STANDARD_GALLERY_IMAGES: Record<PurchaseBenefitKind, string> = {
+  "ppf-kit": "/kit-ppf-completo-intershield.png",
+  "adhesive-gift": "/kit-adesivo-espatula-intershield.png",
+};
+
 export const PPF_APPLICATION_EXTRAS = [
   "Solução deslizante para auxiliar na aplicação",
   "Espátula de aplicação",
@@ -29,6 +34,22 @@ export function getPurchaseBenefitKind(
   }
 
   return "adhesive-gift";
+}
+
+export function addStandardBenefitImage(
+  product: ProductPurchaseSummary,
+  images: string[],
+) {
+  const standardImage = STANDARD_GALLERY_IMAGES[getPurchaseBenefitKind(product)];
+  const uniqueImages = Array.from(
+    new Set(images.filter((image) => image && image !== standardImage)),
+  );
+
+  if (uniqueImages.length === 0) {
+    return [standardImage];
+  }
+
+  return [uniqueImages[0], standardImage, ...uniqueImages.slice(1)];
 }
 
 function hasEquivalentItem(items: string[], extra: string) {
