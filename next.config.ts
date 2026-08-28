@@ -9,7 +9,7 @@ const contentSecurityPolicy = [
   "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://connect.facebook.net",
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https://http2.mlstatic.com https://www.google-analytics.com https://www.facebook.com",
-  "media-src 'self'",
+  "media-src 'self' blob:",
   "font-src 'self' data:",
   "connect-src 'self' https://*.google-analytics.com https://*.googletagmanager.com https://www.facebook.com",
   "upgrade-insecure-requests",

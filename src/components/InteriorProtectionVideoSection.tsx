@@ -1,5 +1,8 @@
 import Link from "next/link";
 
+import { ChunkedVideo } from "@/components/media/ChunkedVideo";
+import { videoChunks } from "@/lib/videoChunks";
+
 const benefits = [
   {
     number: "01",
@@ -100,20 +103,12 @@ export function InteriorProtectionVideoSection() {
             </div>
 
             <div className="relative aspect-[9/16] overflow-hidden rounded-[26px] border border-blue-400/25 bg-black shadow-[0_24px_80px_-28px_rgba(37,99,235,0.6)]">
-              <video
-                controls
-                playsInline
-                preload="metadata"
+              <ChunkedVideo
+                ariaLabel="Aplicação do PPF InterShield no console e nas superfícies internas de um veículo"
+                chunks={videoChunks.interiorProtection}
                 poster="/protecao-interior-intershield-capa.png"
-                aria-label="Aplicação do PPF InterShield no console e nas superfícies internas de um veículo"
                 className="h-full w-full object-cover"
-              >
-                <source
-                  src="/protecao-interior-intershield.mp4"
-                  type="video/mp4"
-                />
-                Seu navegador não oferece suporte à reprodução deste vídeo.
-              </video>
+              />
             </div>
 
             <p className="mt-4 text-center text-[11px] leading-5 text-slate-400">
