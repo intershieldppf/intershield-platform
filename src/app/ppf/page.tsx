@@ -6,9 +6,10 @@ import { PurchaseBenefitNotice } from "@/components/PurchaseBenefitNotice";
 import { VehicleBar } from "@/components/search/VehicleBar";
 
 export const metadata: Metadata = {
-  title: "PPF | InterShield Películas",
+  title: "PPF automotivo",
   description:
     "Entenda o que é PPF, como ele protege o veículo e conheça as opções Gloss e Fosco da InterShield Películas.",
+  alternates: { canonical: "/ppf" },
 };
 
 function Icon({ kind }: { kind: "shield" | "spark" | "diamond" | "car" }) {
@@ -239,7 +240,7 @@ export default function PpfPage() {
                     loop
                     playsInline
                     controls
-                    preload="auto"
+                    preload="metadata"
                     poster="/ppf-auto-regeneracao-poster.webp"
                     aria-label="Demonstração real da autorregeneração do PPF com aplicação de calor"
                     className="aspect-[9/16] w-full object-cover"

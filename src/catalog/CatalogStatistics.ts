@@ -1,18 +1,7 @@
 import {
   CatalogStatistics,
-  CatalogProduct,
-  CatalogVariant,
-  CatalogVehicle,
-  CatalogCompatibility,
-  CatalogMedia,
-  CatalogSeo,
-  CatalogChannel,
   InterShieldCatalog,
 } from "./catalogTypes";
-
-function safeCount(value: unknown): number {
-  return typeof value === "number" && Number.isFinite(value) ? value : 0;
-}
 
 export function calculateCatalogStatistics(catalog: InterShieldCatalog): CatalogStatistics {
   const statistics: CatalogStatistics = {

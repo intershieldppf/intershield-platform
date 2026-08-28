@@ -1,11 +1,12 @@
 export const runtime = "nodejs";
 
 import { NextResponse } from "next/server";
-import { vehicleImages } from "@/data/vehicleImages";
 import { mockBrands, mockVehicleModels, mockVehicles, mockProducts, mockCompatibilities } from "@/data/mockCatalog";
-import { VehicleImageService, InMemoryVehicleImageRepository } from "@/catalog/VehicleImageService";
+import { VehicleImageService } from "@/catalog/VehicleImageService";
+import { requireAdminRequest } from "@/lib/security/adminAuth";
+import { vehicleImageRepository } from "@/lib/admin/vehicleImageStore";
 
-const repository = new InMemoryVehicleImageRepository(vehicleImages);
+const repository = vehicleImageRepository;
 
 const productData = mockProducts.map((product) => ({
   productId: product.id,
@@ -45,7 +46,10 @@ function getVehicleType(vehicleId: string) {
   return model?.vehicleType ?? null;
 }
 
-export async function GET() {
+export async function GET(request: Request) {
+  const unauthorized = requireAdminRequest(request);
+  if (unauthorized) return unauthorized;
+
   const vehicles = service.listVehicles();
 
   const payload = vehicles.map((vehicle) => ({

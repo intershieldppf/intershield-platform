@@ -11,16 +11,6 @@ import { mockBrands, mockVehicleModels, mockVehicles, mockProductTypes, mockProd
 import { VehicleImageService, InMemoryVehicleImageRepository } from "@/catalog/VehicleImageService";
 import { vehicleImages } from "@/data/vehicleImages";
 
-function filterVehiclesByText(vehicle: Vehicle, query: string): { score: number; matchedTerms: string[] } {
-  const normalizedQuery = normalizeSearchText(query);
-
-  const model = mockVehicleModels.find((item) => item.id === vehicle.vehicleModelId);
-  const brand = model ? mockBrands.find((item) => item.id === model.brandId) : null;
-  const searchSource = `${brand?.name ?? ""} ${model?.name ?? ""} ${vehicle.generation} ${vehicle.yearStart} ${vehicle.yearEnd} ${vehicle.searchKeywords.join(" ")}`;
-
-  return calculateSearchScore(normalizedQuery, searchSource, model?.aliases ?? []);
-}
-
 function getBrandBySlug(slug: string): Brand | null {
   return mockBrands.find((brand) => brand.slug === slug) ?? null;
 }
@@ -42,19 +32,6 @@ function getProductsByVehicleId(vehicleId: string): Product[] {
 
 function getProductTypeById(productTypeId: string): ProductType | null {
   return mockProductTypes.find((type) => type.id === productTypeId) ?? null;
-}
-
-function getVehicleTypesByVehicleId(vehicleId: string): string[] {
-  return getProductsByVehicleId(vehicleId)
-    .map((product) => {
-      const productType = getProductTypeById(product.productTypeId);
-      return productType?.name ?? "";
-    })
-    .filter(Boolean);
-}
-
-function getFirstKitType(vehicleId: string): string | undefined {
-  return getVehicleTypesByVehicleId(vehicleId)[0];
 }
 
 function getVehiclesByProductId(productId: string): Vehicle[] {

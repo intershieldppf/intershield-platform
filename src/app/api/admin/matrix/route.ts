@@ -1,9 +1,13 @@
 import { NextResponse } from "next/server";
-import { CatalogEngine } from "@/catalog";
+import { CatalogEngine } from "@/catalog/CatalogEngine";
+import { requireAdminRequest } from "@/lib/security/adminAuth";
 
 export const runtime = "nodejs";
 
-export async function GET() {
+export async function GET(request: Request) {
+  const unauthorized = requireAdminRequest(request);
+  if (unauthorized) return unauthorized;
+
   try {
     const result = await CatalogEngine.loadFromProjectMatrix();
 
@@ -18,7 +22,8 @@ export async function GET() {
       },
       { status: 200 }
     );
-  } catch (err: any) {
-    return NextResponse.json({ error: String(err.message ?? err) }, { status: 500 });
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : String(error);
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

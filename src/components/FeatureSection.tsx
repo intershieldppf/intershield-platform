@@ -124,7 +124,7 @@ export function FeatureSection() {
               loop
               playsInline
               controls
-              preload="auto"
+              preload="metadata"
               aria-label="Vídeo real da plotter recortando a película"
             />
           </div>

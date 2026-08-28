@@ -1,4 +1,3 @@
-import { Buffer } from "buffer";
 import { CatalogLoadResult, InterShieldCatalog, CatalogPreviewVariant } from "./catalogTypes";
 import { loadProjectMatrix, parseUploadedMatrix } from "./CatalogLoader";
 import { normalizeCatalog } from "./CatalogNormalizer";
@@ -19,12 +18,6 @@ function buildPreviewVariants(catalog: InterShieldCatalog, validation: ReturnTyp
   return catalog.variants.slice(0, 50).map((variant) => {
     const product = productById.get(variant.productId) ?? productBySku.get(variant.sku);
     const validationEntry = validation.variantStates.find((entry) => entry.id === variant.variationId || entry.sku === variant.sku);
-    const productValidation = product ? validation.productStates.find((entry) => entry.id === product.productId || entry.sku === product.sku) : undefined;
-    const issues = [
-      ...((validationEntry?.issues ?? []) as any[]),
-      ...((productValidation?.issues ?? []) as any[]),
-    ];
-
     const productName = product?.name ?? product?.officialName ?? "Não localizado";
     const productId = product?.productId ?? variant.productId;
     const channelCandidates = [

@@ -2,7 +2,6 @@ import type {
   CatalogProduct,
   CatalogCompatibility,
   CatalogMedia,
-  CatalogVehicle,
 } from "./catalogTypes";
 
 export type VehicleImageState = {
@@ -220,7 +219,7 @@ private compatibilities: Array<Pick<CatalogCompatibility, "productId" | "vehicle
     if (!current) return [];
 
     return Object.entries(this.repository.getAll())
-      .filter(([id, state]) => id !== vehicleId)
+      .filter(([id]) => id !== vehicleId)
       .filter(([, state]) => state.imageUrl?.trim() === current)
       .map(([id]) => id);
   }
@@ -242,7 +241,7 @@ private compatibilities: Array<Pick<CatalogCompatibility, "productId" | "vehicle
   private isValidUrl(value: string) {
     try {
       const url = new URL(value.trim());
-      return url.protocol === "http:" || url.protocol === "https:";
+      return url.protocol === "https:";
     } catch {
       return false;
     }

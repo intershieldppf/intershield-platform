@@ -21,6 +21,9 @@ export function ProductGallery({ name, images }: ProductGalleryProps) {
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const swipeStartRef = useRef<SwipeStart | null>(null);
   const ignoreNextClickRef = useRef(false);
+  const openerRef = useRef<HTMLButtonElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
   const selectedImage = images[selectedIndex] ?? images[0];
   const hasMultipleImages = images.length > 1;
 
@@ -44,19 +47,37 @@ export function ProductGallery({ name, images }: ProductGalleryProps) {
     if (!isLightboxOpen) return;
 
     const previousOverflow = document.body.style.overflow;
+    const opener = openerRef.current;
 
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") setIsLightboxOpen(false);
       if (event.key === "ArrowLeft") showPrevious();
       if (event.key === "ArrowRight") showNext();
+      if (event.key === "Tab") {
+        const focusable = Array.from(
+          dialogRef.current?.querySelectorAll<HTMLButtonElement>("button") ?? [],
+        );
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
     }
 
     document.body.style.overflow = "hidden";
+    closeButtonRef.current?.focus();
     window.addEventListener("keydown", handleKeyDown);
 
     return () => {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", handleKeyDown);
+      opener?.focus();
     };
   }, [isLightboxOpen, showNext, showPrevious]);
 
@@ -130,6 +151,7 @@ export function ProductGallery({ name, images }: ProductGalleryProps) {
       >
         {selectedImage ? (
           <button
+            ref={openerRef}
             type="button"
             aria-label={`Ampliar imagem ${selectedIndex + 1} de ${name}`}
             onClick={handleMainImageClick}
@@ -198,6 +220,7 @@ export function ProductGallery({ name, images }: ProductGalleryProps) {
 
       {hasMultipleImages ? (
         <div
+          ref={dialogRef}
           className="mt-3 flex gap-2 overflow-x-auto pb-1"
           aria-label="Galeria de imagens do produto"
         >
@@ -237,6 +260,7 @@ export function ProductGallery({ name, images }: ProductGalleryProps) {
           className="fixed inset-0 z-[100] flex touch-pan-y items-center justify-center bg-slate-950/95 p-3 sm:p-8"
         >
           <button
+            ref={closeButtonRef}
             type="button"
             aria-label="Fechar imagem ampliada"
             onClick={() => setIsLightboxOpen(false)}

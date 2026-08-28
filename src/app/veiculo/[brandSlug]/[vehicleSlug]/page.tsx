@@ -1,24 +1,47 @@
+import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { CustomKitNotice } from "@/components/CustomKitNotice";
+import { Header } from "@/components/layout/Header";
 import { LocalCatalogService } from "@/services/catalog/localCatalogService";
 
 type VehiclePageProps = {
-  params: {
+  params: Promise<{
     brandSlug: string;
     vehicleSlug: string;
-  };
+  }>;
 };
 
-export default async function VehiclePage({ params }: VehiclePageProps) {
+export async function generateMetadata({ params }: VehiclePageProps): Promise<Metadata> {
+  const { brandSlug, vehicleSlug } = await params;
   const service = new LocalCatalogService();
-  const brand = await service.findBrandBySlug(params.brandSlug);
+  const brand = await service.findBrandBySlug(brandSlug);
+  const vehicle = await service.findVehicleBySlug(vehicleSlug);
+  const model = vehicle
+    ? await service.findVehicleModelBySlug(vehicle.vehicleModelId)
+    : null;
+
+  if (!brand || !vehicle || !model || model.brandId !== brand.id) return {};
+
+  const title = `Películas para ${brand.name} ${model.name}`;
+  return {
+    title,
+    description: `Encontre kits de proteção InterShield compatíveis com ${brand.name} ${model.name}, anos ${vehicle.yearStart} a ${vehicle.yearEnd}.`,
+    alternates: { canonical: `/veiculo/${brandSlug}/${vehicleSlug}` },
+  };
+}
+
+export default async function VehiclePage({ params }: VehiclePageProps) {
+  const { brandSlug, vehicleSlug } = await params;
+  const service = new LocalCatalogService();
+  const brand = await service.findBrandBySlug(brandSlug);
   if (!brand) {
     notFound();
   }
 
-  const vehicle = await service.findVehicleBySlug(params.vehicleSlug);
+  const vehicle = await service.findVehicleBySlug(vehicleSlug);
   if (!vehicle) {
     notFound();
   }
@@ -41,7 +64,9 @@ export default async function VehiclePage({ params }: VehiclePageProps) {
   );
 
   return (
-    <main className="min-h-screen bg-slate-50 px-6 py-14 text-slate-950 sm:px-8 lg:px-10">
+    <div className="min-h-screen bg-slate-50 text-slate-950">
+      <Header />
+      <main className="px-6 py-14 sm:px-8 lg:px-10">
       <div className="mx-auto max-w-6xl space-y-10">
         <div className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
@@ -60,12 +85,14 @@ export default async function VehiclePage({ params }: VehiclePageProps) {
             </div>
           </div>
 
-          {vehicle.imageUrl ? (
-            <div className="mt-8 overflow-hidden rounded-[2rem] border border-slate-200 bg-slate-50">
-              <img
+          {vehicle.imageUrl?.startsWith("/") ? (
+            <div className="relative mt-8 aspect-[16/9] overflow-hidden rounded-[2rem] border border-slate-200 bg-slate-50">
+              <Image
                 src={vehicle.imageUrl}
                 alt={vehicle.imageAlt ?? `${brand.name} ${vehicleModel.name}`}
-                className="aspect-[16/9] w-full object-cover"
+                fill
+                sizes="(max-width: 1152px) 100vw, 1152px"
+                className="object-cover"
               />
             </div>
           ) : null}
@@ -138,6 +165,7 @@ export default async function VehiclePage({ params }: VehiclePageProps) {
           />
         </section>
       </div>
-    </main>
+      </main>
+    </div>
   );
 }

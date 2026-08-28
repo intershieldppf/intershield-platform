@@ -1,6 +1,11 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { Menu } from "lucide-react";
+import { useCallback, useState } from "react";
 
+import { MobileMenu } from "@/components/layout/MobileMenu";
 import { PlatformIcon } from "@/components/ui/PlatformIcon";
 
 const navItems = [
@@ -35,6 +40,9 @@ function HomeLogo({ label }: { label: string }) {
 }
 
 export function Header() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const closeMenu = useCallback(() => setMenuOpen(false), []);
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/95 backdrop-blur-xl">
       <div className="mx-auto flex h-[68px] max-w-[1320px] items-center gap-3 px-4 sm:gap-5 sm:px-6 lg:gap-7 lg:px-8">
@@ -42,7 +50,7 @@ export function Header() {
           <HomeLogo label="Ir para o início do site" />
         </div>
 
-        <nav className="flex min-w-0 flex-1 items-center justify-start gap-7 overflow-x-auto whitespace-nowrap text-[13px] font-semibold text-slate-700 sm:justify-center lg:gap-9 xl:gap-11">
+        <nav className="hidden min-w-0 flex-1 items-center justify-center gap-9 whitespace-nowrap text-[13px] font-semibold text-slate-700 lg:flex xl:gap-11">
           {navItems.map((item) => (
             <Link
               key={item.label}
@@ -66,7 +74,24 @@ export function Header() {
           <PlatformIcon name="whatsapp" className="h-4 w-4 text-[#25D366]" />
           Comprar pelo WhatsApp
         </a>
+
+        <button
+          type="button"
+          aria-label="Abrir menu"
+          aria-expanded={menuOpen}
+          aria-controls="mobile-navigation"
+          onClick={() => setMenuOpen(true)}
+          className="ml-auto inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 text-slate-950 transition hover:border-blue-300 hover:text-blue-600 lg:hidden"
+        >
+          <Menu className="h-5 w-5" />
+        </button>
       </div>
+      <MobileMenu
+        items={navItems}
+        open={menuOpen}
+        onClose={closeMenu}
+        ctaHref={whatsappUrl}
+      />
     </header>
   );
 }

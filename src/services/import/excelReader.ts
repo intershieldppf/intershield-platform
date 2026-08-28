@@ -1,5 +1,5 @@
 import * as XLSX from "xlsx";
-import type { ImportRow, MarketplaceSource } from "@/domain/imports/importTypes";
+import type { ImportRow } from "@/domain/imports/importTypes";
 import { mapMarketplaceRowToImportRow } from "@/services/import/marketplaceColumnMapper";
 
 export async function parseSpreadsheetFile(file: File): Promise<{

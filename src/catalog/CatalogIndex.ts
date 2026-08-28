@@ -1,10 +1,6 @@
 import {
   InterShieldCatalog,
   CatalogIndex,
-  CatalogMedia,
-  CatalogSeo,
-  CatalogChannel,
-  CatalogCompatibility,
 } from "./catalogTypes";
 
 export function buildCatalogIndex(catalog: InterShieldCatalog): CatalogIndex {

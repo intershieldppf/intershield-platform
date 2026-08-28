@@ -14,7 +14,7 @@ export function HeroSection() {
       className="relative min-h-[680px] overflow-hidden bg-[#010817] lg:min-h-[720px]"
     >
       <Image
-        src="/intershield-hero-bmw.png"
+        src="/intershield-hero-bmw.webp"
         alt="Interior automotivo protegido pela InterShield Películas"
         fill
         priority

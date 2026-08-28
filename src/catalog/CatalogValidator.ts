@@ -6,7 +6,6 @@ import {
   CatalogValidationItemStatus,
   InterShieldCatalog,
   CatalogProduct,
-  CatalogVariant,
   CatalogVehicle,
   CatalogCompatibility,
   CatalogMedia,

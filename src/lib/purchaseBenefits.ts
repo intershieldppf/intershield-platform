@@ -6,7 +6,7 @@ type ProductPurchaseSummary = {
 export type PurchaseBenefitKind = "ppf-kit" | "adhesive-gift";
 
 const STANDARD_GALLERY_IMAGES: Record<PurchaseBenefitKind, string> = {
-  "ppf-kit": "/kit-ppf-completo-intershield.png",
+  "ppf-kit": "/kit-ppf-completo-intershield.webp",
   "adhesive-gift": "/kit-adesivo-espatula-intershield.webp",
 };
 

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { storefrontCatalog } from "@/data/storefront/catalog";
+import { storefrontCatalog, storefrontProductSlug } from "@/data/storefront/catalog";
+import { checkRateLimit, rateLimitResponse } from "@/lib/security/rateLimit";
 
 function normalizeText(value: string) {
   return value
@@ -37,7 +38,10 @@ function scoreSuggestion(title: string, query: string) {
 }
 
 export async function GET(request: NextRequest) {
-  const query = request.nextUrl.searchParams.get("q")?.trim() ?? "";
+  const rateLimit = checkRateLimit(request, "catalog-suggestions", 60, 60_000);
+  if (!rateLimit.allowed) return rateLimitResponse(rateLimit.retryAfterSeconds);
+
+  const query = (request.nextUrl.searchParams.get("q")?.trim() ?? "").slice(0, 120);
 
   if (query.length < 2) {
     return NextResponse.json({ suggestions: [] });
@@ -59,6 +63,7 @@ export async function GET(request: NextRequest) {
     .slice(0, 6)
     .map(({ product }) => ({
       id: product.id,
+      slug: storefrontProductSlug(product),
       title: product.title,
       price: product.price,
       image: product.image,

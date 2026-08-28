@@ -14,9 +14,9 @@ const whatsappUrl =
 const directChannels = [
   {
     name: "Catálogo InterShield",
-    label: "Compra pelo site",
+    label: "Catálogo próprio",
     description:
-      "Pesquise por marca, modelo, ano ou peça e encontre os kits compatíveis disponíveis no catálogo da InterShield.",
+      "Pesquise por marca, modelo, ano ou peça, confira os kits compatíveis e conclua a compra com atendimento pelo WhatsApp.",
     href: "/catalogo",
     action: "Acessar o catálogo",
     icon: "catalog",
@@ -140,8 +140,8 @@ export function MarketplaceSection() {
           </h2>
         </div>
         <p className="max-w-md text-sm leading-7 text-slate-500">
-          Compre diretamente conosco ou escolha uma de nossas lojas nos
-          principais marketplaces.
+          Consulte nosso catálogo, fale com a equipe pelo WhatsApp ou escolha
+          uma de nossas lojas nos principais marketplaces.
         </p>
       </div>
 

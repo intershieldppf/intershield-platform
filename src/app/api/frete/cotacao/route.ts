@@ -7,6 +7,7 @@ import {
   normalizePostalCode,
   SHIPPING_ORIGIN_POSTAL_CODE,
 } from "@/lib/commerce/shipping";
+import { checkRateLimit, rateLimitResponse } from "@/lib/security/rateLimit";
 
 export const runtime = "nodejs";
 
@@ -25,6 +26,14 @@ function json(data: unknown, status: number) {
 }
 
 export async function POST(request: Request) {
+  const rateLimit = checkRateLimit(request, "shipping-quote", 20, 60_000);
+  if (!rateLimit.allowed) return rateLimitResponse(rateLimit.retryAfterSeconds);
+
+  const contentLength = Number(request.headers.get("content-length") ?? 0);
+  if (contentLength > 4_096) {
+    return json({ error: "Dados inválidos para calcular o frete." }, 413);
+  }
+
   if (process.env.CHECKOUT_ENABLED !== "true") {
     return json({ error: "O checkout ainda não está disponível." }, 503);
   }
