@@ -2,8 +2,10 @@ import Image from "next/image";
 import type { Metadata } from "next";
 
 import { Header } from "@/components/layout/Header";
+import { ChunkedVideo } from "@/components/media/ChunkedVideo";
 import { PurchaseBenefitNotice } from "@/components/PurchaseBenefitNotice";
 import { VehicleBar } from "@/components/search/VehicleBar";
+import { videoChunks } from "@/lib/videoChunks";
 
 export const metadata: Metadata = {
   title: "Acabamentos para colunas",
@@ -175,15 +177,11 @@ export default function BlackPianoPage() {
 
             <div className="mx-auto w-full max-w-[360px]">
               <div className="overflow-hidden rounded-[28px] border border-slate-200 bg-slate-950 p-2 shadow-[0_24px_60px_-32px_rgba(15,23,42,0.55)]">
-                <video
-                  controls
-                  playsInline
-                  preload="metadata"
+                <ChunkedVideo
+                  ariaLabel="Vídeo da plotter produzindo o recorte computadorizado para colunas"
+                  chunks={videoChunks.blackPianoCut}
                   className="aspect-[9/16] w-full rounded-[22px] bg-black object-cover"
-                >
-                  <source src="/coluna-black-piano-corte.mp4" type="video/mp4" />
-                  Seu navegador não suporta reprodução de vídeo.
-                </video>
+                />
               </div>
               <p className="mt-3 text-center text-[12px] leading-5 text-slate-500">
                 Veja como o kit para colunas é produzido com corte computadorizado.

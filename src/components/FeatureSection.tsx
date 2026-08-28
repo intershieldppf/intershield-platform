@@ -1,5 +1,8 @@
 import Image from "next/image";
 
+import { ChunkedVideo } from "@/components/media/ChunkedVideo";
+import { videoChunks } from "@/lib/videoChunks";
+
 const processSteps = [
   {
     number: "01",
@@ -117,15 +120,12 @@ export function FeatureSection() {
           </div>
 
           <div className="relative mx-auto aspect-[9/14] max-h-[560px] overflow-hidden rounded-[22px] border border-white/10 bg-black">
-            <video
+            <ChunkedVideo
+              ariaLabel="Vídeo real da plotter recortando a película"
+              chunks={videoChunks.plotterCut}
               className="h-full w-full object-cover"
-              src="/corte-ppf-plotter.mp4"
               poster="/corte-ppf-plotter-poster.webp"
               loop
-              playsInline
-              controls
-              preload="metadata"
-              aria-label="Vídeo real da plotter recortando a película"
             />
           </div>
 

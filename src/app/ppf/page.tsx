@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import Image from "next/image";
 
 import { Header } from "@/components/layout/Header";
+import { ChunkedVideo } from "@/components/media/ChunkedVideo";
 import { PurchaseBenefitNotice } from "@/components/PurchaseBenefitNotice";
 import { VehicleBar } from "@/components/search/VehicleBar";
+import { videoChunks } from "@/lib/videoChunks";
 
 export const metadata: Metadata = {
   title: "PPF automotivo",
@@ -236,18 +238,13 @@ export default function PpfPage() {
             <article className="mt-5 overflow-hidden rounded-[32px] border border-blue-100 bg-white p-5 shadow-[0_28px_80px_-48px_rgba(37,99,235,0.5)] sm:p-8 lg:p-10">
               <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:items-center lg:gap-14">
                 <div className="relative mx-auto w-full max-w-[360px] overflow-hidden rounded-[28px] border border-slate-800 bg-slate-950 shadow-[0_28px_70px_-30px_rgba(15,23,42,0.9)]">
-                  <video
+                  <ChunkedVideo
+                    ariaLabel="Demonstração real da autorregeneração do PPF com aplicação de calor"
+                    chunks={videoChunks.selfHealing}
                     loop
-                    playsInline
-                    controls
-                    preload="metadata"
                     poster="/ppf-auto-regeneracao-poster.webp"
-                    aria-label="Demonstração real da autorregeneração do PPF com aplicação de calor"
                     className="aspect-[9/16] w-full object-cover"
-                  >
-                    <source src="/ppf-auto-regeneracao-intershield.mp4" type="video/mp4" />
-                    Seu navegador não oferece suporte à reprodução deste vídeo.
-                  </video>
+                  />
                   <div className="pointer-events-none absolute left-4 top-4 rounded-full border border-white/20 bg-slate-950/75 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-white backdrop-blur">
                     Demonstração real
                   </div>
