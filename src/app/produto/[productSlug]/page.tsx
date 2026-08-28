@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
@@ -12,6 +14,7 @@ import { CustomKitNotice } from "@/components/CustomKitNotice";
 import { PurchaseBenefitNotice } from "@/components/PurchaseBenefitNotice";
 import { ProductCheckoutActions } from "@/components/product/ProductCheckoutActions";
 import { ProductGallery } from "@/components/product/ProductGallery";
+import { Header } from "@/components/layout/Header";
 import {
   findStorefrontProductBySlug,
   storefrontCatalog,
@@ -31,6 +34,29 @@ type ProductPageProps = {
     productSlug: string;
   }>;
 };
+
+export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
+  const { productSlug } = await params;
+  const product = findStorefrontProductBySlug(productSlug);
+
+  if (!product) return {};
+
+  const canonical = `/produto/${storefrontProductSlug(product)}`;
+  const description = `${product.title}. Consulte compatibilidade e compre com suporte da InterShield Películas.`;
+
+  return {
+    title: product.title,
+    description,
+    alternates: { canonical },
+    openGraph: {
+      title: product.title,
+      description,
+      url: canonical,
+      images: [{ url: product.image, alt: product.title }],
+      type: "website",
+    },
+  };
+}
 
 function formatPrice(price: number | null) {
   if (price === null) return "Consulte";
@@ -69,8 +95,50 @@ export default async function ProductPage({ params }: ProductPageProps) {
     )
     .slice(0, 4);
 
+  const canonicalUrl = `https://www.intershield.com.br/produto/${storefrontProductSlug(product)}`;
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Product",
+        name: product.title,
+        image: images.map((image) => image.startsWith("http") ? image : `https://www.intershield.com.br${image}`),
+        sku: product.sku ?? product.id,
+        brand: product.brand ? { "@type": "Brand", name: product.brand } : undefined,
+        url: canonicalUrl,
+        offers:
+          product.price !== null
+            ? {
+                "@type": "Offer",
+                priceCurrency: "BRL",
+                price: product.price,
+                availability: "https://schema.org/InStock",
+                url: canonicalUrl,
+                seller: { "@type": "Organization", name: "InterShield Películas" },
+              }
+            : undefined,
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Início", item: "https://www.intershield.com.br/" },
+          { "@type": "ListItem", position: 2, name: "Catálogo", item: "https://www.intershield.com.br/catalogo" },
+          { "@type": "ListItem", position: 3, name: product.title, item: canonicalUrl },
+        ],
+      },
+    ],
+  };
+
   return (
-    <main className="min-h-screen bg-white text-slate-950">
+    <div className="min-h-screen bg-white text-slate-950">
+      <Header />
+      <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
+        }}
+      />
       <div className="border-b border-slate-200 bg-white">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-8">
           <Link
@@ -305,8 +373,14 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   href={`/produto/${storefrontProductSlug(item)}`}
                   className="group overflow-hidden rounded-[20px] border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
                 >
-                  <div className="aspect-square bg-slate-50 p-3">
-                    <img src={item.image} alt={item.title} className="h-full w-full object-contain" />
+                  <div className="relative aspect-square bg-slate-50 p-3">
+                    <Image
+                      src={item.image}
+                      alt={item.title}
+                      fill
+                      sizes="(max-width: 767px) 50vw, 25vw"
+                      className="object-contain p-3"
+                    />
                   </div>
                   <div className="p-3 sm:p-4">
                     <p className="line-clamp-2 text-xs font-semibold leading-5 text-slate-900 sm:text-sm">
@@ -322,6 +396,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
           </div>
         </section>
       ) : null}
-    </main>
+      </main>
+    </div>
   );
 }

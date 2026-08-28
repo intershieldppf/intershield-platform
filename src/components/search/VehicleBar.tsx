@@ -33,6 +33,7 @@ export function VehicleBar({
   const [suggestions, setSuggestions] = useState<ProductSearchSuggestion[]>([]);
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(-1);
 
   useEffect(() => {
     const term = query.trim();
@@ -61,6 +62,7 @@ export function VehicleBar({
         };
 
         setSuggestions(data.suggestions ?? []);
+        setActiveIndex(-1);
       } catch (error) {
         if ((error as Error).name !== "AbortError") {
           console.error("Erro ao buscar produtos:", error);
@@ -84,6 +86,7 @@ export function VehicleBar({
 
     setQuery(value);
     setIsOpen(hasSearchTerm);
+    setActiveIndex(-1);
 
     if (!hasSearchTerm) {
       setSuggestions([]);
@@ -99,13 +102,34 @@ export function VehicleBar({
   function handleSelect(product: ProductSearchSuggestion) {
     setQuery(product.title);
     setIsOpen(false);
-    goToCatalog(product.title);
+    router.push(`/produto/${product.slug}`);
   }
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setIsOpen(false);
     goToCatalog(query);
+  }
+
+  function handleSearchKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+    if (event.key === "Escape") {
+      setIsOpen(false);
+      setActiveIndex(-1);
+      return;
+    }
+
+    if (!isOpen || suggestions.length === 0) return;
+
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      setActiveIndex((current) => (current + 1) % suggestions.length);
+    } else if (event.key === "ArrowUp") {
+      event.preventDefault();
+      setActiveIndex((current) => (current <= 0 ? suggestions.length - 1 : current - 1));
+    } else if (event.key === "Enter" && activeIndex >= 0) {
+      event.preventDefault();
+      handleSelect(suggestions[activeIndex]);
+    }
   }
 
   return (
@@ -151,7 +175,13 @@ export function VehicleBar({
               className={hero ? "flex flex-col gap-3 sm:flex-row" : "relative"}
             >
               <div className="relative min-w-0 flex-1">
-                <SearchInput value={query} onChange={handleQueryChange} />
+                <SearchInput
+                  value={query}
+                  onChange={handleQueryChange}
+                  onKeyDown={handleSearchKeyDown}
+                  expanded={isOpen}
+                  activeDescendant={activeIndex >= 0 ? `product-suggestion-${suggestions[activeIndex]?.id}` : undefined}
+                />
 
                 {isOpen && loading && (
                   <div className="absolute left-0 right-0 top-[68px] z-50 rounded-[18px] border border-slate-200 bg-white px-4 py-3 text-sm text-slate-500 shadow-lg">
@@ -163,6 +193,8 @@ export function VehicleBar({
                   <SearchSuggestions
                     suggestions={suggestions}
                     onSelect={handleSelect}
+                    activeIndex={activeIndex}
+                    onActiveIndexChange={setActiveIndex}
                   />
                 )}
 

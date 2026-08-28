@@ -55,8 +55,12 @@ select {
 }
 
 a {
-  color: inherit;
   text-decoration: none;
+}
+
+:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--intershield-blue) 55%, transparent);
+  outline-offset: 3px;
 }
 
 ::selection {

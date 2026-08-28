@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { CatalogEngine } from "@/catalog";
+import { CatalogEngine } from "@/catalog/CatalogEngine";
+import type { CatalogVehicle } from "@/catalog/catalogTypes";
+import { checkRateLimit, rateLimitResponse } from "@/lib/security/rateLimit";
 
 export const runtime = "nodejs";
 
@@ -12,8 +14,11 @@ function normalizeText(value: string) {
 }
 
 export async function GET(request: NextRequest) {
+  const rateLimit = checkRateLimit(request, "vehicle-search", 60, 60_000);
+  if (!rateLimit.allowed) return rateLimitResponse(rateLimit.retryAfterSeconds);
+
   try {
-    const rawQuery = request.nextUrl.searchParams.get("q") ?? "";
+    const rawQuery = (request.nextUrl.searchParams.get("q") ?? "").slice(0, 120);
     const query = normalizeText(rawQuery);
 
     const result = await CatalogEngine.loadFromProjectMatrix();
@@ -59,7 +64,21 @@ export async function GET(request: NextRequest) {
         return true;
       });
 
-    const grouped = new Map<string, any>();
+    const grouped = new Map<
+      string,
+      Pick<
+        CatalogVehicle,
+        | "vehicleId"
+        | "brand"
+        | "model"
+        | "yearStart"
+        | "yearEnd"
+        | "slug"
+        | "imageUrl"
+        | "imageStatus"
+        | "imageAlt"
+      > & { vehicleIds: string[] }
+    >();
 
     for (const vehicle of matchingVehicles) {
       const key =

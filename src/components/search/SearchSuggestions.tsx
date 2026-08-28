@@ -1,5 +1,6 @@
 export type ProductSearchSuggestion = {
   id: string;
+  slug: string;
   title: string;
   price: number | null;
   image: string;
@@ -11,6 +12,8 @@ export type ProductSearchSuggestion = {
 type SearchSuggestionsProps = {
   suggestions: ProductSearchSuggestion[];
   onSelect: (value: ProductSearchSuggestion) => void;
+  activeIndex: number;
+  onActiveIndexChange: (index: number) => void;
 };
 
 function formatPrice(price: number | null) {
@@ -25,13 +28,20 @@ function formatPrice(price: number | null) {
 export function SearchSuggestions({
   suggestions,
   onSelect,
+  activeIndex,
+  onActiveIndexChange,
 }: SearchSuggestionsProps) {
   if (suggestions.length === 0) {
     return null;
   }
 
   return (
-    <div className="absolute left-0 right-0 top-[66px] z-50 overflow-hidden rounded-[18px] border border-slate-200 bg-white shadow-xl">
+    <div
+      id="product-search-suggestions"
+      role="listbox"
+      aria-label="Sugestões de produtos"
+      className="absolute left-0 right-0 top-[66px] z-50 overflow-hidden rounded-[18px] border border-slate-200 bg-white shadow-xl"
+    >
       <div className="border-b border-slate-100 px-4 py-2.5">
         <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">
           Produtos encontrados
@@ -39,20 +49,24 @@ export function SearchSuggestions({
       </div>
 
       <div className="max-h-[410px] overflow-y-auto py-1">
-        {suggestions.slice(0, 6).map((item) => (
+        {suggestions.slice(0, 6).map((item, index) => (
           <button
             key={item.id}
+            id={`product-suggestion-${item.id}`}
+            role="option"
+            aria-selected={activeIndex === index}
+            onMouseEnter={() => onActiveIndexChange(index)}
             type="button"
             onClick={() => onSelect(item)}
-            className="flex w-full items-center gap-3 border-b border-slate-100 px-3 py-3 text-left transition-colors last:border-b-0 hover:bg-slate-50 sm:px-4"
+            className={`flex w-full items-center gap-3 border-b border-slate-100 px-3 py-3 text-left transition-colors last:border-b-0 hover:bg-slate-50 sm:px-4 ${activeIndex === index ? "bg-blue-50" : ""}`}
           >
-            <div className="h-14 w-14 shrink-0 overflow-hidden rounded-xl border border-slate-100 bg-slate-50 sm:h-16 sm:w-16">
-              {/* Imagens vêm da exportação oficial do catálogo. */}
-              <img
+            <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl border border-slate-100 bg-slate-50 sm:h-16 sm:w-16">
+              <Image
                 src={item.image}
                 alt=""
+                fill
+                sizes="64px"
                 className="h-full w-full object-contain p-1"
-                loading="lazy"
               />
             </div>
 
@@ -87,3 +101,4 @@ export function SearchSuggestions({
     </div>
   );
 }
+import Image from "next/image";

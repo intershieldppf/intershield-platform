@@ -6,7 +6,6 @@ import type {
   MatrixMedia,
   MatrixSEO,
   MatrixChannel,
-  MatrixImportResult,
   MatrixValidationIssue,
 } from "@/domain/imports/matrixImportTypes";
 

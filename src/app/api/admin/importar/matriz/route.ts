@@ -1,17 +1,24 @@
 export const runtime = "nodejs";
 
 import { NextResponse } from "next/server";
-import { CatalogEngine } from "@/catalog";
+import { CatalogEngine } from "@/catalog/CatalogEngine";
 import {
   extractMarketplaceProductsFromArrayBuffer,
   marketplaceImportCoverage,
 } from "@/data/storefront/marketplaceImport";
+import { requireAdminRequest } from "@/lib/security/adminAuth";
+import { checkRateLimit, rateLimitResponse } from "@/lib/security/rateLimit";
+
+const MAX_UPLOAD_BYTES = 5 * 1024 * 1024;
 
 function errorMessage(error: unknown) {
   return error instanceof Error ? error.message : String(error);
 }
 
-export async function GET() {
+export async function GET(request: Request) {
+  const unauthorized = requireAdminRequest(request);
+  if (unauthorized) return unauthorized;
+
   try {
     const result = await CatalogEngine.loadFromProjectMatrix();
     return NextResponse.json(
@@ -31,6 +38,17 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  const unauthorized = requireAdminRequest(request);
+  if (unauthorized) return unauthorized;
+
+  const rateLimit = checkRateLimit(request, "admin-matrix-import", 10, 60_000);
+  if (!rateLimit.allowed) return rateLimitResponse(rateLimit.retryAfterSeconds);
+
+  const contentLength = Number(request.headers.get("content-length") ?? 0);
+  if (contentLength > MAX_UPLOAD_BYTES) {
+    return NextResponse.json({ error: "O arquivo deve ter no máximo 5 MB." }, { status: 413 });
+  }
+
   try {
     const formData = await request.formData();
     const fileValue = formData.get("file");
@@ -41,6 +59,10 @@ export async function POST(request: Request) {
 
     if (!fileValue.name.toLowerCase().endsWith(".xlsx")) {
       return NextResponse.json({ error: "Formato inválido. Envie um arquivo .xlsx." }, { status: 400 });
+    }
+
+    if (fileValue.size > MAX_UPLOAD_BYTES) {
+      return NextResponse.json({ error: "O arquivo deve ter no máximo 5 MB." }, { status: 413 });
     }
 
     const arrayBuffer = await fileValue.arrayBuffer();

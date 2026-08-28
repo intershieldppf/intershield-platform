@@ -274,7 +274,7 @@ function buildEmptyStatistics(): CatalogStatistics {
   };
 }
 
-function buildEmptyCatalog(metadata: CatalogFileMetadata): InterShieldCatalog {
+function buildEmptyCatalog(): InterShieldCatalog {
   return {
     products: [],
     variants: [],
@@ -294,7 +294,7 @@ export async function loadProjectMatrix(): Promise<CatalogLoadResult> {
   const filePath = path.join(process.cwd(), "src", "data", "imports", "Matriz_Mestre_InterShield_V2.xlsx");
   try {
     await fs.access(filePath);
-  } catch (error: unknown) {
+  } catch {
     throw new Error(`Não foi possível acessar a Matriz Mestre em ${filePath}`);
   }
 
@@ -330,7 +330,7 @@ function parseWorkbook(workbook: XLSX.WorkBook, metadata: CatalogFileMetadata): 
     rows: 0,
   }));
 
-  const catalog = buildEmptyCatalog(metadata);
+  const catalog = buildEmptyCatalog();
   const parserByName: Record<CatalogSheetName, (rows: Record<string, unknown>[]) => unknown[]> = {
     Produtos_Mestre: parseProducts,
     Variacoes_SKU: parseVariants,

@@ -20,6 +20,9 @@ const navigationLinks = [
   { label: "Catálogo", href: "/catalogo" },
   { label: "Como instalar", href: "/#instalar" },
   { label: "Quem somos", href: "/#sobre" },
+  { label: "Privacidade", href: "/privacidade" },
+  { label: "Envio e trocas", href: "/envio-trocas" },
+  { label: "Garantia e instalação", href: "/garantia-instalacao" },
 ];
 
 const solutionLinks = [

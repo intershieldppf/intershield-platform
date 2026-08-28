@@ -6,9 +6,10 @@ import { PurchaseBenefitNotice } from "@/components/PurchaseBenefitNotice";
 import { VehicleBar } from "@/components/search/VehicleBar";
 
 export const metadata: Metadata = {
-  title: "Acabamentos para Colunas | InterShield Películas",
+  title: "Acabamentos para colunas",
   description:
     "Conheça os acabamentos Black Piano, Preto Fosco Poroso e Fibra de Carbono 4D para colunas automotivas, produzidos com corte computadorizado.",
+  alternates: { canonical: "/black-piano" },
 };
 
 const finishes = [
@@ -118,7 +119,7 @@ export default function BlackPianoPage() {
 
             <div className="relative min-h-[390px] overflow-hidden rounded-[30px] border border-white/70 bg-slate-950 shadow-[0_30px_80px_-35px_rgba(37,99,235,0.45)] lg:min-h-[440px]">
               <Image
-                src="/black-piano-antes-depois.png"
+                src="/black-piano-antes-depois.webp"
                 alt="Comparação de colunas automotivas antes e depois da renovação do acabamento"
                 fill
                 priority

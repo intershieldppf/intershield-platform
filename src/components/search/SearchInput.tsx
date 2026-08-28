@@ -1,6 +1,9 @@
 type SearchInputProps = {
   value: string;
   onChange: (value: string) => void;
+  onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+  expanded?: boolean;
+  activeDescendant?: string;
 };
 
 function SearchIcon() {
@@ -22,7 +25,7 @@ function SearchIcon() {
   );
 }
 
-export function SearchInput({ value, onChange }: SearchInputProps) {
+export function SearchInput({ value, onChange, onKeyDown, expanded, activeDescendant }: SearchInputProps) {
   return (
     <div className="relative w-full">
       <div className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-blue-600">
@@ -33,8 +36,14 @@ export function SearchInput({ value, onChange }: SearchInputProps) {
         type="search"
         value={value}
         onChange={(event) => onChange(event.target.value)}
+        onKeyDown={onKeyDown}
         placeholder="Digite marca, modelo e ano. Ex: BMW X3 2024"
         aria-label="Buscar veículo ou produto"
+        role="combobox"
+        aria-autocomplete="list"
+        aria-expanded={expanded}
+        aria-controls="product-search-suggestions"
+        aria-activedescendant={activeDescendant}
         autoComplete="off"
         className="h-[60px] w-full rounded-[18px] border border-slate-200 bg-white pl-14 pr-12 text-[15px] font-medium text-slate-950 shadow-sm outline-none transition-all duration-200 placeholder:font-normal placeholder:text-slate-400 focus:border-blue-300 focus:ring-4 focus:ring-blue-50"
       />

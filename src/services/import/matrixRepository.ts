@@ -143,12 +143,6 @@ function parseCadastroNovo(rows: Record<string, any>[]): MatrixCadastroNovo[] {
 
 type MatrixImportSheetKey = Exclude<keyof MatrixImportResult, "metadata">;
 
-type MatrixSheetDefinition<K extends MatrixImportSheetKey> = {
-  name: MatrixSheetName;
-  key: K;
-  parser: (rows: Record<string, any>[]) => MatrixImportResult[K];
-};
-
 const sheetMetadata: Array<{
   name: MatrixSheetName;
   key: MatrixImportSheetKey;

@@ -5,8 +5,9 @@ import { Header } from "@/components/layout/Header";
 import { storefrontCatalog } from "@/data/storefront/catalog";
 
 export const metadata: Metadata = {
-  title: "Catálogo | InterShield Películas",
+  title: "Catálogo",
   description: "Encontre películas PPF e soluções Black Piano compatíveis com seu veículo.",
+  alternates: { canonical: "/catalogo" },
 };
 
 type CatalogPageProps = {

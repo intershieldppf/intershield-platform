@@ -1,7 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useDeferredValue, useMemo, useState } from "react";
 import { Search, SlidersHorizontal, X } from "lucide-react";
 
 import { CustomKitNotice } from "@/components/CustomKitNotice";
@@ -151,6 +152,7 @@ type CatalogClientProps = {
 
 export function CatalogClient({ products, initialQuery = "" }: CatalogClientProps) {
   const [query, setQuery] = useState(initialQuery);
+  const deferredQuery = useDeferredValue(query);
   const [type, setType] = useState("Todos");
   const [tag, setTag] = useState("Todos");
   const [brand, setBrand] = useState("Todas");
@@ -173,13 +175,13 @@ export function CatalogClient({ products, initialQuery = "" }: CatalogClientProp
       .filter((product) => type === "Todos" || product.type === type)
       .filter((product) => tag === "Todos" || product.tags.includes(tag))
       .filter((product) => brand === "Todas" || product.brand === brand)
-      .map((product) => ({ product, score: scoreProduct(product, query) }))
+      .map((product) => ({ product, score: scoreProduct(product, deferredQuery) }))
       .filter(
         (item): item is { product: StorefrontProduct; score: number } =>
           item.score !== null,
       );
 
-    if (query.trim()) {
+    if (deferredQuery.trim()) {
       return scored
         .sort(
           (a, b) =>
@@ -207,7 +209,7 @@ export function CatalogClient({ products, initialQuery = "" }: CatalogClientProp
     }
 
     return result.sort((a, b) => a.displayOrder - b.displayOrder);
-  }, [products, query, type, tag, brand, sort]);
+  }, [products, deferredQuery, type, tag, brand, sort]);
 
   const visibleProducts = filteredProducts.slice(0, visibleCount);
   const hasMore = visibleCount < filteredProducts.length;
@@ -283,7 +285,7 @@ export function CatalogClient({ products, initialQuery = "" }: CatalogClientProp
         </div>
       </section>
 
-      <section className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 px-4 py-3 backdrop-blur-xl sm:px-8 lg:py-4">
+      <section className="sticky top-[68px] z-40 border-b border-slate-200 bg-white/95 px-4 py-3 backdrop-blur-xl sm:px-8 lg:py-4">
         <div className="mx-auto max-w-7xl">
           <div className="flex gap-2">
             <div className="relative flex-1">
@@ -398,6 +400,7 @@ export function CatalogClient({ products, initialQuery = "" }: CatalogClientProp
                 return (
                   <article
                     key={product.id}
+                    style={{ contentVisibility: "auto", containIntrinsicSize: "460px" }}
                     className="group overflow-hidden rounded-[20px] border border-slate-200 bg-white shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md"
                   >
                     <Link
@@ -405,10 +408,11 @@ export function CatalogClient({ products, initialQuery = "" }: CatalogClientProp
                       className="relative block aspect-square overflow-hidden bg-slate-50"
                       aria-label={`Ver ${product.title}`}
                     >
-                      <img
+                      <Image
                         src={product.image}
                         alt={product.title}
-                        loading="lazy"
+                        fill
+                        sizes="(max-width: 639px) 50vw, (max-width: 1023px) 33vw, 20vw"
                         className="h-full w-full object-contain p-2 transition duration-300 group-hover:scale-[1.02]"
                       />
                       <span className="absolute left-2 top-2 rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-blue-600 shadow-sm">

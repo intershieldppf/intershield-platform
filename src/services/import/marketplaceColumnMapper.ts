@@ -35,7 +35,7 @@ export function mapMarketplaceRowToImportRow(
     title: row["Título"]?.toString().trim() ?? "",
     categoryName: row["Nome da Categoria"]?.toString().trim() ?? "",
     description: row["Descrição"]?.toString().trim() ?? "",
-    price: parseFloat(String(row["ML Preço"] ?? "").replace(/[.,]/g, (match, offset, str) => (match === "," ? "." : ""))) || undefined,
+    price: parseFloat(String(row["ML Preço"] ?? "").replace(/\./g, "").replace(",", ".")) || undefined,
     listingType: row["Tipo de Anúncio"]?.toString().trim() ?? "",
     warrantyType: row["Tipo de Garantia"]?.toString().trim() ?? "",
     sku: row["SKU"]?.toString().trim() ?? "",

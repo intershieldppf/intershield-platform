@@ -49,6 +49,65 @@ function decodeTags(mask: number) {
   return TAGS.filter(([bit]) => (mask & bit) === bit).map(([, label]) => label);
 }
 
+function normalizeText(value: string) {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+}
+
+function resolveProductType(title: string, type: StorefrontProduct["type"]) {
+  const normalized = normalizeText(title);
+
+  if (
+    type === "Black Piano" &&
+    /\b(ppf|tpu|pelicula)\b/.test(normalized) &&
+    !/\b(adesivo|blackout|pvc)\b/.test(normalized)
+  ) {
+    return "PPF" as const;
+  }
+
+  return type;
+}
+
+function inferTags(title: string, decodedTags: string[]) {
+  if (decodedTags.length > 0) return decodedTags;
+
+  const normalized = normalizeText(title);
+  const inferred = TAGS.flatMap(([, label]) =>
+    normalized.includes(normalizeText(label)) ? [label] : [],
+  );
+
+  if (/\bkit interior\b/.test(normalized)) inferred.push("Interior");
+  if (/\bkit exterior\b/.test(normalized)) inferred.push("Exterior");
+
+  return Array.from(new Set(inferred));
+}
+
+function inferBrand(title: string, brand: string | null) {
+  if (brand) return brand;
+
+  const normalized = normalizeText(title);
+  const brands: Array<[RegExp, string]> = [
+    [/\bhaval\b|\bgwm\b/, "GWM"],
+    [/\bbyd\b/, "BYD"],
+    [/\bchevrolet\b|\bonix\b/, "Chevrolet"],
+    [/\bvolkswagen\b|\bvw\b/, "Volkswagen"],
+    [/\baudi\b/, "Audi"],
+    [/\bbmw\b/, "BMW"],
+    [/\bjeep\b/, "Jeep"],
+  ];
+
+  return brands.find(([pattern]) => pattern.test(normalized))?.[1] ?? null;
+}
+
+function normalizeVariant(value: string) {
+  const normalized = value.trim().toLocaleLowerCase("pt-BR");
+  return normalized ? normalized.charAt(0).toLocaleUpperCase("pt-BR") + normalized.slice(1) : value;
+}
+
 function resolveYears(title: string, yearStart: number | null, yearEnd: number | null) {
   const fullYears = Array.from(title.matchAll(/\b20\d{2}\b/g), (match) => Number(match[0]));
 
@@ -86,13 +145,13 @@ function mapRow(row: RawCatalogRow): StorefrontProduct {
     price,
     image: `https://http2.mlstatic.com/${image}`,
     sku,
-    brand,
+    brand: inferBrand(title, brand),
     yearStart: resolvedYears.yearStart,
     yearEnd: resolvedYears.yearEnd,
-    type,
-    tags: decodeTags(tagMask),
+    type: resolveProductType(title, type),
+    tags: inferTags(title, decodeTags(tagMask)),
     displayOrder,
-    variantValues,
+    variantValues: Array.from(new Set(variantValues.map(normalizeVariant))),
   };
 }
 
@@ -112,9 +171,26 @@ const rawCatalog = [
   ...(catalog4 as unknown as RawCatalogRow[]),
 ];
 
-export const storefrontCatalog = rawCatalog
-  .map(mapRow)
-  .sort((a, b) => a.displayOrder - b.displayOrder);
+function deduplicateCatalog(products: StorefrontProduct[]) {
+  const titles = new Set<string>();
+  const skus = new Set<string>();
+
+  return products.filter((product) => {
+    const titleKey = normalizeText(product.title);
+    const skuKey = product.sku?.trim().toLocaleUpperCase("pt-BR") ?? null;
+    const duplicate = titles.has(titleKey) || (skuKey ? skus.has(skuKey) : false);
+
+    if (duplicate) return false;
+
+    titles.add(titleKey);
+    if (skuKey) skus.add(skuKey);
+    return true;
+  });
+}
+
+export const storefrontCatalog = deduplicateCatalog(
+  rawCatalog.map(mapRow).sort((a, b) => a.displayOrder - b.displayOrder),
+);
 
 export function storefrontProductSlug(product: StorefrontProduct) {
   return `${slugify(product.title)}-${product.id.toLowerCase()}`;
