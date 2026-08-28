@@ -13,17 +13,27 @@ export function HeroSection() {
       id="inicio"
       className="relative min-h-[680px] overflow-hidden bg-[#010817] lg:min-h-[720px]"
     >
-      <Image
-        src="/intershield-hero-bmw.webp"
-        alt="Interior automotivo protegido pela InterShield Películas"
-        fill
-        priority
-        sizes="100vw"
-        className="object-cover object-[68%_center] sm:object-[64%_center] lg:object-center"
-      />
+      <div
+        className="absolute inset-y-0 right-0 w-full lg:w-[62%]"
+        style={{
+          WebkitMaskImage:
+            "linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.58) 18%, black 38%)",
+          maskImage:
+            "linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.58) 18%, black 38%)",
+        }}
+      >
+        <Image
+          src="/intershield-hero-bmw-m5.webp"
+          alt="Interior esportivo de BMW com painel digital e acabamento automotivo"
+          fill
+          priority
+          sizes="(min-width: 1024px) 62vw, 100vw"
+          className="object-cover object-[54%_48%] sm:object-[56%_48%] lg:object-[48%_50%]"
+        />
+      </div>
 
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(1,7,20,0.99)_0%,rgba(1,7,20,0.94)_32%,rgba(1,7,20,0.72)_56%,rgba(1,7,20,0.18)_82%,rgba(1,7,20,0.08)_100%)]" />
-      <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(1,7,20,0.86)_0%,rgba(1,7,20,0.08)_45%,rgba(1,7,20,0.12)_100%)] lg:hidden" />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(1,7,20,0.99)_0%,rgba(1,7,20,0.96)_34%,rgba(1,7,20,0.76)_58%,rgba(1,7,20,0.2)_84%,rgba(1,7,20,0.08)_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(1,7,20,0.68)_0%,rgba(1,7,20,0.3)_42%,rgba(1,7,20,0.92)_100%)] lg:hidden" />
 
       <div className="relative z-10 mx-auto flex min-h-[680px] max-w-[1440px] items-center px-5 py-14 sm:px-8 sm:py-16 lg:min-h-[720px] lg:px-16 xl:px-20">
         <div className="w-full max-w-[760px]">
