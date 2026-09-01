@@ -89,6 +89,29 @@ export function SupportSection() {
                   @intershieldppf
                 </span>
               </a>
+
+              <a
+                href="https://www.youtube.com/@InterShieldPPF"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Acessar o canal da InterShield no YouTube"
+                className="flex items-center justify-between gap-4 text-sm text-slate-300 transition hover:text-white"
+              >
+                <span className="flex min-w-0 items-center gap-3">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#FF0000] text-white">
+                    <PlatformIcon name="youtube" className="h-[18px] w-[18px]" />
+                  </span>
+                  <span className="flex min-w-0 flex-col">
+                    <span>YouTube</span>
+                    <span className="text-xs leading-5 text-slate-500">
+                      Vídeos educativos e guias de aplicação
+                    </span>
+                  </span>
+                </span>
+                <span className="shrink-0 font-semibold text-white">
+                  Assistir
+                </span>
+              </a>
             </div>
           </div>
         </div>
