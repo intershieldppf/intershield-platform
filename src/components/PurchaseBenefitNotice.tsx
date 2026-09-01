@@ -6,6 +6,7 @@ import {
   PackageCheck,
   PanelsTopLeft,
 } from "lucide-react";
+import Image from "next/image";
 
 import type { PurchaseBenefitKind } from "@/lib/purchaseBenefits";
 
@@ -28,8 +29,8 @@ const ppfItems = [
   },
   {
     icon: PackageCheck,
-    title: "Espátula de aplicação",
-    text: "Ajuda a remover o líquido e acomodar o PPF.",
+    title: "Espátula personalizada",
+    text: "Modelo oficial da InterShield para auxiliar na aplicação.",
   },
   {
     icon: BookOpenCheck,
@@ -53,7 +54,7 @@ export function PurchaseBenefitNotice({
   if (compact) {
     return (
       <aside
-        aria-label={isPpfKit ? "Kit completo para aplicação de PPF" : "Brinde para aplicação do adesivo"}
+        aria-label={isPpfKit ? "Kit completo para aplicação de PPF" : "Espátula personalizada grátis"}
         className={`rounded-[20px] border border-blue-200 bg-blue-50/70 p-4 ${className}`}
       >
         <div className="flex gap-3">
@@ -68,12 +69,12 @@ export function PurchaseBenefitNotice({
             <p className="text-sm font-bold text-slate-950">
               {isPpfKit
                 ? "Você recebe o kit de aplicação completo"
-                : "Espátula de aplicação de brinde"}
+                : "Espátula personalizada grátis!"}
             </p>
             <p className="mt-1 text-xs leading-5 text-slate-600">
               {isPpfKit
-                ? "PPF pré-cortado, solução deslizante, espátula, manual ilustrado e suporte especializado."
-                : "Além do acabamento adesivo, enviamos uma espátula para auxiliar na aplicação."}
+                ? "PPF pré-cortado, solução deslizante, espátula personalizada, manual ilustrado e suporte especializado."
+                : "A espátula oficial da InterShield acompanha o acabamento adesivo para auxiliar na aplicação."}
             </p>
           </div>
         </div>
@@ -87,25 +88,34 @@ export function PurchaseBenefitNotice({
         aria-labelledby="adhesive-gift-title"
         className={`overflow-hidden rounded-[30px] border border-blue-200 bg-[linear-gradient(120deg,#eff6ff_0%,#ffffff_60%,#eef2ff_100%)] p-7 shadow-sm sm:p-9 ${className}`}
       >
-        <div className="grid gap-7 lg:grid-cols-[auto_1fr_auto] lg:items-center">
-          <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-lg shadow-blue-900/15">
-            <Gift className="h-7 w-7" />
-          </span>
+        <div className="grid gap-7 lg:grid-cols-[128px_1fr_auto] lg:items-center">
+          <div className="relative flex h-24 w-32 items-center justify-center overflow-hidden rounded-2xl border border-blue-100 bg-white p-2 shadow-lg shadow-blue-900/10">
+            <Image
+              src="/espatula-personalizada-intershield.png"
+              width={182}
+              height={140}
+              alt="Espátula personalizada oficial da InterShield"
+              className="h-full w-full object-contain"
+            />
+            <span className="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-lg bg-blue-600 text-white shadow-sm">
+              <Gift className="h-4 w-4" />
+            </span>
+          </div>
           <div>
             <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-blue-600">
-              Brinde incluso na compra
+              Brinde personalizado incluso
             </p>
             <h2 id="adhesive-gift-title" className="mt-2 text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">
-              Sua espátula de aplicação vai junto com o acabamento
+              Espátula personalizada grátis!
             </h2>
             <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-600">
-              Você recebe as peças adesivas conforme o anúncio e uma espátula de
-              brinde para ajudar no posicionamento, na fixação e no acabamento
-              durante a instalação.
+              Você recebe as peças adesivas conforme o anúncio e a espátula
+              oficial da InterShield para ajudar no posicionamento, na fixação e
+              no acabamento durante a instalação.
             </p>
           </div>
           <span className="w-fit rounded-full border border-blue-200 bg-white px-4 py-2 text-xs font-bold text-blue-700 shadow-sm">
-            Espátula grátis
+            Vai no seu pedido
           </span>
         </div>
       </section>

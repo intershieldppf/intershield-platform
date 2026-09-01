@@ -32,7 +32,7 @@ const categories = [
     description:
       "Opções em Black Piano, Preto Fosco Poroso e Fibra de Carbono 4D, produzidas com recorte específico para cada modelo.",
     details: "Black Piano • Fosco • Fibra 4D",
-    purchaseBenefit: "Espátula de aplicação de brinde",
+    purchaseBenefit: "Espátula personalizada grátis",
     href: "/black-piano",
     action: "Conhecer os acabamentos",
     number: "03",

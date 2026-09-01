@@ -13,6 +13,11 @@ Criar uma plataforma digital para InterShield Películas com foco em proteção 
 - Tipografia clara, com espaçamento tecnológico e hierarquia visual definida.
 - Uso restrito de sombras e nenhum gradiente exagerado.
 - Todas as imagens e ícones devem reforçar a marca, sem gerar imagens artificiais.
+- A espátula oficial de envio é o modelo cinza personalizado com o escudo da
+  InterShield, armazenado em `public/espatula-personalizada-intershield.png`.
+- Não substituir a espátula oficial por modelos genéricos, pretos ou sem o
+  símbolo da InterShield em páginas, anúncios ou novas artes.
+- Ao destacar o brinde, usar a chamada "Espátula personalizada grátis!".
 
 ## Arquitetura
 

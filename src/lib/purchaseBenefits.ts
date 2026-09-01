@@ -12,13 +12,13 @@ const STANDARD_GALLERY_IMAGES: Record<PurchaseBenefitKind, string> = {
 
 export const PPF_APPLICATION_EXTRAS = [
   "Solução deslizante para auxiliar na aplicação",
-  "Espátula de aplicação",
+  "Espátula personalizada da InterShield",
   "Manual ilustrado de instalação",
   "Suporte especializado da InterShield",
 ] as const;
 
 export const ADHESIVE_APPLICATION_EXTRAS = [
-  "Espátula de aplicação enviada como brinde",
+  "Espátula personalizada da InterShield enviada grátis",
 ] as const;
 
 export function getPurchaseBenefitKind(
