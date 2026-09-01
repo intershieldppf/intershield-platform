@@ -12,7 +12,7 @@ const navItems = [
   { label: "PPF", href: "/ppf" },
   { label: "Acabamentos para colunas", href: "/black-piano" },
   { label: "Catálogo", href: "/catalogo" },
-  { label: "Como instalar", href: "/#instalar" },
+  { label: "Como instalar", href: "/como-instalar" },
   { label: "Sobre", href: "/#sobre" },
   { label: "Suporte", href: "/#suporte" },
 ];

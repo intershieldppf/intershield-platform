@@ -18,7 +18,7 @@ const navigationLinks = [
   { label: "PPF", href: "/ppf" },
   { label: "Acabamentos para colunas", href: "/black-piano" },
   { label: "Catálogo", href: "/catalogo" },
-  { label: "Como instalar", href: "/#instalar" },
+  { label: "Como instalar", href: "/como-instalar" },
   { label: "Quem somos", href: "/#sobre" },
   { label: "Privacidade", href: "/privacidade" },
   { label: "Envio e trocas", href: "/envio-trocas" },

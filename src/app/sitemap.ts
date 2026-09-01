@@ -5,7 +5,16 @@ import { storefrontCatalog, storefrontProductSlug } from "@/data/storefront/cata
 const baseUrl = "https://www.intershield.com.br";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes = ["", "/catalogo", "/ppf", "/black-piano", "/privacidade", "/envio-trocas", "/garantia-instalacao"];
+  const staticRoutes = [
+    "",
+    "/catalogo",
+    "/ppf",
+    "/black-piano",
+    "/como-instalar",
+    "/privacidade",
+    "/envio-trocas",
+    "/garantia-instalacao",
+  ];
 
   return [
     ...staticRoutes.map((route, index) => ({
