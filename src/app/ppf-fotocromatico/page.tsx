@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 
 import { Header } from "@/components/layout/Header";
+import { PhotochromicCarousel } from "@/components/media/PhotochromicCarousel";
 import { PlatformIcon } from "@/components/ui/PlatformIcon";
 
 export const metadata: Metadata = {
@@ -92,6 +93,10 @@ const questions = [
     text: "Não. Trincas, descascamento, opacidade e amarelamento existentes devem ser avaliados antes. O PPF protege a condição atual, mas não substitui restauração ou reparo.",
   },
   {
+    title: "É indicado polir o farol antes da aplicação?",
+    text: "Quando a lente apresenta opacidade, amarelamento leve ou micro-riscos, um polimento técnico prévio pode melhorar brilho e uniformidade. Em faróis novos ou com a superfície íntegra, normalmente basta realizar limpeza e descontaminação corretas. A avaliação deve ser feita por um profissional.",
+  },
+  {
     title: "Por que a instalação profissional é recomendada?",
     text: "Diferente das peças internas pré-cortadas, a manta precisa ser medida, conformada e recortada no próprio farol. As curvas complexas exigem controle de tensão e acabamento preciso. Recomendamos fortemente um profissional com experiência em PPF automotivo.",
   },
@@ -138,38 +143,7 @@ export default function PpfFotocromaticoPage() {
               </div>
             </div>
 
-            <div className="relative mx-auto w-full max-w-[560px]">
-              <div className="absolute -inset-5 rounded-[44px] border border-blue-400/15" />
-              <div className="relative aspect-[5/4] overflow-hidden rounded-[36px] border border-white/10 bg-slate-950 shadow-[0_35px_90px_-44px_rgba(37,99,235,0.75)]">
-                <Image
-                  src="/ppf-fotocromatico-hero-real.webp"
-                  alt="Farol automotivo com simulação realista do efeito do PPF fotocromático"
-                  fill
-                  priority
-                  sizes="(max-width: 1024px) 90vw, 560px"
-                  className="object-cover object-[66%_center]"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-white/5" />
-
-                <div className="absolute bottom-5 left-5 flex items-center gap-3 rounded-[20px] border border-white/15 bg-[#050b19]/80 p-2 pr-4 backdrop-blur-md">
-                  <span className="relative h-16 w-16 overflow-hidden rounded-2xl bg-white/95">
-                    <Image
-                      src="/ppf-fotocromatico-rolo.webp"
-                      alt="Rolo do PPF fotocromático"
-                      fill
-                      sizes="64px"
-                      className="object-contain p-1.5"
-                    />
-                  </span>
-                  <div>
-                    <p className="text-xs font-bold uppercase tracking-[0.18em] text-blue-300">
-                      30 cm × metragem
-                    </p>
-                    <p className="mt-1 text-sm font-semibold text-white">Manta sem pré-corte</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <PhotochromicCarousel />
           </div>
         </section>
 
@@ -402,6 +376,7 @@ export default function PpfFotocromaticoPage() {
                   "Medição e melhor aproveitamento da manta",
                   "Controle de tensão nas curvas complexas do farol",
                   "Recorte seguro e acabamento preciso das bordas",
+                  "Avaliação da lente e polimento técnico, quando necessário",
                   "Superfície descontaminada e completamente limpa",
                 ].map((item) => (
                   <div key={item} className="flex items-start gap-3 text-sm leading-6 text-slate-300">
@@ -413,6 +388,10 @@ export default function PpfFotocromaticoPage() {
 
               <p className="mt-7 border-l-2 border-blue-500 pl-4 text-sm font-semibold leading-7 text-white">
                 Recomendamos fortemente a instalação por um profissional com experiência em PPF automotivo. É a escolha mais segura para obter uniformidade, boa fixação e acabamento correto.
+              </p>
+
+              <p className="mt-5 rounded-2xl border border-blue-400/20 bg-blue-500/10 px-5 py-4 text-sm leading-7 text-slate-300">
+                Se a lente estiver opaca, levemente amarelada ou com micro-riscos, o polimento técnico antes da aplicação pode recuperar brilho e deixar o acabamento mais uniforme. Em faróis íntegros, evite desgaste desnecessário: limpeza e descontaminação bem executadas costumam ser suficientes.
               </p>
             </div>
           </div>
