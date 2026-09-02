@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import {
   Box,
   CheckCircle2,
-  CircleAlert,
   Clock3,
   Droplets,
+  Hand,
   Layers,
   MessageCircle,
   Move,
@@ -150,7 +150,7 @@ export default function ComoInstalarPage() {
       <main className="overflow-hidden">
         <section className="relative border-b border-slate-100 bg-white">
           <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[46%] bg-[linear-gradient(135deg,transparent_0%,#eff6ff_100%)] lg:block" />
-          <div className="relative mx-auto grid min-h-[570px] max-w-[1320px] items-center gap-12 px-6 py-16 sm:px-8 lg:grid-cols-[1.15fr_0.85fr] lg:px-10 lg:py-20">
+          <div className="relative mx-auto grid min-h-[570px] max-w-[1320px] items-center gap-14 px-6 py-16 sm:px-8 lg:grid-cols-[1.08fr_0.92fr] lg:px-10 lg:py-20">
             <div className="max-w-[720px]">
               <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-blue-600">
                 Guia de aplicação
@@ -179,34 +179,39 @@ export default function ComoInstalarPage() {
               </div>
             </div>
 
-            <div className="relative">
-              <div className="absolute -inset-8 rounded-full border border-blue-100" />
-              <div className="relative overflow-hidden rounded-[32px] border border-slate-200 bg-[#030816] p-7 text-white shadow-[0_30px_80px_-42px_rgba(37,99,235,0.65)] sm:p-9">
-                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-blue-400">
-                  Antes de começar
+            <div className="relative lg:pl-14">
+              <div className="absolute bottom-0 left-0 top-0 hidden w-px bg-gradient-to-b from-transparent via-blue-200 to-transparent lg:block" />
+
+              <div className="flex items-center gap-4">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-blue-600 text-white">
+                  <Hand className="h-5 w-5" />
+                </span>
+                <p className="text-xs font-bold uppercase tracking-[0.24em] text-blue-600">
+                  Instalação guiada
                 </p>
-                <h2 className="mt-4 text-2xl font-bold tracking-[-0.03em]">
-                  Preparação correta evita a maioria dos problemas.
-                </h2>
-                <div className="mt-8 grid grid-cols-3 gap-3 border-t border-white/10 pt-7">
-                  {[
-                    ["06", "etapas"],
-                    ["02", "vídeos"],
-                    ["48 h", "de cuidado"],
-                  ].map(([value, label]) => (
-                    <div key={label}>
-                      <p className="text-xl font-bold text-white sm:text-2xl">{value}</p>
-                      <p className="mt-1 text-[10px] uppercase tracking-[0.12em] text-slate-500">
-                        {label}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-8 flex gap-4 rounded-[20px] border border-blue-500/20 bg-blue-500/10 p-5">
-                  <CircleAlert className="mt-0.5 h-5 w-5 shrink-0 text-blue-400" />
-                  <p className="text-sm leading-6 text-slate-300">
-                    A superfície deve estar completamente limpa e higienizada antes da aplicação.
-                  </p>
+              </div>
+
+              <h2 className="mt-7 text-[42px] font-bold leading-[0.98] tracking-[-0.045em] text-slate-950 sm:text-[54px]">
+                Faça você mesmo.
+              </h2>
+              <p className="mt-5 max-w-lg text-base leading-8 text-slate-600">
+                Com o PPF pré-cortado, a espátula inclusa e este guia, você pode realizar a aplicação seguindo cada etapa com calma e atenção.
+              </p>
+
+              <div className="mt-9 border-t border-slate-200 pt-8">
+                <div className="flex items-start gap-4">
+                  <ShieldCheck className="mt-1 h-6 w-6 shrink-0 text-blue-600" />
+                  <div>
+                    <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
+                      Nossa recomendação
+                    </p>
+                    <h3 className="mt-3 text-xl font-bold tracking-[-0.02em] text-slate-950 sm:text-2xl">
+                      Para máxima precisão, prefira um profissional.
+                    </h3>
+                    <p className="mt-3 max-w-lg text-base leading-7 text-slate-600">
+                      A instalação profissional oferece mais segurança no posicionamento, na fixação e no acabamento final da peça.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
