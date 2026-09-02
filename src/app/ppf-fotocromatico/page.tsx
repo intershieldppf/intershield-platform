@@ -9,6 +9,8 @@ import {
   Layers3,
   MoonStar,
   Palette,
+  Ruler,
+  Scissors,
   ShieldCheck,
   Sparkles,
   SunMedium,
@@ -61,6 +63,9 @@ const benefits = [
 ] as const;
 
 const specifications = [
+  ["Formato de venda", "Manta vendida por metragem"],
+  ["Largura fixa", "30 cm"],
+  ["Comprimentos", "1 m, 2 m, 3 m ou mais"],
   ["Material", "PPF flexível de TPU"],
   ["Espessura nominal", "165 micras"],
   ["Acabamento", "Transparente e ultrabrilhante"],
@@ -70,6 +75,10 @@ const specifications = [
 ] as const;
 
 const questions = [
+  {
+    title: "O produto chega pré-cortado para o meu farol?",
+    text: "Não. O PPF fotocromático é vendido em manta de 30 cm de largura, com o comprimento escolhido no pedido: 1 m, 2 m, 3 m ou mais. A medição, o recorte e o acabamento são feitos durante a instalação.",
+  },
   {
     title: "O efeito mantém sempre a mesma cor?",
     text: "Não. A intensidade pode mudar conforme incidência de luz ultravioleta, horário, clima, temperatura, orientação do farol e tempo de exposição.",
@@ -83,8 +92,8 @@ const questions = [
     text: "Não. Trincas, descascamento, opacidade e amarelamento existentes devem ser avaliados antes. O PPF protege a condição atual, mas não substitui restauração ou reparo.",
   },
   {
-    title: "A aplicação exige cuidado profissional?",
-    text: "Sim. Curvas, recortes e emendas podem comprometer o acabamento e a fixação. Para melhor uniformidade, recomendamos instalação por profissional especializado.",
+    title: "Por que a instalação profissional é recomendada?",
+    text: "Diferente das peças internas pré-cortadas, a manta precisa ser medida, conformada e recortada no próprio farol. As curvas complexas exigem controle de tensão e acabamento preciso. Recomendamos fortemente um profissional com experiência em PPF automotivo.",
   },
 ] as const;
 
@@ -154,9 +163,9 @@ export default function PpfFotocromaticoPage() {
                   </span>
                   <div>
                     <p className="text-xs font-bold uppercase tracking-[0.18em] text-blue-300">
-                      165 µm
+                      30 cm × metragem
                     </p>
-                    <p className="mt-1 text-sm font-semibold text-white">Proteção flexível</p>
+                    <p className="mt-1 text-sm font-semibold text-white">Manta sem pré-corte</p>
                   </div>
                 </div>
               </div>
@@ -177,6 +186,64 @@ export default function PpfFotocromaticoPage() {
                 <p className="text-sm font-bold text-slate-800">{label}</p>
               </div>
             ))}
+          </div>
+        </section>
+
+        <section className="border-b border-slate-100 bg-white py-16 sm:py-20">
+          <div className="mx-auto grid max-w-[1240px] items-center gap-10 px-6 sm:px-8 lg:grid-cols-[0.82fr_1.18fr] lg:gap-16 lg:px-10">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.26em] text-blue-600">
+                Formato de venda
+              </p>
+              <h2 className="mt-4 text-4xl font-bold leading-tight tracking-[-0.04em] text-slate-950 sm:text-[50px]">
+                Não é kit pré-cortado.
+              </h2>
+              <p className="mt-5 text-base leading-8 text-slate-600">
+                O PPF fotocromático é fornecido em manta com <strong className="font-bold text-slate-950">30 cm de largura fixa</strong>. Você escolhe o comprimento necessário em metros, de acordo com o projeto.
+              </p>
+              <div className="mt-6 flex items-start gap-3 rounded-2xl border border-blue-100 bg-blue-50 px-5 py-4 text-sm leading-7 text-slate-700">
+                <Scissors className="mt-1 h-5 w-5 shrink-0 text-blue-600" />
+                <p>O recorte no formato do farol é realizado pelo instalador durante a aplicação.</p>
+              </div>
+            </div>
+
+            <div className="overflow-hidden rounded-[30px] bg-[#030816] p-6 text-white shadow-[0_30px_80px_-50px_rgba(37,99,235,0.8)] sm:p-8">
+              <div className="flex items-center justify-between gap-5 border-b border-white/10 pb-6">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-[0.2em] text-blue-300">
+                    Largura da manta
+                  </p>
+                  <p className="mt-2 text-3xl font-bold tracking-[-0.04em]">0,30 metro</p>
+                </div>
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-600">
+                  <Ruler className="h-6 w-6" />
+                </span>
+              </div>
+
+              <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                {["0,30 × 1 m", "0,30 × 2 m", "0,30 × 3 m", "Mais metros"].map(
+                  (measure, index) => (
+                    <div
+                      key={measure}
+                      className={`rounded-2xl border px-4 py-5 ${
+                        index === 3
+                          ? "border-blue-400/30 bg-blue-500/15"
+                          : "border-white/10 bg-white/[0.04]"
+                      }`}
+                    >
+                      <p className="text-xs font-bold uppercase tracking-[0.16em] text-slate-400">
+                        {index === 3 ? "Sob medida" : "Opção"}
+                      </p>
+                      <p className="mt-2 text-base font-bold text-white">{measure}</p>
+                    </div>
+                  ),
+                )}
+              </div>
+
+              <p className="mt-5 text-sm leading-7 text-slate-400">
+                A largura permanece em 30 cm; o comprimento aumenta conforme a metragem selecionada no pedido.
+              </p>
+            </div>
           </div>
         </section>
 
@@ -321,20 +388,21 @@ export default function PpfFotocromaticoPage() {
 
             <div>
               <p className="text-xs font-bold uppercase tracking-[0.26em] text-blue-400">
-                Instalação faz diferença
+                Instalação profissional recomendada
               </p>
               <h2 className="mt-4 text-4xl font-bold leading-tight tracking-[-0.04em] text-white sm:text-[50px]">
-                Curvas, bordas e transparência exigem precisão.
+                Farol não é aplicação de peça pré-cortada.
               </h2>
               <p className="mt-6 text-base leading-8 text-slate-300">
-                O farol combina curvas acentuadas, recortes estreitos e áreas que não podem perder uniformidade. Uma aplicação bem executada evita tensão excessiva, marcas, bordas levantadas e solução retida sob o filme.
+                Diferente dos kits para peças internas, este material chega em manta. O profissional precisa medir, posicionar, conformar e recortar o PPF diretamente para cada farol, respeitando curvas, bordas e o formato específico da lente.
               </p>
 
               <div className="mt-7 space-y-4">
                 {[
+                  "Medição e melhor aproveitamento da manta",
+                  "Controle de tensão nas curvas complexas do farol",
+                  "Recorte seguro e acabamento preciso das bordas",
                   "Superfície descontaminada e completamente limpa",
-                  "Posicionamento uniforme sem comprometer o conjunto óptico",
-                  "Acabamento das bordas com tempo correto de cura",
                 ].map((item) => (
                   <div key={item} className="flex items-start gap-3 text-sm leading-6 text-slate-300">
                     <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-blue-400" />
@@ -344,7 +412,7 @@ export default function PpfFotocromaticoPage() {
               </div>
 
               <p className="mt-7 border-l-2 border-blue-500 pl-4 text-sm font-semibold leading-7 text-white">
-                Para o melhor resultado visual e maior segurança na fixação, recomendamos instalação por profissional especializado.
+                Recomendamos fortemente a instalação por um profissional com experiência em PPF automotivo. É a escolha mais segura para obter uniformidade, boa fixação e acabamento correto.
               </p>
             </div>
           </div>
@@ -450,10 +518,10 @@ export default function PpfFotocromaticoPage() {
               <div className="relative grid gap-9 lg:grid-cols-[1fr_auto] lg:items-center">
                 <div className="max-w-3xl">
                   <h2 className="text-3xl font-bold tracking-[-0.035em] text-white sm:text-[44px]">
-                    Quer avaliar o PPF fotocromático para o seu projeto?
+                    Precisa calcular a metragem para o seu projeto?
                   </h2>
                   <p className="mt-4 max-w-2xl text-base leading-8 text-blue-100">
-                    Envie o modelo e o ano do veículo. Nossa equipe orienta sobre medida, instalação e cuidados antes da compra.
+                    Envie o modelo e o ano do veículo. Nossa equipe orienta sobre a quantidade de material e os cuidados antes da compra. Para a aplicação, procure um profissional experiente em PPF.
                   </p>
                 </div>
                 <a
@@ -463,7 +531,7 @@ export default function PpfFotocromaticoPage() {
                   className="inline-flex h-12 min-w-[240px] items-center justify-center gap-3 rounded-xl bg-white px-6 text-sm font-bold text-blue-700 transition hover:bg-blue-50"
                 >
                   <PlatformIcon name="whatsapp" className="h-5 w-5 text-[#25D366]" />
-                  Consultar aplicação
+                  Consultar metragem
                 </a>
               </div>
             </div>
