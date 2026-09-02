@@ -16,6 +16,7 @@ const whatsappUrl =
 const navigationLinks = [
   { label: "Início", href: "/" },
   { label: "PPF", href: "/ppf" },
+  { label: "PPF Fotocromático", href: "/ppf-fotocromatico" },
   { label: "Acabamentos para colunas", href: "/black-piano" },
   { label: "Catálogo", href: "/catalogo" },
   { label: "Como instalar", href: "/como-instalar" },
@@ -28,6 +29,7 @@ const navigationLinks = [
 const solutionLinks = [
   { label: "PPF Interior", href: "/ppf" },
   { label: "PPF Exterior", href: "/ppf" },
+  { label: "PPF Fotocromático", href: "/ppf-fotocromatico" },
   { label: "Black Piano", href: "/black-piano" },
   { label: "Preto Fosco Poroso", href: "/black-piano" },
   { label: "Fibra de Carbono 4D", href: "/black-piano" },

@@ -6,6 +6,7 @@ export type NavItem = {
 export const navigation: NavItem[] = [
   { label: "Kits para veiculos", href: "#kits" },
   { label: "Motos", href: "#motos" },
+  { label: "PPF Fotocromático", href: "/ppf-fotocromatico" },
   { label: "Black Piano", href: "#blackpiano" },
   { label: "Como instalar", href: "/como-instalar" },
   { label: "Conheca a InterShield", href: "#sobre" },

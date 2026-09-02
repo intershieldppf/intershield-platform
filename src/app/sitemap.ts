@@ -9,6 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "",
     "/catalogo",
     "/ppf",
+    "/ppf-fotocromatico",
     "/black-piano",
     "/como-instalar",
     "/privacidade",

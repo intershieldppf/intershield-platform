@@ -10,6 +10,7 @@ import { PlatformIcon } from "@/components/ui/PlatformIcon";
 
 const navItems = [
   { label: "PPF", href: "/ppf" },
+  { label: "PPF Fotocromático", href: "/ppf-fotocromatico" },
   { label: "Acabamentos para colunas", href: "/black-piano" },
   { label: "Catálogo", href: "/catalogo" },
   { label: "Como instalar", href: "/como-instalar" },
@@ -50,7 +51,7 @@ export function Header() {
           <HomeLogo label="Ir para o início do site" />
         </div>
 
-        <nav className="hidden min-w-0 flex-1 items-center justify-center gap-9 whitespace-nowrap text-[13px] font-semibold text-slate-700 lg:flex xl:gap-11">
+        <nav className="hidden min-w-0 flex-1 items-center justify-center gap-5 whitespace-nowrap text-[12px] font-semibold text-slate-700 lg:flex xl:gap-7 xl:text-[13px]">
           {navItems.map((item) => (
             <Link
               key={item.label}
