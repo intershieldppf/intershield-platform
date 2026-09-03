@@ -67,7 +67,7 @@ const SPECIFIC_PRODUCT_SPECS: Record<string, SpecificProductSpec> = {
     gallery: [
       "/ppf-fotocromatico-tiguan-catalogo.webp",
       "/ppf-fotocromatico-rolo.webp",
-      "/ppf-fotocromatico-rolo-real.webp",
+      "/ppf-fotocromatico-rolo-fundo-studio.webp",
       "/ppf-fotocromatico-antes-depois.webp",
       "/ppf-fotocromatico-aplicacao.webp",
     ],
