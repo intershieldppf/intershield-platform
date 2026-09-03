@@ -23,13 +23,23 @@ export function HeroSection() {
         }}
       >
         <Image
-          src="/intershield-hero-bmw-m5.webp"
-          alt="Interior esportivo de BMW com painel digital e acabamento automotivo"
+          src="/intershield-hero-bmw-night.webp"
+          alt=""
+          fill
+          priority
+          sizes="(min-width: 1280px) 48vw, (min-width: 1024px) 50vw, 100vw"
+          className="scale-110 object-cover object-center opacity-35 blur-xl"
+          aria-hidden="true"
+        />
+        <div className="absolute inset-0 bg-[#010817]/15" />
+        <Image
+          src="/intershield-hero-bmw-night.webp"
+          alt="Interior de BMW com painel digital, central multimídia e console iluminado"
           fill
           priority
           quality={95}
-          sizes="(min-width: 1280px) 48vw, (min-width: 1024px) 50vw, 100vw"
-          className="object-cover object-[58%_46%] contrast-[1.04] saturate-[1.06] sm:object-[60%_46%] lg:object-[54%_44%]"
+          sizes="(min-width: 1280px) 540px, (min-width: 1024px) 50vw, 100vw"
+          className="object-cover object-[58%_50%] contrast-[1.03] saturate-[1.04] lg:object-contain lg:object-right"
         />
       </div>
 

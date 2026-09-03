@@ -135,10 +135,10 @@ export default function PpfFotocromaticoPage() {
                   <ArrowRight className="h-4 w-4" />
                 </a>
                 <a
-                  href="#como-funciona"
+                  href="#entenda-a-tecnologia"
                   className="inline-flex h-12 items-center justify-center rounded-xl border border-white/15 bg-white/5 px-6 text-sm font-bold text-white transition hover:border-white/30 hover:bg-white/10"
                 >
-                  Entender a tecnologia
+                  Entenda a tecnologia
                 </a>
               </div>
             </div>
@@ -221,49 +221,89 @@ export default function PpfFotocromaticoPage() {
           </div>
         </section>
 
-        <section id="como-funciona" className="scroll-mt-24 bg-white py-20 sm:py-24">
-          <div className="mx-auto grid max-w-[1240px] items-center gap-12 px-6 sm:px-8 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16 lg:px-10">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-[0.26em] text-blue-600">
-                Como funciona
-              </p>
-              <h2 className="mt-4 text-4xl font-bold leading-tight tracking-[-0.04em] text-slate-950 sm:text-[52px]">
-                A aparência muda. A proteção permanece.
-              </h2>
-              <p className="mt-6 text-base leading-8 text-slate-600">
-                Compostos fotocromáticos respondem à radiação ultravioleta presente na luz solar. Com maior exposição, a tonalidade do filme se intensifica; quando a incidência diminui, o material retorna progressivamente ao estado mais claro.
-              </p>
-              <p className="mt-4 text-base leading-8 text-slate-600">
-                O efeito não funciona como um interruptor. A velocidade e a intensidade da transição variam com luz, temperatura, clima e tempo de exposição — por isso cada ambiente pode produzir uma percepção diferente.
-              </p>
-            </div>
+        <section
+          id="entenda-a-tecnologia"
+          className="scroll-mt-24 bg-white py-20 sm:py-24"
+        >
+          <div className="mx-auto max-w-[1240px] px-6 sm:px-8 lg:px-10">
+            <div className="grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+              <figure className="mx-auto w-full max-w-[560px] overflow-hidden rounded-[30px] border border-slate-200 bg-[#030816] shadow-[0_32px_80px_-46px_rgba(15,23,42,0.7)] lg:mx-0">
+                <div className="flex items-center justify-between gap-4 border-b border-white/10 px-5 py-4 sm:px-6">
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-blue-400">
+                      Demonstração real
+                    </p>
+                    <p className="mt-1 text-sm font-bold text-white">
+                      Veja o material reagindo à luz
+                    </p>
+                  </div>
+                  <span className="rounded-full border border-blue-400/25 bg-blue-500/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.15em] text-blue-300">
+                    33 segundos
+                  </span>
+                </div>
 
-            <div className="grid gap-4 sm:grid-cols-2">
-              <article className="min-h-[300px] rounded-[28px] border border-slate-200 bg-slate-50 p-7 sm:p-8">
-                <MoonStar className="h-7 w-7 text-slate-700" />
-                <p className="mt-10 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
-                  Menor exposição UV
-                </p>
-                <h3 className="mt-3 text-2xl font-bold tracking-[-0.03em] text-slate-950">
-                  Aparência mais clara
-                </h3>
-                <p className="mt-4 text-sm leading-7 text-slate-600">
-                  Em locais cobertos, à sombra ou com pouca incidência solar, o tom tende a ficar mais discreto.
-                </p>
-              </article>
+                <video
+                  controls
+                  playsInline
+                  preload="metadata"
+                  poster="/ppf-fotocromatico-video-poster.webp"
+                  className="aspect-[7/8] w-full bg-black object-cover"
+                  aria-label="Demonstração do efeito do PPF fotocromático sob a luz"
+                >
+                  <source
+                    src="/videos/ppf-fotocromatico-tecnologia.mp4"
+                    type="video/mp4"
+                  />
+                  Seu navegador não consegue reproduzir este vídeo.
+                </video>
 
-              <article className="min-h-[300px] rounded-[28px] border border-blue-500/20 bg-[#06112b] p-7 text-white sm:p-8">
-                <SunMedium className="h-7 w-7 text-blue-400" />
-                <p className="mt-10 text-xs font-bold uppercase tracking-[0.2em] text-blue-300">
-                  Maior exposição UV
+                <figcaption className="border-t border-white/10 px-5 py-4 text-xs leading-6 text-slate-400 sm:px-6">
+                  A intensidade e o tempo de transição podem variar conforme a incidência UV, a temperatura e o ambiente.
+                </figcaption>
+              </figure>
+
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.26em] text-blue-600">
+                  Entenda a tecnologia
                 </p>
-                <h3 className="mt-3 text-2xl font-bold tracking-[-0.03em] text-white">
-                  Efeito camaleão ativo
-                </h3>
-                <p className="mt-4 text-sm leading-7 text-slate-300">
-                  Sob luz solar mais intensa, a coloração ganha presença e transforma o visual do conjunto óptico.
+                <h2 className="mt-4 text-4xl font-bold leading-tight tracking-[-0.04em] text-slate-950 sm:text-[52px]">
+                  A aparência muda. A proteção permanece.
+                </h2>
+                <p className="mt-6 text-base leading-8 text-slate-600">
+                  Compostos fotocromáticos respondem à radiação ultravioleta presente na luz solar. Com maior exposição, a tonalidade do filme se intensifica; quando a incidência diminui, o material retorna progressivamente ao estado mais claro.
                 </p>
-              </article>
+                <p className="mt-4 text-base leading-8 text-slate-600">
+                  O efeito não funciona como um interruptor. A velocidade e a intensidade da transição variam com luz, temperatura, clima e tempo de exposição — por isso cada ambiente pode produzir uma percepção diferente.
+                </p>
+
+                <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                  <article className="rounded-[24px] border border-slate-200 bg-slate-50 p-6">
+                    <MoonStar className="h-6 w-6 text-slate-700" />
+                    <p className="mt-7 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">
+                      Menor exposição UV
+                    </p>
+                    <h3 className="mt-3 text-xl font-bold tracking-[-0.03em] text-slate-950">
+                      Aparência mais clara
+                    </h3>
+                    <p className="mt-3 text-sm leading-7 text-slate-600">
+                      Em locais cobertos, à sombra ou com pouca incidência solar, o tom tende a ficar mais discreto.
+                    </p>
+                  </article>
+
+                  <article className="rounded-[24px] border border-blue-500/20 bg-[#06112b] p-6 text-white">
+                    <SunMedium className="h-6 w-6 text-blue-400" />
+                    <p className="mt-7 text-[10px] font-bold uppercase tracking-[0.2em] text-blue-300">
+                      Maior exposição UV
+                    </p>
+                    <h3 className="mt-3 text-xl font-bold tracking-[-0.03em] text-white">
+                      Efeito camaleão ativo
+                    </h3>
+                    <p className="mt-3 text-sm leading-7 text-slate-300">
+                      Sob luz solar mais intensa, a coloração ganha presença e transforma o visual do conjunto óptico.
+                    </p>
+                  </article>
+                </div>
+              </div>
             </div>
           </div>
         </section>
