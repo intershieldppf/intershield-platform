@@ -6,6 +6,10 @@ import { useCallback, useRef, useState } from "react";
 
 const slides = [
   {
+    src: "/ppf-fotocromatico-carrossel-05.webp",
+    alt: "Veículo prata com faróis personalizados por PPF fotocromático",
+  },
+  {
     src: "/ppf-fotocromatico-carrossel-01.webp",
     alt: "Comparação do PPF fotocromático sob maior e menor incidência de luz ultravioleta",
   },
@@ -20,10 +24,6 @@ const slides = [
   {
     src: "/ppf-fotocromatico-carrossel-04.webp",
     alt: "Proteção do farol contra pedriscos leves, riscos superficiais e desgaste cotidiano",
-  },
-  {
-    src: "/ppf-fotocromatico-carrossel-05.webp",
-    alt: "Veículo prata com faróis personalizados por PPF fotocromático",
   },
 ] as const;
 
