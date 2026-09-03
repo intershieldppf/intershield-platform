@@ -288,7 +288,7 @@ export default function PpfFotocromaticoPage() {
               <div className="relative aspect-[16/9]">
                 <Image
                   src="/ppf-fotocromatico-antes-depois.webp"
-                  alt="Simulação comparativa de farol sem película e com o efeito fotocromático ativado"
+                  alt="Comparativo do mesmo farol sem película e com PPF fotocromático fumê ativado"
                   fill
                   sizes="(max-width: 1280px) 100vw, 1200px"
                   className="object-cover"
@@ -297,11 +297,11 @@ export default function PpfFotocromaticoPage() {
                   Antes · sem película
                 </div>
                 <div className="absolute right-4 top-4 rounded-full border border-blue-300/35 bg-blue-700/75 px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-white backdrop-blur sm:right-6 sm:top-6">
-                  Depois · efeito ativado
+                  Depois · PPF ativado
                 </div>
               </div>
               <figcaption className="border-t border-white/10 bg-[#030816] px-6 py-4 text-sm leading-6 text-slate-400">
-                Simulação visual criada a partir da imagem enviada. A tonalidade real pode variar conforme o produto, o farol e as condições de luz.
+                Simulação visual do efeito fotocromático. A tonalidade real pode variar conforme o produto, o farol e as condições de luz.
               </figcaption>
             </figure>
           </div>
