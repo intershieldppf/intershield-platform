@@ -134,15 +134,15 @@ export function SiteFooter() {
           <div>
             <div className="flex items-center gap-3">
               <span className="rounded-full bg-white/15 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-white">
-                Loja em evolução
+                Compra com suporte
               </span>
               <span className="text-xs font-medium text-blue-100">
-                Compra direta em preparação
+                Compatibilidade confirmada
               </span>
             </div>
             <p className="mt-3 max-w-2xl text-lg font-semibold leading-7 text-white sm:text-xl">
-              Consulte o catálogo agora. Em breve, a compra poderá ser concluída
-              diretamente no site.
+              Encontre o produto no catálogo e finalize pelo WhatsApp com a
+              orientação da nossa equipe.
             </p>
           </div>
 

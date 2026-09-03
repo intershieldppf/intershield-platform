@@ -93,17 +93,32 @@ export default async function ProductPage({ params }: ProductPageProps) {
         item.id !== product.id &&
         ((product.brand && item.brand === product.brand) || item.type === product.type),
     )
+    .map((item) => ({
+      item,
+      score:
+        (product.brand && item.brand === product.brand ? 100 : 0) +
+        item.tags.filter((tag) => product.tags.includes(tag)).length * 10 +
+        (item.type === product.type ? 5 : 0),
+    }))
+    .sort(
+      (a, b) =>
+        b.score - a.score || a.item.displayOrder - b.item.displayOrder,
+    )
+    .map(({ item }) => item)
     .slice(0, 4);
 
   const canonicalUrl = `https://www.intershield.com.br/produto/${storefrontProductSlug(product)}`;
+  const structuredDescription = `${product.title}. Consulte compatibilidade e compre com suporte da InterShield Películas.`;
   const structuredData = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "Product",
         name: product.title,
+        description: structuredDescription,
         image: images.map((image) => image.startsWith("http") ? image : `https://www.intershield.com.br${image}`),
         sku: product.sku ?? product.id,
+        category: product.type,
         brand: product.brand ? { "@type": "Brand", name: product.brand } : undefined,
         url: canonicalUrl,
         offers:
@@ -112,7 +127,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 "@type": "Offer",
                 priceCurrency: "BRL",
                 price: product.price,
-                availability: "https://schema.org/InStock",
                 url: canonicalUrl,
                 seller: { "@type": "Organization", name: "InterShield Películas" },
               }
