@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import {
+  BookOpen,
   Box,
   CheckCircle2,
   Clock3,
@@ -24,7 +26,30 @@ export const metadata: Metadata = {
 };
 
 const whatsappUrl =
-  "https://wa.me/5531997146624?text=Ol%C3%A1%21%20Estou%20instalando%20meu%20kit%20InterShield%20e%20preciso%20de%20ajuda.";
+  "https://wa.me/5531988633883?text=Ol%C3%A1%21%20Estou%20instalando%20meu%20kit%20InterShield%20e%20preciso%20de%20ajuda.";
+
+const kitContents = [
+  {
+    icon: Layers,
+    title: "PPF pré-cortado",
+    text: "Película cortada sob medida conforme o modelo e a peça escolhidos no anúncio.",
+  },
+  {
+    icon: Droplets,
+    title: "Solução para aplicação",
+    text: "Auxilia o posicionamento do PPF antes da fixação definitiva sobre a peça.",
+  },
+  {
+    icon: Hand,
+    title: "Espátula de aplicação",
+    text: "Espátula própria para conduzir a solução e o ar do centro para as bordas.",
+  },
+  {
+    icon: BookOpen,
+    title: "Manual de instalação",
+    text: "Orientações essenciais de preparação, aplicação, acabamento e tempo de cura.",
+  },
+] as const;
 
 const installationSteps = [
   {
@@ -213,6 +238,50 @@ export default function ComoInstalarPage() {
                     </p>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="border-b border-slate-100 bg-slate-50 py-20 sm:py-24">
+          <div className="mx-auto grid max-w-[1240px] items-center gap-12 px-6 sm:px-8 lg:grid-cols-[0.88fr_1.12fr] lg:gap-16 lg:px-10">
+            <figure className="relative mx-auto aspect-square w-full max-w-[560px] overflow-hidden rounded-[32px] border border-slate-200 bg-white shadow-[0_32px_80px_-46px_rgba(15,23,42,0.35)] lg:mx-0">
+              <Image
+                src="/kit-ppf-completo-intershield.webp"
+                alt="Kit InterShield Películas com PPF pré-cortado, solução para aplicação, espátula e manual de instalação"
+                fill
+                sizes="(max-width: 1024px) 90vw, 560px"
+                className="object-cover"
+              />
+            </figure>
+
+            <div>
+              <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-blue-600">
+                Tudo preparado para começar
+              </p>
+              <h2 className="mt-4 text-4xl font-bold leading-[1.04] tracking-[-0.04em] text-slate-950 sm:text-[52px]">
+                O que acompanha seu kit InterShield PPF?
+              </h2>
+              <p className="mt-6 max-w-2xl text-base leading-8 text-slate-600">
+                Seu pedido chega organizado com os itens essenciais para tornar a aplicação mais simples e segura. Antes de retirar o liner, confira o conteúdo e leia o manual completo.
+              </p>
+
+              <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                {kitContents.map((item) => {
+                  const ItemIcon = item.icon;
+
+                  return (
+                    <article key={item.title} className="rounded-[22px] border border-slate-200 bg-white p-5">
+                      <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-white">
+                        <ItemIcon className="h-5 w-5" />
+                      </span>
+                      <h3 className="mt-5 text-lg font-bold tracking-[-0.02em] text-slate-950">
+                        {item.title}
+                      </h3>
+                      <p className="mt-2 text-sm leading-6 text-slate-600">{item.text}</p>
+                    </article>
+                  );
+                })}
               </div>
             </div>
           </div>
