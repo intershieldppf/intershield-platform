@@ -3,9 +3,12 @@ type ProductPurchaseSummary = {
   type: "PPF" | "Black Piano";
 };
 
-export type PurchaseBenefitKind = "ppf-kit" | "adhesive-gift";
+export type PurchaseBenefitKind =
+  | "ppf-kit"
+  | "ppf-manta"
+  | "adhesive-gift";
 
-const STANDARD_GALLERY_IMAGES: Record<PurchaseBenefitKind, string> = {
+const STANDARD_GALLERY_IMAGES: Partial<Record<PurchaseBenefitKind, string>> = {
   "ppf-kit": "/kit-ppf-completo-intershield.webp",
   "adhesive-gift": "/kit-adesivo-espatula-intershield.webp",
 };
@@ -29,6 +32,10 @@ export function getPurchaseBenefitKind(
     .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase();
 
+  if (/fotocromatic[ao]|camaleao/.test(title)) {
+    return "ppf-manta";
+  }
+
   if (product.type === "PPF" || /\b(ppf|tpu)\b/.test(title)) {
     return "ppf-kit";
   }
@@ -41,15 +48,25 @@ export function addStandardBenefitImage(
   images: string[],
 ) {
   const standardImage = STANDARD_GALLERY_IMAGES[getPurchaseBenefitKind(product)];
-  const uniqueImages = Array.from(
-    new Set(images.filter((image) => image && image !== standardImage)),
+  const uniqueImages = Array.from(new Set(images.filter(Boolean)));
+
+  if (!standardImage) {
+    return uniqueImages;
+  }
+
+  const imagesWithoutStandard = uniqueImages.filter(
+    (image) => image !== standardImage,
   );
 
-  if (uniqueImages.length === 0) {
+  if (imagesWithoutStandard.length === 0) {
     return [standardImage];
   }
 
-  return [uniqueImages[0], standardImage, ...uniqueImages.slice(1)];
+  return [
+    imagesWithoutStandard[0],
+    standardImage,
+    ...imagesWithoutStandard.slice(1),
+  ];
 }
 
 function hasEquivalentItem(items: string[], extra: string) {
@@ -75,10 +92,13 @@ export function addPurchaseExtras(
   product: ProductPurchaseSummary,
   items: string[],
 ) {
+  const benefitKind = getPurchaseBenefitKind(product);
   const extras =
-    getPurchaseBenefitKind(product) === "ppf-kit"
+    benefitKind === "ppf-kit"
       ? PPF_APPLICATION_EXTRAS
-      : ADHESIVE_APPLICATION_EXTRAS;
+      : benefitKind === "ppf-manta"
+        ? ["Suporte especializado da InterShield"]
+        : ADHESIVE_APPLICATION_EXTRAS;
 
   return [
     ...items,

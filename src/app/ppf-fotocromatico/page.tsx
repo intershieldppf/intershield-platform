@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import {
   ArrowRight,
   CheckCircle2,
@@ -19,6 +20,10 @@ import {
 import { Header } from "@/components/layout/Header";
 import { PhotochromicCarousel } from "@/components/media/PhotochromicCarousel";
 import { PlatformIcon } from "@/components/ui/PlatformIcon";
+import {
+  photochromicProduct,
+  storefrontProductSlug,
+} from "@/data/storefront/catalog";
 
 export const metadata: Metadata = {
   title: "PPF fotocromático para faróis",
@@ -29,6 +34,19 @@ export const metadata: Metadata = {
 
 const whatsappUrl =
   "https://wa.me/5531988633883?text=Ol%C3%A1%21%20Quero%20saber%20mais%20sobre%20o%20PPF%20fotocrom%C3%A1tico%20para%20far%C3%B3is.%20Meu%20ve%C3%ADculo%20%C3%A9%3A%20";
+
+const productUrl = `/produto/${storefrontProductSlug(photochromicProduct)}`;
+const featuredVariants = photochromicProduct.variantOptions.filter((_, index) =>
+  [0, 1, 4, 9].includes(index),
+);
+const priceFormatter = new Intl.NumberFormat("pt-BR", {
+  style: "currency",
+  currency: "BRL",
+});
+
+function formatPrice(value: number) {
+  return priceFormatter.format(value);
+}
 
 const benefits = [
   {
@@ -66,7 +84,7 @@ const benefits = [
 const specifications = [
   ["Formato de venda", "Manta vendida por metragem"],
   ["Largura fixa", "30 cm"],
-  ["Comprimentos", "1 m, 2 m, 3 m ou mais"],
+  ["Comprimentos", "De 1 a 10 metros"],
   ["Material", "PPF flexível de TPU"],
   ["Espessura nominal", "165 micras"],
   ["Acabamento", "Transparente e ultrabrilhante"],
@@ -78,7 +96,7 @@ const specifications = [
 const questions = [
   {
     title: "O produto chega pré-cortado para o meu farol?",
-    text: "Não. O PPF fotocromático é vendido em manta de 30 cm de largura, com o comprimento escolhido no pedido: 1 m, 2 m, 3 m ou mais. A medição, o recorte e o acabamento são feitos durante a instalação.",
+    text: "Não. O PPF fotocromático é vendido em manta de 30 cm de largura, com o comprimento escolhido no pedido entre 1 e 10 metros. A medição, o recorte e o acabamento são feitos durante a instalação.",
   },
   {
     title: "O efeito mantém sempre a mesma cor?",
@@ -195,28 +213,38 @@ export default function PpfFotocromaticoPage() {
               </div>
 
               <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
-                {["0,30 × 1 m", "0,30 × 2 m", "0,30 × 3 m", "Mais metros"].map(
-                  (measure, index) => (
+                {featuredVariants.map((variant, index) => (
                     <div
-                      key={measure}
+                      key={variant.sku}
                       className={`rounded-2xl border px-4 py-5 ${
-                        index === 3
+                        index === featuredVariants.length - 1
                           ? "border-blue-400/30 bg-blue-500/15"
                           : "border-white/10 bg-white/[0.04]"
                       }`}
                     >
                       <p className="text-xs font-bold uppercase tracking-[0.16em] text-slate-400">
-                        {index === 3 ? "Sob medida" : "Opção"}
+                        {index === 0 ? "Medida inicial" : "Opção"}
                       </p>
-                      <p className="mt-2 text-base font-bold text-white">{measure}</p>
+                      <p className="mt-2 text-base font-bold text-white">
+                        {variant.value}
+                      </p>
+                      <p className="mt-1 text-xs font-semibold text-blue-300">
+                        {formatPrice(variant.price)}
+                      </p>
                     </div>
-                  ),
-                )}
+                  ))}
               </div>
 
               <p className="mt-5 text-sm leading-7 text-slate-400">
-                A largura permanece em 30 cm; o comprimento aumenta conforme a metragem selecionada no pedido.
+                A largura permanece em 30 cm; escolha qualquer comprimento de 1 a 10 metros no anúncio.
               </p>
+              <Link
+                href={productUrl}
+                className="mt-6 inline-flex h-12 w-full items-center justify-center gap-3 rounded-xl bg-blue-600 px-6 text-sm font-bold text-white transition hover:bg-blue-500"
+              >
+                Escolher metragem e comprar
+                <ArrowRight className="h-4 w-4" />
+              </Link>
             </div>
           </div>
         </section>
@@ -598,15 +626,24 @@ export default function PpfFotocromaticoPage() {
                     Envie o modelo e o ano do veículo. Nossa equipe orienta sobre a quantidade de material e os cuidados antes da compra. Para a aplicação, procure um profissional experiente em PPF.
                   </p>
                 </div>
-                <a
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex h-12 min-w-[240px] items-center justify-center gap-3 rounded-xl bg-white px-6 text-sm font-bold text-blue-700 transition hover:bg-blue-50"
-                >
-                  <PlatformIcon name="whatsapp" className="h-5 w-5 text-[#25D366]" />
-                  Consultar metragem
-                </a>
+                <div className="grid gap-3">
+                  <Link
+                    href={productUrl}
+                    className="inline-flex h-12 min-w-[240px] items-center justify-center gap-3 rounded-xl bg-white px-6 text-sm font-bold text-blue-700 transition hover:bg-blue-50"
+                  >
+                    Ver opções e comprar
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                  <a
+                    href={whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex h-12 min-w-[240px] items-center justify-center gap-3 rounded-xl border border-white/30 px-6 text-sm font-bold text-white transition hover:bg-white/10"
+                  >
+                    <PlatformIcon name="whatsapp" className="h-5 w-5 text-[#25D366]" />
+                    Consultar metragem
+                  </a>
+                </div>
               </div>
             </div>
           </div>

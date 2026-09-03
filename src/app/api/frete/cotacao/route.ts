@@ -14,6 +14,7 @@ export const runtime = "nodejs";
 const quoteSchema = z.object({
   productId: z.string().trim().min(1).max(160),
   postalCode: z.string().transform(normalizePostalCode).pipe(z.string().length(8)),
+  variantValue: z.string().trim().min(1).max(80).optional(),
 });
 
 function json(data: unknown, status: number) {
@@ -64,6 +65,18 @@ export async function POST(request: Request) {
     return json({ error: "Produto indisponível para compra no site." }, 404);
   }
 
+  const selectedVariant = parsed.data.variantValue
+    ? product.variantOptions.find(
+        (variant) => variant.value === parsed.data.variantValue,
+      )
+    : null;
+
+  if (product.variantOptions.length > 0 && !selectedVariant) {
+    return json({ error: "Selecione uma metragem válida." }, 400);
+  }
+
+  const insuredPrice = selectedVariant?.price ?? product.price;
+
   const baseUrl =
     process.env.MELHOR_ENVIO_ENV === "production"
       ? "https://melhorenvio.com.br"
@@ -86,7 +99,7 @@ export async function POST(request: Request) {
         volumes: [
           {
             ...DEFAULT_SHIPPING_PACKAGE,
-            insurance: Number(product.price.toFixed(2)),
+            insurance: Number(insuredPrice.toFixed(2)),
           },
         ],
         options: {

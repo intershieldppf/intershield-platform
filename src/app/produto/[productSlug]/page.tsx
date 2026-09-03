@@ -82,6 +82,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const compatibility = details.compatibility;
   const purchaseBenefitKind = getPurchaseBenefitKind(product);
   const isPpfKit = purchaseBenefitKind === "ppf-kit";
+  const isPpfManta = purchaseBenefitKind === "ppf-manta";
 
   const checkoutEnabled =
     process.env.CHECKOUT_ENABLED === "true" &&
@@ -109,6 +110,25 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   const canonicalUrl = `https://www.intershield.com.br/produto/${storefrontProductSlug(product)}`;
   const structuredDescription = `${product.title}. Consulte compatibilidade e compre com suporte da InterShield Películas.`;
+  const structuredOffers = product.variantOptions.length
+    ? product.variantOptions.map((variant) => ({
+        "@type": "Offer",
+        name: variant.value,
+        sku: variant.sku,
+        priceCurrency: "BRL",
+        price: variant.price,
+        url: canonicalUrl,
+        seller: { "@type": "Organization", name: "InterShield Películas" },
+      }))
+    : product.price !== null
+      ? {
+          "@type": "Offer",
+          priceCurrency: "BRL",
+          price: product.price,
+          url: canonicalUrl,
+          seller: { "@type": "Organization", name: "InterShield Películas" },
+        }
+      : undefined;
   const structuredData = {
     "@context": "https://schema.org",
     "@graph": [
@@ -121,16 +141,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
         category: product.type,
         brand: product.brand ? { "@type": "Brand", name: product.brand } : undefined,
         url: canonicalUrl,
-        offers:
-          product.price !== null
-            ? {
-                "@type": "Offer",
-                priceCurrency: "BRL",
-                price: product.price,
-                url: canonicalUrl,
-                seller: { "@type": "Organization", name: "InterShield Películas" },
-              }
-            : undefined,
+        offers: structuredOffers,
       },
       {
         "@type": "BreadcrumbList",
@@ -194,25 +205,21 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
               <p className="mt-3 text-sm font-medium text-slate-500">{compatibility}</p>
 
-              <div className="mt-6 border-y border-slate-200 py-6">
-                <p className="text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
-                  {formatPrice(product.price)}
-                </p>
-                <p className="mt-2 text-xs text-slate-500">SKU {product.sku ?? product.id}</p>
-              </div>
-
-              <PurchaseBenefitNotice
-                compact
-                kind={purchaseBenefitKind}
-                className="mt-6"
-              />
-
               <ProductCheckoutActions
                 productId={product.id}
                 productTitle={product.title}
                 sku={product.sku ?? product.id}
                 compatibility={compatibility}
                 variants={product.variantValues}
+                variantOptions={product.variantOptions}
+                price={product.price}
+                benefitNotice={
+                  <PurchaseBenefitNotice
+                    compact
+                    kind={purchaseBenefitKind}
+                    className="mt-6"
+                  />
+                }
                 whatsappNumber={WHATSAPP_NUMBER}
                 checkoutEnabled={checkoutEnabled}
               />
@@ -225,7 +232,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 <div className="rounded-2xl border border-slate-200 bg-white p-4">
                   <PackageCheck className="h-5 w-5 text-blue-600" />
                   <p className="mt-2 text-xs font-semibold text-slate-800">
-                    {isPpfKit ? "Kit de aplicação completo" : "Espátula de brinde"}
+                    {isPpfKit
+                      ? "Kit de aplicação completo"
+                      : isPpfManta
+                        ? "Manta na medida escolhida"
+                        : "Espátula de brinde"}
                   </p>
                 </div>
                 <div className="rounded-2xl border border-slate-200 bg-white p-4">
@@ -234,11 +245,13 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 </div>
               </div>
 
-              <CustomKitNotice
-                compact
-                context={`${product.title} · ${compatibility}`}
-                className="mt-4"
-              />
+              {!isPpfManta ? (
+                <CustomKitNotice
+                  compact
+                  context={`${product.title} · ${compatibility}`}
+                  className="mt-4"
+                />
+              ) : null}
             </div>
           </div>
         </div>
@@ -277,12 +290,18 @@ export default async function ProductPage({ params }: ProductPageProps) {
             <div className="space-y-6">
               <div className="rounded-[26px] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
                 <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-blue-600">
-                  {isPpfKit ? "Kit completo incluso" : "Brinde incluso"}
+                  {isPpfKit
+                    ? "Kit completo incluso"
+                    : isPpfManta
+                      ? "Venda por metragem"
+                      : "Brinde incluso"}
                 </p>
                 <h2 className="mt-2 text-xl font-bold text-slate-950">
                   {isPpfKit
                     ? "O que acompanha seu kit PPF"
-                    : "O que acompanha seu acabamento"}
+                    : isPpfManta
+                      ? "O que acompanha seu pedido"
+                      : "O que acompanha seu acabamento"}
                 </h2>
                 <div className="mt-5 space-y-3">
                   {details.kitContents.map((item) => (
