@@ -10,10 +10,19 @@ type MobileMenuProps = {
   open: boolean;
   onClose: () => void;
   ctaHref?: string;
+  currentPath: string;
 };
 
-export function MobileMenu({ items, open, onClose, ctaHref }: MobileMenuProps) {
+export function MobileMenu({
+  items,
+  open,
+  onClose,
+  ctaHref,
+  currentPath,
+}: MobileMenuProps) {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const previouslyFocusedRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     if (!open) {
@@ -21,18 +30,41 @@ export function MobileMenu({ items, open, onClose, ctaHref }: MobileMenuProps) {
     }
 
     const originalOverflow = document.body.style.overflow;
+    previouslyFocusedRef.current = document.activeElement as HTMLElement | null;
     document.body.style.overflow = "hidden";
     closeButtonRef.current?.focus();
 
-    function closeOnEscape(event: KeyboardEvent) {
+    function handleDialogKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") onClose();
+
+      if (event.key === "Tab") {
+        const focusable = Array.from(
+          dialogRef.current?.querySelectorAll<HTMLElement>(
+            'a[href], button:not([disabled])',
+          ) ?? [],
+        );
+
+        if (focusable.length === 0) return;
+
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
     }
 
-    document.addEventListener("keydown", closeOnEscape);
+    document.addEventListener("keydown", handleDialogKeyDown);
 
     return () => {
       document.body.style.overflow = originalOverflow;
-      document.removeEventListener("keydown", closeOnEscape);
+      document.removeEventListener("keydown", handleDialogKeyDown);
+      previouslyFocusedRef.current?.focus();
     };
   }, [onClose, open]);
 
@@ -49,6 +81,7 @@ export function MobileMenu({ items, open, onClose, ctaHref }: MobileMenuProps) {
         className="absolute inset-0 bg-slate-950/40 transition-opacity"
       />
       <div
+        ref={dialogRef}
         id="mobile-navigation"
         role="dialog"
         aria-modal="true"
@@ -68,16 +101,27 @@ export function MobileMenu({ items, open, onClose, ctaHref }: MobileMenuProps) {
           </button>
         </div>
         <nav className="mt-8 flex flex-col gap-2">
-          {items.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              onClick={onClose}
-              className="rounded-2xl px-4 py-4 text-sm font-medium text-slate-950 transition hover:bg-slate-100"
-            >
-              {item.label}
-            </Link>
-          ))}
+          {items.map((item) => {
+            const current =
+              currentPath === item.href ||
+              (item.href === "/catalogo" &&
+                (currentPath.startsWith("/produto/") ||
+                  currentPath.startsWith("/veiculo/")));
+
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={onClose}
+                aria-current={current ? "page" : undefined}
+                className={`rounded-2xl px-4 py-4 text-sm font-medium transition hover:bg-slate-100 ${
+                  current ? "bg-blue-50 text-blue-700" : "text-slate-950"
+                }`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </nav>
         {ctaHref ? (
           <a

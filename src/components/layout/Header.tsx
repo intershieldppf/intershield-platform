@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Menu } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { useCallback, useState } from "react";
 
 import { MobileMenu } from "@/components/layout/MobileMenu";
@@ -41,8 +42,21 @@ function HomeLogo({ label }: { label: string }) {
 }
 
 export function Header() {
+  const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const closeMenu = useCallback(() => setMenuOpen(false), []);
+
+  function isCurrentPage(href: string) {
+    if (href === "/catalogo") {
+      return (
+        pathname === "/catalogo" ||
+        pathname.startsWith("/produto/") ||
+        pathname.startsWith("/veiculo/")
+      );
+    }
+
+    return pathname === href;
+  }
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/95 backdrop-blur-xl">
@@ -52,17 +66,28 @@ export function Header() {
         </div>
 
         <nav className="hidden min-w-0 flex-1 items-center justify-center gap-5 whitespace-nowrap text-[12px] font-semibold text-slate-700 lg:flex xl:gap-7 xl:text-[13px]">
-          {navItems.map((item) => (
-            <Link
-              key={item.label}
-              href={item.href}
-              className="group relative flex h-[68px] shrink-0 items-center transition-colors duration-200 hover:text-blue-600"
-            >
-              {item.label}
+          {navItems.map((item) => {
+            const current = isCurrentPage(item.href);
 
-              <span className="absolute bottom-0 left-1/2 h-[2px] w-0 -translate-x-1/2 rounded-full bg-blue-600 transition-all duration-300 group-hover:w-full" />
-            </Link>
-          ))}
+            return (
+              <Link
+                key={item.label}
+                href={item.href}
+                aria-current={current ? "page" : undefined}
+                className={`group relative flex h-[68px] shrink-0 items-center transition-colors duration-200 hover:text-blue-600 ${
+                  current ? "text-blue-600" : ""
+                }`}
+              >
+                {item.label}
+
+                <span
+                  className={`absolute bottom-0 left-1/2 h-[2px] -translate-x-1/2 rounded-full bg-blue-600 transition-all duration-300 group-hover:w-full ${
+                    current ? "w-full" : "w-0"
+                  }`}
+                />
+              </Link>
+            );
+          })}
         </nav>
 
         <a
@@ -92,6 +117,7 @@ export function Header() {
         open={menuOpen}
         onClose={closeMenu}
         ctaHref={whatsappUrl}
+        currentPath={pathname}
       />
     </header>
   );

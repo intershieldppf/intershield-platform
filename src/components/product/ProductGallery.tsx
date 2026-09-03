@@ -220,7 +220,6 @@ export function ProductGallery({ name, images }: ProductGalleryProps) {
 
       {hasMultipleImages ? (
         <div
-          ref={dialogRef}
           className="mt-3 flex gap-2 overflow-x-auto pb-1"
           aria-label="Galeria de imagens do produto"
         >
@@ -253,6 +252,7 @@ export function ProductGallery({ name, images }: ProductGalleryProps) {
 
       {isLightboxOpen && selectedImage ? (
         <div
+          ref={dialogRef}
           role="dialog"
           aria-modal="true"
           aria-label={`Imagem ampliada de ${name}`}

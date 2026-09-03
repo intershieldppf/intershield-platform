@@ -295,6 +295,7 @@ export function CatalogClient({ products, initialQuery = "" }: CatalogClientProp
                 onChange={(event) => setQuery(event.target.value)}
                 type="search"
                 autoComplete="off"
+                aria-label="Buscar veículo ou produto no catálogo"
                 placeholder="Busque veículo ou produto. Ex: BMW X3 2024, multimídia..."
                 className="h-14 w-full rounded-2xl border border-slate-200 bg-white pl-12 pr-12 text-[15px] font-medium text-slate-950 shadow-sm outline-none transition placeholder:font-normal placeholder:text-slate-400 focus:border-blue-400 focus:ring-4 focus:ring-blue-50"
               />
@@ -313,6 +314,8 @@ export function CatalogClient({ products, initialQuery = "" }: CatalogClientProp
             <button
               type="button"
               onClick={() => setShowMobileFilters((current) => !current)}
+              aria-expanded={showMobileFilters}
+              aria-controls="catalog-mobile-filters"
               className="inline-flex h-14 items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm lg:hidden"
             >
               <SlidersHorizontal className="h-4 w-4" />
@@ -326,6 +329,7 @@ export function CatalogClient({ products, initialQuery = "" }: CatalogClientProp
                 key={item}
                 type="button"
                 onClick={() => setTag(item)}
+                aria-pressed={tag === item}
                 className={`shrink-0 rounded-full border px-4 py-2 text-xs font-semibold transition ${
                   tag === item
                     ? "border-blue-600 bg-blue-600 text-white"
@@ -338,7 +342,10 @@ export function CatalogClient({ products, initialQuery = "" }: CatalogClientProp
           </div>
 
           {showMobileFilters ? (
-            <div className="mt-3 grid gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4 lg:hidden">
+            <div
+              id="catalog-mobile-filters"
+              className="mt-3 grid gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4 lg:hidden"
+            >
               {filterControls}
               {hasFilters ? (
                 <button
