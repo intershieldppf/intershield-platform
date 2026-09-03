@@ -196,7 +196,7 @@ export const photochromicProduct: StorefrontProduct = {
   id: "IS-PPF-FOTO-CAM-030",
   title: "Película PPF Fotocromática Camaleão para Faróis 30 cm",
   price: photochromicVariantOptions[0].price,
-  image: "/ppf-fotocromatico-rolo.webp",
+  image: "/ppf-fotocromatico-tiguan-catalogo.webp",
   sku: photochromicVariantOptions[0].sku,
   brand: null,
   yearStart: null,

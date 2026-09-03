@@ -182,7 +182,20 @@ export default async function ProductPage({ params }: ProductPageProps) {
       <section className="px-4 py-6 sm:px-8 lg:py-10">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-8 lg:grid-cols-[1.08fr_0.92fr] lg:gap-12">
-            <ProductGallery key={product.id} name={product.title} images={images} />
+            <ProductGallery
+              key={product.id}
+              name={product.title}
+              images={images}
+              video={
+                product.id === "IS-PPF-FOTO-CAM-030"
+                  ? {
+                      src: "/videos/ppf-fotocromatico-tecnologia.mp4",
+                      poster: "/ppf-fotocromatico-video-poster.webp",
+                      label: "Demonstração do efeito do PPF fotocromático sob a luz",
+                    }
+                  : undefined
+              }
+            />
 
             <div className="lg:pt-2">
               <div className="flex flex-wrap gap-2">

@@ -65,7 +65,9 @@ const SPECIFIC_PRODUCT_SPECS: Record<string, SpecificProductSpec> = {
     finish: "Transparente, ultrabrilhante e com efeito camaleão sob luz UV",
     thickness: "165 micras",
     gallery: [
-      "/ppf-fotocromatico-hero-real.webp",
+      "/ppf-fotocromatico-tiguan-catalogo.webp",
+      "/ppf-fotocromatico-tiguan-real.webp",
+      "/ppf-fotocromatico-rolo-real.webp",
       "/ppf-fotocromatico-rolo.webp",
       "/ppf-fotocromatico-antes-depois.webp",
       "/ppf-fotocromatico-aplicacao.webp",
