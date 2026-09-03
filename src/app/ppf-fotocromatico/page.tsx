@@ -93,8 +93,8 @@ const questions = [
     text: "Não. Trincas, descascamento, opacidade e amarelamento existentes devem ser avaliados antes. O PPF protege a condição atual, mas não substitui restauração ou reparo.",
   },
   {
-    title: "É indicado polir o farol antes da aplicação?",
-    text: "Quando a lente apresenta opacidade, amarelamento leve ou micro-riscos, um polimento técnico prévio pode melhorar brilho e uniformidade. Em faróis novos ou com a superfície íntegra, normalmente basta realizar limpeza e descontaminação corretas. A avaliação deve ser feita por um profissional.",
+    title: "Quando a revitalização do farol é necessária?",
+    text: "Se a lente estiver opaca, amarelada ou marcada pelo desgaste, a revitalização profissional — com o processo de polimento adequado ao estado do farol — deve ser realizada antes do PPF para alcançar melhor transparência, brilho e uniformidade. A película protege a superfície preparada, mas não corrige danos existentes. Em lentes íntegras, limpeza e descontaminação corretas são suficientes.",
   },
   {
     title: "Por que a instalação profissional é recomendada?",
@@ -344,6 +344,64 @@ export default function PpfFotocromaticoPage() {
           </div>
         </section>
 
+        <section className="border-y border-blue-100 bg-[#f5f8ff] py-20 sm:py-24">
+          <div className="mx-auto grid max-w-[1240px] items-center gap-12 px-6 sm:px-8 lg:grid-cols-[0.82fr_1.18fr] lg:gap-16 lg:px-10">
+            <figure className="mx-auto w-full max-w-[520px] overflow-hidden rounded-[30px] border border-blue-100 bg-white shadow-[0_32px_80px_-46px_rgba(37,99,235,0.45)] lg:mx-0">
+              <div className="relative aspect-[9/16]">
+                <Image
+                  src="/ppf-fotocromatico-revitalizacao.webp"
+                  alt="Comparativo real de um farol desgastado antes e revitalizado depois do polimento"
+                  fill
+                  sizes="(max-width: 1024px) 90vw, 500px"
+                  className="object-cover"
+                />
+                <div className="absolute left-4 top-4 rounded-full border border-white/30 bg-slate-950/80 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.16em] text-white backdrop-blur sm:left-5 sm:top-5">
+                  Antes · lente desgastada
+                </div>
+                <div className="absolute left-4 top-[52%] rounded-full border border-blue-200/50 bg-blue-600/90 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.16em] text-white backdrop-blur sm:left-5">
+                  Depois · lente revitalizada
+                </div>
+              </div>
+              <figcaption className="border-t border-slate-100 bg-white px-5 py-4 text-xs leading-6 text-slate-500">
+                Comparativo real de revitalização. O resultado varia conforme o nível de desgaste e o processo indicado para cada lente.
+              </figcaption>
+            </figure>
+
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.26em] text-blue-600">
+                Preparação antes do PPF
+              </p>
+              <h2 className="mt-4 text-4xl font-bold leading-[1.06] tracking-[-0.04em] text-slate-950 sm:text-[52px]">
+                O PPF protege. A revitalização recupera o que já foi desgastado.
+              </h2>
+              <p className="mt-6 text-base leading-8 text-slate-600">
+                A película acompanha e preserva a condição atual do farol. Por isso, se a lente estiver opaca, amarelada, sem brilho ou com marcas de desgaste, ela deve ser revitalizada antes da aplicação. Um polimento profissional adequado cria uma base mais transparente e uniforme, favorecendo o brilho e o acabamento final do PPF.
+              </p>
+
+              <div className="mt-8 grid gap-4 sm:grid-cols-3">
+                {[
+                  ["01", "Avaliar", "Identificar opacidade, amarelamento e marcas na lente."],
+                  ["02", "Revitalizar", "Executar o polimento correto quando houver desgaste."],
+                  ["03", "Proteger", "Aplicar o PPF somente sobre a superfície pronta e limpa."],
+                ].map(([number, title, text]) => (
+                  <article key={number} className="rounded-[22px] border border-blue-100 bg-white p-5">
+                    <span className="text-xs font-bold tracking-[0.18em] text-blue-600">{number}</span>
+                    <h3 className="mt-5 text-lg font-bold tracking-[-0.02em] text-slate-950">{title}</h3>
+                    <p className="mt-2 text-sm leading-6 text-slate-600">{text}</p>
+                  </article>
+                ))}
+              </div>
+
+              <div className="mt-6 flex items-start gap-3 rounded-[22px] border border-blue-200 bg-blue-600 px-5 py-5 text-white shadow-[0_18px_45px_-30px_rgba(37,99,235,0.8)]">
+                <CircleAlert className="mt-0.5 h-5 w-5 shrink-0 text-blue-100" />
+                <p className="text-sm leading-7">
+                  <strong>Farol em bom estado não precisa de polimento.</strong> Quando a lente está íntegra, a preparação correta consiste em limpeza e descontaminação completas, evitando desgaste desnecessário da superfície.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section className="bg-[#030816] py-20 text-white sm:py-24">
           <div className="mx-auto grid max-w-[1240px] items-center gap-12 px-6 sm:px-8 lg:grid-cols-[1.08fr_0.92fr] lg:gap-16 lg:px-10">
             <div className="relative aspect-[3/2] overflow-hidden rounded-[30px] border border-white/10 bg-slate-900">
@@ -376,7 +434,7 @@ export default function PpfFotocromaticoPage() {
                   "Medição e melhor aproveitamento da manta",
                   "Controle de tensão nas curvas complexas do farol",
                   "Recorte seguro e acabamento preciso das bordas",
-                  "Avaliação da lente e polimento técnico, quando necessário",
+                  "Avaliação da lente e revitalização, quando necessária",
                   "Superfície descontaminada e completamente limpa",
                 ].map((item) => (
                   <div key={item} className="flex items-start gap-3 text-sm leading-6 text-slate-300">
@@ -390,9 +448,6 @@ export default function PpfFotocromaticoPage() {
                 Recomendamos fortemente a instalação por um profissional com experiência em PPF automotivo. É a escolha mais segura para obter uniformidade, boa fixação e acabamento correto.
               </p>
 
-              <p className="mt-5 rounded-2xl border border-blue-400/20 bg-blue-500/10 px-5 py-4 text-sm leading-7 text-slate-300">
-                Se a lente estiver opaca, levemente amarelada ou com micro-riscos, o polimento técnico antes da aplicação pode recuperar brilho e deixar o acabamento mais uniforme. Em faróis íntegros, evite desgaste desnecessário: limpeza e descontaminação bem executadas costumam ser suficientes.
-              </p>
             </div>
           </div>
         </section>
