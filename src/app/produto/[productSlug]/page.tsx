@@ -192,6 +192,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                       src: "/videos/ppf-fotocromatico-tecnologia.mp4",
                       poster: "/ppf-fotocromatico-video-poster.webp",
                       label: "Demonstração do efeito do PPF fotocromático sob a luz",
+                      position: 2,
                     }
                   : undefined
               }

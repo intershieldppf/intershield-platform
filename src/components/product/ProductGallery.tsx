@@ -8,6 +8,7 @@ type ProductGalleryVideo = {
   src: string;
   poster: string;
   label: string;
+  position?: number;
 };
 
 type ProductGalleryProps = {
@@ -36,10 +37,22 @@ export function ProductGallery({ name, images, video }: ProductGalleryProps) {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const mediaItems = useMemo<GalleryItem[]>(
-    () => [
-      ...images.map((src) => ({ type: "image" as const, src })),
-      ...(video ? [{ type: "video" as const, ...video }] : []),
-    ],
+    () => {
+      const imageItems = images.map((src) => ({ type: "image" as const, src }));
+
+      if (!video) return imageItems;
+
+      const videoPosition = Math.min(
+        Math.max(video.position ?? imageItems.length, 0),
+        imageItems.length,
+      );
+
+      return [
+        ...imageItems.slice(0, videoPosition),
+        { type: "video" as const, ...video },
+        ...imageItems.slice(videoPosition),
+      ];
+    },
     [images, video],
   );
   const imageIndexes = useMemo(

@@ -66,9 +66,8 @@ const SPECIFIC_PRODUCT_SPECS: Record<string, SpecificProductSpec> = {
     thickness: "165 micras",
     gallery: [
       "/ppf-fotocromatico-tiguan-catalogo.webp",
-      "/ppf-fotocromatico-tiguan-real.webp",
-      "/ppf-fotocromatico-rolo-real.webp",
       "/ppf-fotocromatico-rolo.webp",
+      "/ppf-fotocromatico-rolo-real.webp",
       "/ppf-fotocromatico-antes-depois.webp",
       "/ppf-fotocromatico-aplicacao.webp",
     ],
