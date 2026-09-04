@@ -24,6 +24,7 @@ const navigationLinks = [
   { label: "Privacidade", href: "/privacidade" },
   { label: "Envio e trocas", href: "/envio-trocas" },
   { label: "Garantia e instalação", href: "/garantia-instalacao" },
+  { label: "Meus pedidos", href: "/minha-conta" },
 ];
 
 const solutionLinks = [

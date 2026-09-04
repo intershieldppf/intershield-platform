@@ -14,12 +14,13 @@ export function HeroSection() {
       className="relative min-h-[680px] overflow-hidden bg-[#010817] lg:min-h-[720px]"
     >
       <div
-        className="absolute inset-y-0 right-0 w-full lg:w-[50%] xl:w-[48%]"
+        aria-hidden="true"
+        className="absolute inset-y-0 right-0 w-full lg:w-[58%]"
         style={{
           WebkitMaskImage:
-            "linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.72) 16%, black 34%)",
+            "linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.35) 22%, black 62%)",
           maskImage:
-            "linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.72) 16%, black 34%)",
+            "linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.35) 22%, black 62%)",
         }}
       >
         <Image
@@ -27,23 +28,34 @@ export function HeroSection() {
           alt=""
           fill
           priority
-          sizes="(min-width: 1280px) 48vw, (min-width: 1024px) 50vw, 100vw"
-          className="scale-110 object-cover object-center opacity-35 blur-xl"
-          aria-hidden="true"
+          sizes="(min-width: 1024px) 58vw, 100vw"
+          className="scale-110 object-cover object-center opacity-30 blur-2xl"
         />
-        <div className="absolute inset-0 bg-[#010817]/15" />
+      </div>
+
+      <div
+        className="absolute inset-y-0 right-0 w-full lg:w-auto"
+        style={{
+          aspectRatio: "3 / 4",
+          WebkitMaskImage:
+            "linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.5) 18%, black 42%)",
+          maskImage:
+            "linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.5) 18%, black 42%)",
+        }}
+      >
         <Image
           src="/intershield-hero-bmw-night.webp"
           alt="Interior de BMW com painel digital, central multimídia e console iluminado"
           fill
           priority
           quality={95}
-          sizes="(min-width: 1280px) 540px, (min-width: 1024px) 50vw, 100vw"
-          className="object-cover object-[58%_50%] contrast-[1.03] saturate-[1.04] lg:object-contain lg:object-right"
+          sizes="(min-width: 1024px) 540px, 100vw"
+          className="object-cover object-[50%_48%] contrast-[1.03] saturate-[1.04] lg:object-contain lg:object-right"
         />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(1,8,23,0.48)_0%,rgba(1,8,23,0.1)_42%,transparent_70%)]" />
       </div>
 
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(1,7,20,0.99)_0%,rgba(1,7,20,0.97)_38%,rgba(1,7,20,0.78)_55%,rgba(1,7,20,0.16)_78%,rgba(1,7,20,0.04)_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(1,7,20,1)_0%,rgba(1,7,20,0.98)_36%,rgba(1,7,20,0.82)_52%,rgba(1,7,20,0.22)_76%,rgba(1,7,20,0.04)_100%)]" />
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(1,7,20,0.68)_0%,rgba(1,7,20,0.3)_42%,rgba(1,7,20,0.92)_100%)] lg:hidden" />
 
       <div className="relative z-10 mx-auto flex min-h-[680px] max-w-[1440px] items-center px-5 py-14 sm:px-8 sm:py-16 lg:min-h-[720px] lg:px-16 xl:px-20">

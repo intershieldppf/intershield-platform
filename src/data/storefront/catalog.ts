@@ -3,6 +3,12 @@ import catalog2 from "./catalog-2.json";
 import catalog3 from "./catalog-3.json";
 import catalog4 from "./catalog-4.json";
 
+export type StorefrontVariantOption = {
+  value: string;
+  price: number;
+  sku: string;
+};
+
 export type StorefrontProduct = {
   id: string;
   title: string;
@@ -16,6 +22,7 @@ export type StorefrontProduct = {
   tags: string[];
   displayOrder: number;
   variantValues: string[];
+  variantOptions: StorefrontVariantOption[];
 };
 
 type RawCatalogRow = [
@@ -152,6 +159,7 @@ function mapRow(row: RawCatalogRow): StorefrontProduct {
     tags: inferTags(title, decodeTags(tagMask)),
     displayOrder,
     variantValues: Array.from(new Set(variantValues.map(normalizeVariant))),
+    variantOptions: [],
   };
 }
 
@@ -171,6 +179,35 @@ const rawCatalog = [
   ...(catalog4 as unknown as RawCatalogRow[]),
 ];
 
+const photochromicVariantOptions: StorefrontVariantOption[] = Array.from(
+  { length: 10 },
+  (_, index) => {
+    const meters = index + 1;
+
+    return {
+      value: `0,30 × ${meters} m`,
+      price: Number((199.9 * meters - 10 * (meters - 1)).toFixed(2)),
+      sku: `PPF-FOTO-CAM-030X${String(meters).padStart(2, "0")}M`,
+    };
+  },
+);
+
+export const photochromicProduct: StorefrontProduct = {
+  id: "IS-PPF-FOTO-CAM-030",
+  title: "Película PPF Fotocromática Camaleão para Faróis 30 cm",
+  price: photochromicVariantOptions[0].price,
+  image: "/ppf-fotocromatico-tiguan-catalogo.webp",
+  sku: photochromicVariantOptions[0].sku,
+  brand: null,
+  yearStart: null,
+  yearEnd: null,
+  type: "PPF",
+  tags: ["Exterior", "Universal"],
+  displayOrder: -1,
+  variantValues: photochromicVariantOptions.map((variant) => variant.value),
+  variantOptions: photochromicVariantOptions,
+};
+
 function deduplicateCatalog(products: StorefrontProduct[]) {
   const titles = new Set<string>();
   const skus = new Set<string>();
@@ -189,7 +226,9 @@ function deduplicateCatalog(products: StorefrontProduct[]) {
 }
 
 export const storefrontCatalog = deduplicateCatalog(
-  rawCatalog.map(mapRow).sort((a, b) => a.displayOrder - b.displayOrder),
+  [...rawCatalog.map(mapRow), photochromicProduct].sort(
+    (a, b) => a.displayOrder - b.displayOrder,
+  ),
 );
 
 export function storefrontProductSlug(product: StorefrontProduct) {

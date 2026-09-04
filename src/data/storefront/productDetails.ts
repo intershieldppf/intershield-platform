@@ -45,9 +45,80 @@ type SpecificProductSpec = {
   material: string;
   finish?: string;
   notes?: string[];
+  gallery?: string[];
+  intro?: string[];
+  benefits?: string[];
+  installation?: string[];
+  thickness?: string;
+  fullDescription?: string;
 };
 
 const SPECIFIC_PRODUCT_SPECS: Record<string, SpecificProductSpec> = {
+  "IS-PPF-FOTO-CAM-030": {
+    compatibility: "Aplicação universal em faróis · manta sem pré-corte",
+    application: "proteção e personalização de faróis automotivos",
+    kitContents: [
+      "Manta de PPF fotocromático com 30 cm de largura",
+      "Comprimento conforme a metragem selecionada no pedido",
+    ],
+    material: "PPF flexível de TPU fotocromático",
+    finish: "Transparente, ultrabrilhante e com efeito camaleão sob luz UV",
+    thickness: "165 micras",
+    gallery: [
+      "/ppf-fotocromatico-tiguan-catalogo.webp",
+      "/ppf-fotocromatico-rolo.webp",
+      "/ppf-fotocromatico-rolo-fundo-studio.webp",
+      "/ppf-fotocromatico-antes-depois.webp",
+      "/ppf-fotocromatico-aplicacao.webp",
+    ],
+    intro: [
+      "Manta de PPF TPU fotocromático desenvolvida para proteger e personalizar faróis automotivos. Sob maior exposição à luz ultravioleta, o material revela uma tonalidade camaleão; com menor incidência UV, retorna gradualmente ao aspecto mais claro.",
+      "A largura é fixa em 30 cm e o comprimento pode ser escolhido de 1 a 10 metros. O produto não é pré-cortado: a medição, a conformação e o acabamento são realizados durante a instalação.",
+    ],
+    benefits: [
+      "Ajuda a proteger a lente contra riscos superficiais e pequenos impactos",
+      "Efeito fotocromático ativado pela incidência de luz ultravioleta",
+      "Acabamento ultrabrilhante e superfície regenerativa para micro-riscos",
+      "Metragem selecionável de 1 a 10 metros com largura fixa de 30 cm",
+    ],
+    installation: [
+      "Avalie o estado da lente; faróis opacos ou amarelados devem ser revitalizados antes da aplicação.",
+      "Limpe e descontamine completamente o farol antes de posicionar a manta.",
+      "Meça, conforme e recorte o material respeitando curvas, bordas e o formato da lente.",
+      "Recomendamos instalação profissional para obter boa fixação e acabamento seguro.",
+    ],
+    notes: [
+      "Produto enviado em manta, sem pré-corte e sem aplicação.",
+      "A intensidade e o tempo de transição variam conforme luz UV, temperatura e ambiente.",
+      "Antes de aplicar em veículo que circula em via pública, verifique a regulamentação vigente.",
+    ],
+    fullDescription: [
+      "Película PPF Fotocromática Camaleão para Faróis 30 cm",
+      "",
+      "Manta de PPF TPU que combina proteção física e personalização dinâmica dos faróis. Sob maior exposição à luz ultravioleta, o filme revela uma tonalidade camaleão e, com menor incidência UV, retorna gradualmente ao aspecto mais claro.",
+      "",
+      "Medidas disponíveis",
+      "• Largura fixa: 30 cm.",
+      "• Comprimentos selecionáveis: 1 a 10 metros.",
+      "• Produto enviado em manta, sem pré-corte.",
+      "",
+      "Características",
+      "• Material: PPF flexível de TPU fotocromático.",
+      "• Espessura nominal: 165 micras.",
+      "• Acabamento transparente e ultrabrilhante.",
+      "• Superfície regenerativa para micro-riscos.",
+      "• Efeito camaleão ativado pela incidência de luz ultravioleta.",
+      "",
+      "Instalação",
+      "• A manta deve ser medida, conformada e recortada durante a aplicação.",
+      "• Recomendamos instalação por profissional com experiência em PPF automotivo.",
+      "• A intensidade do efeito varia conforme luz UV, temperatura e ambiente.",
+      "",
+      "Importante",
+      "• Verifique a regulamentação vigente antes de aplicar em veículos que circulam em via pública.",
+      "• Produto enviado sem aplicação.",
+    ].join("\n"),
+  },
   MLB5087455577: {
     compatibility: "BYD Song Plus · 2022 a 2026",
     application: "kit de proteção para os acabamentos do interior completo",
@@ -571,6 +642,8 @@ export function buildStorefrontProductDetails(
 
   const intro = parsedIntro.length
     ? parsedIntro
+    : specific?.intro?.length
+      ? specific.intro
     : specific
       ? [
           product.type === "Black Piano"
@@ -590,7 +663,13 @@ export function buildStorefrontProductDetails(
         ];
 
   const gallery = Array.from(
-    new Set([...(source?.images ?? []), product.image].filter(Boolean)),
+    new Set(
+      [
+        ...(specific?.gallery ?? []),
+        ...(source?.images ?? []),
+        product.image,
+      ].filter(Boolean),
+    ),
   );
   const baseKitContents = parsedKit.length
     ? parsedKit
@@ -601,15 +680,18 @@ export function buildStorefrontProductDetails(
     intro,
     benefits: parsedBenefits.length
       ? parsedBenefits
-      : fallbackBenefits(product),
+      : (specific?.benefits ?? fallbackBenefits(product)),
     kitContents: addPurchaseExtras(product, baseKitContents),
     installation: parsedInstallation.length
       ? parsedInstallation
-      : fallbackInstallation(product),
+      : (specific?.installation ?? fallbackInstallation(product)),
     compatibility,
-    fullDescription: cleanedDescription ?? generatedFullDescription(product),
+    fullDescription:
+      cleanedDescription ??
+      specific?.fullDescription ??
+      generatedFullDescription(product),
     material: specific?.material ?? inferMaterial(product, source),
-    thickness: inferThickness(product, source),
+    thickness: specific?.thickness ?? inferThickness(product, source),
     warranty: source?.warranty || undefined,
     source: rawDescription ? "marketplace" : "generated",
   };

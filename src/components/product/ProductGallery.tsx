@@ -1,13 +1,25 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight, Expand, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Expand, Play, X } from "lucide-react";
+
+type ProductGalleryVideo = {
+  src: string;
+  poster: string;
+  label: string;
+  position?: number;
+};
 
 type ProductGalleryProps = {
   name: string;
   images: string[];
+  video?: ProductGalleryVideo;
 };
+
+type GalleryItem =
+  | { type: "image"; src: string }
+  | ({ type: "video" } & ProductGalleryVideo);
 
 type SwipeStart = {
   x: number;
@@ -16,7 +28,7 @@ type SwipeStart = {
 
 const SWIPE_DISTANCE = 45;
 
-export function ProductGallery({ name, images }: ProductGalleryProps) {
+export function ProductGallery({ name, images, video }: ProductGalleryProps) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const swipeStartRef = useRef<SwipeStart | null>(null);
@@ -24,24 +36,76 @@ export function ProductGallery({ name, images }: ProductGalleryProps) {
   const openerRef = useRef<HTMLButtonElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
-  const selectedImage = images[selectedIndex] ?? images[0];
-  const hasMultipleImages = images.length > 1;
+  const mediaItems = useMemo<GalleryItem[]>(
+    () => {
+      const imageItems = images.map((src) => ({ type: "image" as const, src }));
+
+      if (!video) return imageItems;
+
+      const videoPosition = Math.min(
+        Math.max(video.position ?? imageItems.length, 0),
+        imageItems.length,
+      );
+
+      return [
+        ...imageItems.slice(0, videoPosition),
+        { type: "video" as const, ...video },
+        ...imageItems.slice(videoPosition),
+      ];
+    },
+    [images, video],
+  );
+  const imageIndexes = useMemo(
+    () =>
+      mediaItems.reduce<number[]>((indexes, item, index) => {
+        if (item.type === "image") indexes.push(index);
+        return indexes;
+      }, []),
+    [mediaItems],
+  );
+  const selectedItem = mediaItems[selectedIndex] ?? mediaItems[0];
+  const selectedImage = selectedItem?.type === "image" ? selectedItem.src : null;
+  const selectedVideo = selectedItem?.type === "video" ? selectedItem : null;
+  const hasMultipleItems = mediaItems.length > 1;
 
   const showPrevious = useCallback(() => {
-    if (!hasMultipleImages) return;
+    if (!hasMultipleItems) return;
 
     setSelectedIndex((currentIndex) =>
-      currentIndex === 0 ? images.length - 1 : currentIndex - 1,
+      currentIndex === 0 ? mediaItems.length - 1 : currentIndex - 1,
     );
-  }, [hasMultipleImages, images.length]);
+  }, [hasMultipleItems, mediaItems.length]);
 
   const showNext = useCallback(() => {
-    if (!hasMultipleImages) return;
+    if (!hasMultipleItems) return;
 
     setSelectedIndex((currentIndex) =>
-      currentIndex === images.length - 1 ? 0 : currentIndex + 1,
+      currentIndex === mediaItems.length - 1 ? 0 : currentIndex + 1,
     );
-  }, [hasMultipleImages, images.length]);
+  }, [hasMultipleItems, mediaItems.length]);
+
+  const showPreviousImage = useCallback(() => {
+    if (imageIndexes.length < 2) return;
+
+    setSelectedIndex((currentIndex) => {
+      const currentPosition = imageIndexes.indexOf(currentIndex);
+      const previousPosition = currentPosition <= 0 ? imageIndexes.length - 1 : currentPosition - 1;
+      return imageIndexes[previousPosition];
+    });
+  }, [imageIndexes]);
+
+  const showNextImage = useCallback(() => {
+    if (imageIndexes.length < 2) return;
+
+    setSelectedIndex((currentIndex) => {
+      const currentPosition = imageIndexes.indexOf(currentIndex);
+      const nextPosition =
+        currentPosition === -1 || currentPosition === imageIndexes.length - 1
+          ? 0
+          : currentPosition + 1;
+      return imageIndexes[nextPosition];
+    });
+  }, [imageIndexes]);
 
   useEffect(() => {
     if (!isLightboxOpen) return;
@@ -51,8 +115,8 @@ export function ProductGallery({ name, images }: ProductGalleryProps) {
 
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") setIsLightboxOpen(false);
-      if (event.key === "ArrowLeft") showPrevious();
-      if (event.key === "ArrowRight") showNext();
+      if (event.key === "ArrowLeft") showPreviousImage();
+      if (event.key === "ArrowRight") showNextImage();
       if (event.key === "Tab") {
         const focusable = Array.from(
           dialogRef.current?.querySelectorAll<HTMLButtonElement>("button") ?? [],
@@ -79,7 +143,7 @@ export function ProductGallery({ name, images }: ProductGalleryProps) {
       window.removeEventListener("keydown", handleKeyDown);
       opener?.focus();
     };
-  }, [isLightboxOpen, showNext, showPrevious]);
+  }, [isLightboxOpen, showNextImage, showPreviousImage]);
 
   function handlePointerDown(event: React.PointerEvent<HTMLElement>) {
     if (event.pointerType === "mouse" && event.button !== 0) return;
@@ -90,11 +154,15 @@ export function ProductGallery({ name, images }: ProductGalleryProps) {
     };
   }
 
-  function handlePointerUp(event: React.PointerEvent<HTMLElement>) {
+  function handlePointerUp(
+    event: React.PointerEvent<HTMLElement>,
+    onPrevious = showPrevious,
+    onNext = showNext,
+  ) {
     const swipeStart = swipeStartRef.current;
     swipeStartRef.current = null;
 
-    if (!swipeStart || !hasMultipleImages) return;
+    if (!swipeStart || !hasMultipleItems) return;
 
     const horizontalDistance = event.clientX - swipeStart.x;
     const verticalDistance = event.clientY - swipeStart.y;
@@ -107,9 +175,9 @@ export function ProductGallery({ name, images }: ProductGalleryProps) {
     ignoreNextClickRef.current = true;
 
     if (horizontalDistance < 0) {
-      showNext();
+      onNext();
     } else {
-      showPrevious();
+      onPrevious();
     }
   }
 
@@ -142,11 +210,15 @@ export function ProductGallery({ name, images }: ProductGalleryProps) {
   return (
     <div>
       <div
-        onPointerDown={handlePointerDown}
-        onPointerUp={handlePointerUp}
-        onPointerCancel={() => {
-          swipeStartRef.current = null;
-        }}
+        onPointerDown={selectedVideo ? undefined : handlePointerDown}
+        onPointerUp={selectedVideo ? undefined : handlePointerUp}
+        onPointerCancel={
+          selectedVideo
+            ? undefined
+            : () => {
+                swipeStartRef.current = null;
+              }
+        }
         className="group relative flex aspect-square touch-pan-y select-none items-center justify-center overflow-hidden rounded-[26px] border border-slate-200 bg-slate-50"
       >
         {selectedImage ? (
@@ -168,6 +240,19 @@ export function ProductGallery({ name, images }: ProductGalleryProps) {
               className="object-contain p-4 sm:p-8"
             />
           </button>
+        ) : selectedVideo ? (
+          <video
+            key={selectedVideo.src}
+            controls
+            playsInline
+            preload="metadata"
+            poster={selectedVideo.poster}
+            aria-label={selectedVideo.label}
+            className="h-full w-full bg-slate-950 object-contain"
+          >
+            <source src={selectedVideo.src} type="video/mp4" />
+            Seu navegador não suporta a reprodução deste vídeo.
+          </video>
         ) : (
           <div className="flex h-full w-full items-center justify-center text-sm text-slate-500">
             Imagem do produto não disponível
@@ -181,7 +266,7 @@ export function ProductGallery({ name, images }: ProductGalleryProps) {
           </span>
         ) : null}
 
-        {hasMultipleImages ? (
+        {hasMultipleItems ? (
           <>
             <button
               type="button"
@@ -211,24 +296,32 @@ export function ProductGallery({ name, images }: ProductGalleryProps) {
               <ChevronRight className="h-5 w-5" />
             </button>
 
-            <span className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-slate-950/75 px-2.5 py-1 text-xs font-semibold text-white backdrop-blur-sm">
-              {selectedIndex + 1} / {images.length}
+            <span
+              className={`pointer-events-none absolute left-1/2 -translate-x-1/2 rounded-full bg-slate-950/75 px-2.5 py-1 text-xs font-semibold text-white backdrop-blur-sm ${
+                selectedVideo ? "top-3" : "bottom-3"
+              }`}
+            >
+              {selectedIndex + 1} / {mediaItems.length}
             </span>
           </>
         ) : null}
       </div>
 
-      {hasMultipleImages ? (
+      {hasMultipleItems ? (
         <div
           className="mt-3 flex gap-2 overflow-x-auto pb-1"
-          aria-label="Galeria de imagens do produto"
+          aria-label="Galeria de fotos e vídeo do produto"
         >
-          {images.map((image, index) => (
+          {mediaItems.map((item, index) => (
             <button
-              key={`${image}-${index}`}
+              key={`${item.src}-${index}`}
               type="button"
               onClick={() => setSelectedIndex(index)}
-              aria-label={`Ver imagem ${index + 1} de ${name}`}
+              aria-label={
+                item.type === "image"
+                  ? `Ver imagem ${index + 1} de ${name}`
+                  : `Reproduzir vídeo de ${name}`
+              }
               aria-pressed={selectedIndex === index}
               className={`flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-xl border bg-white p-1.5 transition sm:h-20 sm:w-20 ${
                 selectedIndex === index
@@ -236,15 +329,33 @@ export function ProductGallery({ name, images }: ProductGalleryProps) {
                   : "border-slate-200 hover:border-slate-400"
               }`}
             >
-              <Image
-                src={image}
-                alt=""
-                width={80}
-                height={80}
-                draggable={false}
-                sizes="80px"
-                className="h-full w-full object-contain"
-              />
+              {item.type === "image" ? (
+                <Image
+                  src={item.src}
+                  alt=""
+                  width={80}
+                  height={80}
+                  draggable={false}
+                  sizes="80px"
+                  className="h-full w-full object-contain"
+                />
+              ) : (
+                <span className="relative h-full w-full overflow-hidden rounded-lg bg-slate-950">
+                  <Image
+                    src={item.poster}
+                    alt=""
+                    fill
+                    draggable={false}
+                    sizes="80px"
+                    className="object-cover opacity-80"
+                  />
+                  <span className="absolute inset-0 flex items-center justify-center">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-blue-700 shadow-sm">
+                      <Play className="ml-0.5 h-4 w-4 fill-current" />
+                    </span>
+                  </span>
+                </span>
+              )}
             </button>
           ))}
         </div>
@@ -272,7 +383,9 @@ export function ProductGallery({ name, images }: ProductGalleryProps) {
           <div
             onClick={(event) => event.stopPropagation()}
             onPointerDown={handlePointerDown}
-            onPointerUp={handlePointerUp}
+            onPointerUp={(event) =>
+              handlePointerUp(event, showPreviousImage, showNextImage)
+            }
             onPointerCancel={() => {
               swipeStartRef.current = null;
             }}
@@ -289,14 +402,14 @@ export function ProductGallery({ name, images }: ProductGalleryProps) {
             />
           </div>
 
-          {hasMultipleImages ? (
+          {imageIndexes.length > 1 ? (
             <>
               <button
                 type="button"
                 aria-label="Ver imagem anterior"
                 onClick={(event) => {
                   event.stopPropagation();
-                  showPrevious();
+                  showPreviousImage();
                 }}
                 className="absolute left-3 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white text-slate-950 shadow-lg transition hover:bg-slate-100 sm:left-6"
               >
@@ -308,7 +421,7 @@ export function ProductGallery({ name, images }: ProductGalleryProps) {
                 aria-label="Ver próxima imagem"
                 onClick={(event) => {
                   event.stopPropagation();
-                  showNext();
+                  showNextImage();
                 }}
                 className="absolute right-3 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white text-slate-950 shadow-lg transition hover:bg-slate-100 sm:right-6"
               >
@@ -316,7 +429,7 @@ export function ProductGallery({ name, images }: ProductGalleryProps) {
               </button>
 
               <span className="pointer-events-none absolute bottom-4 left-1/2 z-20 -translate-x-1/2 rounded-full bg-black/60 px-3 py-1.5 text-sm font-semibold text-white backdrop-blur-sm">
-                {selectedIndex + 1} / {images.length}
+                {imageIndexes.indexOf(selectedIndex) + 1} / {imageIndexes.length}
               </span>
             </>
           ) : null}

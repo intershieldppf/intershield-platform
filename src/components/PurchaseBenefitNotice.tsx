@@ -5,6 +5,7 @@ import {
   Headset,
   PackageCheck,
   PanelsTopLeft,
+  Ruler,
 } from "lucide-react";
 import Image from "next/image";
 
@@ -50,17 +51,26 @@ export function PurchaseBenefitNotice({
   className = "",
 }: PurchaseBenefitNoticeProps) {
   const isPpfKit = kind === "ppf-kit";
+  const isPpfManta = kind === "ppf-manta";
 
   if (compact) {
     return (
       <aside
-        aria-label={isPpfKit ? "Kit completo para aplicação de PPF" : "Espátula personalizada grátis"}
+        aria-label={
+          isPpfKit
+            ? "Kit completo para aplicação de PPF"
+            : isPpfManta
+              ? "PPF fotocromático vendido por metragem"
+              : "Espátula personalizada grátis"
+        }
         className={`rounded-[20px] border border-blue-200 bg-blue-50/70 p-4 ${className}`}
       >
         <div className="flex gap-3">
           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-600 text-white">
             {isPpfKit ? (
               <PackageCheck className="h-5 w-5" />
+            ) : isPpfManta ? (
+              <Ruler className="h-5 w-5" />
             ) : (
               <Gift className="h-5 w-5" />
             )}
@@ -69,16 +79,51 @@ export function PurchaseBenefitNotice({
             <p className="text-sm font-bold text-slate-950">
               {isPpfKit
                 ? "Você recebe o kit de aplicação completo"
+                : isPpfManta
+                  ? "Manta fotocromática na metragem escolhida"
                 : "Espátula personalizada grátis!"}
             </p>
             <p className="mt-1 text-xs leading-5 text-slate-600">
               {isPpfKit
                 ? "PPF pré-cortado, solução deslizante, espátula personalizada, manual ilustrado e suporte especializado."
+                : isPpfManta
+                  ? "Largura fixa de 30 cm e comprimento de 1 a 10 metros. O material não é pré-cortado."
                 : "A espátula oficial da InterShield acompanha o acabamento adesivo para auxiliar na aplicação."}
             </p>
           </div>
         </div>
       </aside>
+    );
+  }
+
+  if (isPpfManta) {
+    return (
+      <section
+        aria-labelledby="ppf-manta-title"
+        className={`overflow-hidden rounded-[30px] border border-blue-200 bg-[linear-gradient(120deg,#eff6ff_0%,#ffffff_60%,#eef2ff_100%)] p-7 shadow-sm sm:p-9 ${className}`}
+      >
+        <div className="flex gap-4">
+          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-600 text-white">
+            <Ruler className="h-6 w-6" />
+          </span>
+          <div>
+            <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-blue-600">
+              Venda por metragem
+            </p>
+            <h2
+              id="ppf-manta-title"
+              className="mt-2 text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl"
+            >
+              Escolha de 1 a 10 metros
+            </h2>
+            <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-600">
+              A manta possui 30 cm de largura fixa. O comprimento é cortado
+              conforme a opção escolhida e o acabamento final é realizado pelo
+              instalador diretamente no farol.
+            </p>
+          </div>
+        </div>
+      </section>
     );
   }
 
