@@ -14,12 +14,33 @@ export function HeroSection() {
       className="relative min-h-[680px] overflow-hidden bg-[#010817] lg:min-h-[720px]"
     >
       <div
-        className="absolute inset-y-0 right-0 w-full lg:w-[62%] xl:w-[60%]"
+        aria-hidden="true"
+        className="absolute inset-y-0 right-0 w-full lg:w-[58%]"
         style={{
           WebkitMaskImage:
-            "linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.18) 8%, rgba(0,0,0,0.72) 21%, black 38%)",
+            "linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.35) 22%, black 62%)",
           maskImage:
-            "linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.18) 8%, rgba(0,0,0,0.72) 21%, black 38%)",
+            "linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.35) 22%, black 62%)",
+        }}
+      >
+        <Image
+          src="/intershield-hero-bmw-night.webp"
+          alt=""
+          fill
+          priority
+          sizes="(min-width: 1024px) 58vw, 100vw"
+          className="scale-110 object-cover object-center opacity-30 blur-2xl"
+        />
+      </div>
+
+      <div
+        className="absolute inset-y-0 right-0 w-full lg:w-auto"
+        style={{
+          aspectRatio: "3 / 4",
+          WebkitMaskImage:
+            "linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.5) 18%, black 42%)",
+          maskImage:
+            "linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.5) 18%, black 42%)",
         }}
       >
         <Image
@@ -28,8 +49,8 @@ export function HeroSection() {
           fill
           priority
           quality={95}
-          sizes="(min-width: 1280px) 60vw, (min-width: 1024px) 62vw, 100vw"
-          className="object-cover object-[50%_48%] contrast-[1.03] saturate-[1.04]"
+          sizes="(min-width: 1024px) 540px, 100vw"
+          className="object-cover object-[50%_48%] contrast-[1.03] saturate-[1.04] lg:object-contain lg:object-right"
         />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(1,8,23,0.48)_0%,rgba(1,8,23,0.1)_42%,transparent_70%)]" />
       </div>
