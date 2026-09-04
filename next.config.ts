@@ -11,7 +11,7 @@ const contentSecurityPolicy = [
   "img-src 'self' data: blob: https://http2.mlstatic.com https://www.google-analytics.com https://www.facebook.com",
   "media-src 'self' blob:",
   "font-src 'self' data:",
-  "connect-src 'self' https://*.google-analytics.com https://*.googletagmanager.com https://www.facebook.com",
+  "connect-src 'self' https://*.supabase.co https://*.google-analytics.com https://*.googletagmanager.com https://www.facebook.com",
   "upgrade-insecure-requests",
 ].join("; ");
 

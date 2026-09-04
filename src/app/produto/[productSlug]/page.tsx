@@ -87,6 +87,13 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const checkoutEnabled =
     process.env.CHECKOUT_ENABLED === "true" &&
     Boolean(process.env.MELHOR_ENVIO_TOKEN);
+  const onlinePurchaseEnabled =
+    (process.env.PAYMENTS_ENABLED === "true" &&
+      Boolean(process.env.MERCADO_PAGO_ACCESS_TOKEN) &&
+      Boolean(process.env.MERCADO_PAGO_WEBHOOK_SECRET) &&
+      Boolean(process.env.SUPABASE_URL) &&
+      Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY)) ||
+    process.env.VERCEL_ENV === "preview";
 
   const relatedProducts = storefrontCatalog
     .filter(
@@ -236,6 +243,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 }
                 whatsappNumber={WHATSAPP_NUMBER}
                 checkoutEnabled={checkoutEnabled}
+                onlinePurchaseEnabled={onlinePurchaseEnabled}
               />
 
               <div className="mt-6 grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">

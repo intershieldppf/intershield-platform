@@ -2,11 +2,13 @@ import { z } from "zod";
 
 import { findStorefrontProductBySlug } from "@/data/storefront/catalog";
 import {
-  DEFAULT_SHIPPING_PACKAGE,
-  normalizeMelhorEnvioQuotes,
   normalizePostalCode,
-  SHIPPING_ORIGIN_POSTAL_CODE,
 } from "@/lib/commerce/shipping";
+import {
+  getShippingQuotes,
+  ShippingConfigurationError,
+  ShippingUnavailableError,
+} from "@/lib/commerce/shippingServer";
 import { checkRateLimit, rateLimitResponse } from "@/lib/security/rateLimit";
 
 export const runtime = "nodejs";
@@ -37,12 +39,6 @@ export async function POST(request: Request) {
 
   if (process.env.CHECKOUT_ENABLED !== "true") {
     return json({ error: "O checkout ainda não está disponível." }, 503);
-  }
-
-  const token = process.env.MELHOR_ENVIO_TOKEN;
-
-  if (!token) {
-    return json({ error: "O cálculo de frete ainda está em configuração." }, 503);
   }
 
   let body: unknown;
@@ -77,62 +73,22 @@ export async function POST(request: Request) {
 
   const insuredPrice = selectedVariant?.price ?? product.price;
 
-  const baseUrl =
-    process.env.MELHOR_ENVIO_ENV === "production"
-      ? "https://melhorenvio.com.br"
-      : "https://sandbox.melhorenvio.com.br";
-
-  let response: Response;
-
   try {
-    response = await fetch(`${baseUrl}/api/v2/me/shipment/calculate`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-        "User-Agent": "InterShield Peliculas (contato@intershield.com.br)",
-      },
-      body: JSON.stringify({
-        from: { postal_code: SHIPPING_ORIGIN_POSTAL_CODE },
-        to: { postal_code: parsed.data.postalCode },
-        volumes: [
-          {
-            ...DEFAULT_SHIPPING_PACKAGE,
-            insurance: Number(insuredPrice.toFixed(2)),
-          },
-        ],
-        options: {
-          receipt: false,
-          own_hand: false,
-        },
-        services: "1,2",
-      }),
-      cache: "no-store",
-      signal: AbortSignal.timeout(10_000),
+    const quotes = await getShippingQuotes({
+      destinationPostalCode: parsed.data.postalCode,
+      insuredPrice,
     });
-  } catch {
-    return json(
-      { error: "Não foi possível consultar o frete agora. Tente novamente." },
-      502,
-    );
+    return json({ quotes }, 200);
+  } catch (error) {
+    if (error instanceof ShippingConfigurationError) {
+      return json({ error: error.message }, 503);
+    }
+
+    if (error instanceof ShippingUnavailableError) {
+      const status = error.message.includes("disponíveis") ? 404 : 502;
+      return json({ error: error.message }, status);
+    }
+
+    return json({ error: "Não foi possível calcular o frete agora." }, 500);
   }
-
-  if (!response.ok) {
-    return json(
-      { error: "Não foi possível consultar o frete agora. Tente novamente." },
-      502,
-    );
-  }
-
-  const quotes = normalizeMelhorEnvioQuotes(await response.json());
-
-  if (quotes.length === 0) {
-    return json(
-      { error: "PAC ou SEDEX não estão disponíveis para este CEP." },
-      404,
-    );
-  }
-
-  return json({ quotes }, 200);
 }

@@ -1,7 +1,13 @@
 "use client";
 
 import { useMemo, useState, type ReactNode } from "react";
-import { LoaderCircle, MapPin, MessageCircle, Truck } from "lucide-react";
+import {
+  LoaderCircle,
+  LockKeyhole,
+  MapPin,
+  MessageCircle,
+  Truck,
+} from "lucide-react";
 
 import type { StorefrontVariantOption } from "@/data/storefront/catalog";
 import {
@@ -21,6 +27,7 @@ type ProductCheckoutActionsProps = {
   benefitNotice: ReactNode;
   whatsappNumber: string;
   checkoutEnabled: boolean;
+  onlinePurchaseEnabled: boolean;
 };
 
 type QuoteResponse = {
@@ -48,6 +55,7 @@ export function ProductCheckoutActions({
   benefitNotice,
   whatsappNumber,
   checkoutEnabled,
+  onlinePurchaseEnabled,
 }: ProductCheckoutActionsProps) {
   const [selectedVariant, setSelectedVariant] = useState(
     variantOptions[0]?.value ?? (variants.length === 1 ? variants[0] : ""),
@@ -63,6 +71,11 @@ export function ProductCheckoutActions({
   const selectedOption = variantByValue.get(selectedVariant);
   const displayedPrice = selectedOption?.price ?? price;
   const selectedSku = selectedOption?.sku ?? sku;
+  const checkoutUrl = useMemo(() => {
+    const query = new URLSearchParams({ produto: productId });
+    if (selectedVariant) query.set("variacao", selectedVariant);
+    return `/checkout?${query.toString()}`;
+  }, [productId, selectedVariant]);
 
   const whatsappUrl = useMemo(() => {
     const whatsappText = [
@@ -245,6 +258,24 @@ export function ProductCheckoutActions({
         </div>
       ) : null}
 
+      {onlinePurchaseEnabled ? (
+        <a
+          href={checkoutUrl}
+          aria-disabled={variants.length > 1 && !selectedVariant}
+          onClick={(event) => {
+            if (variants.length > 1 && !selectedVariant) event.preventDefault();
+          }}
+          className={`mt-7 inline-flex h-14 w-full items-center justify-center gap-2 rounded-2xl px-5 text-sm font-bold text-white shadow-sm transition ${
+            variants.length > 1 && !selectedVariant
+              ? "cursor-not-allowed bg-slate-300"
+              : "bg-blue-600 hover:bg-blue-500"
+          }`}
+        >
+          <LockKeyhole className="h-4 w-4" />
+          Comprar no site
+        </a>
+      ) : null}
+
       <a
         href={whatsappUrl}
         target="_blank"
@@ -253,10 +284,12 @@ export function ProductCheckoutActions({
         onClick={(event) => {
           if (variants.length > 1 && !selectedVariant) event.preventDefault();
         }}
-        className={`mt-7 inline-flex h-14 w-full items-center justify-center gap-2 rounded-2xl px-5 text-sm font-bold text-white shadow-sm transition ${
+        className={`${onlinePurchaseEnabled ? "mt-3" : "mt-7"} inline-flex h-14 w-full items-center justify-center gap-2 rounded-2xl border px-5 text-sm font-bold shadow-sm transition ${
           variants.length > 1 && !selectedVariant
-            ? "cursor-not-allowed bg-slate-300"
-            : "bg-blue-600 hover:bg-blue-500"
+            ? "cursor-not-allowed border-slate-300 bg-slate-100 text-slate-400"
+            : onlinePurchaseEnabled
+              ? "border-slate-300 bg-white text-slate-900 hover:border-blue-300 hover:text-blue-600"
+              : "border-blue-600 bg-blue-600 text-white hover:bg-blue-500"
         }`}
       >
         <MessageCircle className="h-5 w-5" />
@@ -264,7 +297,9 @@ export function ProductCheckoutActions({
       </a>
 
       <p className="mt-3 text-center text-xs leading-5 text-slate-500">
-        Atendimento direto para confirmar a compatibilidade antes da compra.
+        {onlinePurchaseEnabled
+          ? "Pague com segurança pelo Mercado Pago ou confirme pelo WhatsApp."
+          : "Atendimento direto para confirmar a compatibilidade antes da compra."}
       </p>
     </div>
   );
