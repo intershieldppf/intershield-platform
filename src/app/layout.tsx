@@ -22,18 +22,19 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.intershield.com.br"),
   title: {
-    default: "InterShield Películas | Proteção automotiva sob medida",
+    default: "InterShield Películas | Kits PPF e Black Piano sob medida",
     template: "%s | InterShield Películas",
   },
   description:
-    "Proteção e acabamento automotivo premium com kits desenvolvidos para cada veículo.",
+    "Kits PPF automotivos e acabamentos Black Piano pré-cortados para multimídias, painéis, consoles, colunas e outras áreas do veículo.",
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     locale: "pt_BR",
     siteName: "InterShield Películas",
-    title: "InterShield Películas | Proteção automotiva sob medida",
-    description: "Kits PPF e acabamentos automotivos pré-cortados para cada veículo.",
+    title: "InterShield Películas | Kits PPF e Black Piano sob medida",
+    description:
+      "Kits PPF automotivos e acabamentos Black Piano pré-cortados para cada veículo.",
     url: "/",
     images: [
       {
@@ -47,7 +48,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "InterShield Películas",
-    description: "Proteção e acabamento automotivo sob medida.",
+    description: "Kits PPF e Black Piano pré-cortados para cada veículo.",
     images: ["/intershield-hero-bmw.webp"],
   },
   robots: { index: true, follow: true },

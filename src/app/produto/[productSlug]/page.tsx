@@ -41,8 +41,10 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
 
   if (!product) return {};
 
+  const marketplaceSource = await getMarketplaceProductSource(product.id);
+  const details = buildStorefrontProductDetails(product, marketplaceSource);
   const canonical = `/produto/${storefrontProductSlug(product)}`;
-  const description = `${product.title}. Consulte compatibilidade e compre com suporte da InterShield Películas.`;
+  const description = details.intro.join(" ").slice(0, 157).trimEnd();
 
   return {
     title: product.title,
@@ -54,6 +56,12 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
       url: canonical,
       images: [{ url: product.image, alt: product.title }],
       type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: product.title,
+      description,
+      images: [product.image],
     },
   };
 }
@@ -108,7 +116,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
     .slice(0, 4);
 
   const canonicalUrl = `https://www.intershield.com.br/produto/${storefrontProductSlug(product)}`;
-  const structuredDescription = `${product.title}. Consulte compatibilidade e compre com suporte da InterShield Películas.`;
+  const structuredDescription = details.intro.join(" ");
   const structuredData = {
     "@context": "https://schema.org",
     "@graph": [
@@ -119,8 +127,34 @@ export default async function ProductPage({ params }: ProductPageProps) {
         image: images.map((image) => image.startsWith("http") ? image : `https://www.intershield.com.br${image}`),
         sku: product.sku ?? product.id,
         category: product.type,
-        brand: product.brand ? { "@type": "Brand", name: product.brand } : undefined,
+        brand: { "@type": "Brand", name: "InterShield Películas" },
+        mpn: product.sku ?? product.id,
         url: canonicalUrl,
+        additionalProperty: [
+          {
+            "@type": "PropertyValue",
+            name: "Compatibilidade",
+            value: compatibility,
+          },
+          ...(details.material
+            ? [
+                {
+                  "@type": "PropertyValue",
+                  name: "Material",
+                  value: details.material,
+                },
+              ]
+            : []),
+          ...(details.thickness
+            ? [
+                {
+                  "@type": "PropertyValue",
+                  name: "Espessura",
+                  value: details.thickness,
+                },
+              ]
+            : []),
+        ],
         offers:
           product.price !== null
             ? {
@@ -128,7 +162,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 priceCurrency: "BRL",
                 price: product.price,
                 url: canonicalUrl,
-                seller: { "@type": "Organization", name: "InterShield Películas" },
+                seller: {
+                  "@id": "https://www.intershield.com.br/#organization",
+                  "@type": "Organization",
+                  name: "InterShield Películas",
+                },
               }
             : undefined,
       },

@@ -27,6 +27,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${baseUrl}/produto/${storefrontProductSlug(product)}`,
       changeFrequency: "weekly" as const,
       priority: 0.8,
+      images: [product.image],
     })),
   ];
 }
