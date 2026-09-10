@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Menu } from "lucide-react";
+import { Menu, UserRound } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useCallback, useState } from "react";
 
@@ -43,6 +43,10 @@ function HomeLogo({ label }: { label: string }) {
 
 export function Header() {
   const pathname = usePathname();
+  const customerAccountEnabled = Boolean(
+    process.env.NEXT_PUBLIC_SUPABASE_URL &&
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+  );
   const [menuOpen, setMenuOpen] = useState(false);
   const closeMenu = useCallback(() => setMenuOpen(false), []);
 
@@ -90,6 +94,22 @@ export function Header() {
           })}
         </nav>
 
+        {customerAccountEnabled ? (
+          <Link
+            href="/minha-conta"
+            aria-label="Acessar meus pedidos"
+            aria-current={pathname === "/minha-conta" ? "page" : undefined}
+            className={`hidden h-10 w-10 shrink-0 items-center justify-center rounded-lg border transition lg:inline-flex ${
+              pathname === "/minha-conta"
+                ? "border-blue-300 bg-blue-50 text-blue-600"
+                : "border-slate-200 text-slate-700 hover:border-blue-300 hover:text-blue-600"
+            }`}
+            title="Meus pedidos"
+          >
+            <UserRound className="h-4 w-4" />
+          </Link>
+        ) : null}
+
         <a
           href={whatsappUrl}
           target="_blank"
@@ -113,7 +133,9 @@ export function Header() {
         </button>
       </div>
       <MobileMenu
-        items={navItems}
+        items={customerAccountEnabled
+          ? [...navItems, { label: "Meus pedidos", href: "/minha-conta" }]
+          : navItems}
         open={menuOpen}
         onClose={closeMenu}
         ctaHref={whatsappUrl}
