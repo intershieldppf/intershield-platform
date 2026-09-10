@@ -24,6 +24,10 @@ const navigationLinks = [
   { label: "Privacidade", href: "/privacidade" },
   { label: "Envio e trocas", href: "/envio-trocas" },
   { label: "Garantia e instalação", href: "/garantia-instalacao" },
+  ...(process.env.NEXT_PUBLIC_SUPABASE_URL &&
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    ? [{ label: "Meus pedidos", href: "/minha-conta" }]
+    : []),
 ];
 
 const solutionLinks = [

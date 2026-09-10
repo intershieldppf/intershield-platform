@@ -14,7 +14,7 @@ export function LegalPage({ title, intro, children }: { title: string; intro: st
           <div className="mt-10 space-y-8 text-sm leading-7 text-slate-600 [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-slate-950 [&_p]:mt-3">
             {children}
           </div>
-          <p className="mt-10 border-t border-slate-200 pt-6 text-xs text-slate-500">Última atualização: 27 de agosto de 2026.</p>
+          <p className="mt-10 border-t border-slate-200 pt-6 text-xs text-slate-500">Última atualização: 10 de setembro de 2026.</p>
         </article>
       </main>
     </div>

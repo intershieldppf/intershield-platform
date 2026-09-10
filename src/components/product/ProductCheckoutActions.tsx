@@ -1,7 +1,13 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { LoaderCircle, MapPin, MessageCircle, Truck } from "lucide-react";
+import {
+  LoaderCircle,
+  LockKeyhole,
+  MapPin,
+  MessageCircle,
+  Truck,
+} from "lucide-react";
 
 import {
   formatPostalCode,
@@ -15,8 +21,10 @@ type ProductCheckoutActionsProps = {
   sku: string;
   compatibility: string;
   variants: string[];
+  price: number | null;
   whatsappNumber: string;
   checkoutEnabled: boolean;
+  onlinePurchaseEnabled: boolean;
 };
 
 type QuoteResponse = {
@@ -24,11 +32,13 @@ type QuoteResponse = {
   error?: string;
 };
 
+const priceFormatter = new Intl.NumberFormat("pt-BR", {
+  style: "currency",
+  currency: "BRL",
+});
+
 function formatPrice(value: number) {
-  return new Intl.NumberFormat("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  }).format(value);
+  return priceFormatter.format(value);
 }
 
 export function ProductCheckoutActions({
@@ -37,8 +47,10 @@ export function ProductCheckoutActions({
   sku,
   compatibility,
   variants,
+  price,
   whatsappNumber,
   checkoutEnabled,
+  onlinePurchaseEnabled,
 }: ProductCheckoutActionsProps) {
   const [selectedVariant, setSelectedVariant] = useState(
     variants.length === 1 ? variants[0] : "",
@@ -47,14 +59,22 @@ export function ProductCheckoutActions({
   const [quotes, setQuotes] = useState<ShippingQuote[]>([]);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const displayedPrice = price;
+  const selectedSku = sku;
+  const checkoutUrl = useMemo(() => {
+    const query = new URLSearchParams({ produto: productId });
+    if (selectedVariant) query.set("variacao", selectedVariant);
+    return `/checkout?${query.toString()}`;
+  }, [productId, selectedVariant]);
 
   const whatsappUrl = useMemo(() => {
     const whatsappText = [
       "Olá! Quero comprar este produto da InterShield Películas:",
       "",
       `Produto: ${productTitle}`,
-      `SKU: ${sku}`,
+      `SKU: ${selectedSku}`,
       selectedVariant ? `Opção: ${selectedVariant}` : null,
+      displayedPrice !== null ? `Valor: ${formatPrice(displayedPrice)}` : null,
       `Compatibilidade: ${compatibility}`,
       "",
       "Gostaria de confirmar a compatibilidade e finalizar a compra.",
@@ -63,7 +83,14 @@ export function ProductCheckoutActions({
       .join("\n");
 
     return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`;
-  }, [compatibility, productTitle, selectedVariant, sku, whatsappNumber]);
+  }, [
+    compatibility,
+    displayedPrice,
+    productTitle,
+    selectedSku,
+    selectedVariant,
+    whatsappNumber,
+  ]);
 
   async function calculateShipping() {
     const normalizedPostalCode = normalizePostalCode(postalCode);
@@ -82,7 +109,11 @@ export function ProductCheckoutActions({
       const response = await fetch("/api/frete/cotacao", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ productId, postalCode: normalizedPostalCode }),
+        body: JSON.stringify({
+          productId,
+          postalCode: normalizedPostalCode,
+          variantValue: selectedVariant || undefined,
+        }),
       });
       const data = (await response.json()) as QuoteResponse;
 
@@ -116,13 +147,13 @@ export function ProductCheckoutActions({
                   type="button"
                   aria-pressed={isSelected}
                   onClick={() => setSelectedVariant(value)}
-                  className={`rounded-xl border px-4 py-2.5 text-sm font-semibold transition ${
+                  className={`rounded-xl border px-4 py-2.5 text-left text-sm font-semibold transition ${
                     isSelected
                       ? "border-blue-600 bg-blue-50 text-blue-700 ring-2 ring-blue-100"
                       : "border-slate-200 bg-white text-slate-800 hover:border-blue-300"
                   }`}
                 >
-                  {value}
+                  <span className="block">{value}</span>
                 </button>
               );
             })}
@@ -202,6 +233,24 @@ export function ProductCheckoutActions({
         </div>
       ) : null}
 
+      {onlinePurchaseEnabled ? (
+        <a
+          href={checkoutUrl}
+          aria-disabled={variants.length > 1 && !selectedVariant}
+          onClick={(event) => {
+            if (variants.length > 1 && !selectedVariant) event.preventDefault();
+          }}
+          className={`mt-7 inline-flex h-14 w-full items-center justify-center gap-2 rounded-2xl px-5 text-sm font-bold text-white shadow-sm transition ${
+            variants.length > 1 && !selectedVariant
+              ? "cursor-not-allowed bg-slate-300"
+              : "bg-blue-600 hover:bg-blue-500"
+          }`}
+        >
+          <LockKeyhole className="h-4 w-4" />
+          Comprar no site
+        </a>
+      ) : null}
+
       <a
         href={whatsappUrl}
         target="_blank"
@@ -210,10 +259,12 @@ export function ProductCheckoutActions({
         onClick={(event) => {
           if (variants.length > 1 && !selectedVariant) event.preventDefault();
         }}
-        className={`mt-7 inline-flex h-14 w-full items-center justify-center gap-2 rounded-2xl px-5 text-sm font-bold text-white shadow-sm transition ${
+        className={`${onlinePurchaseEnabled ? "mt-3" : "mt-7"} inline-flex h-14 w-full items-center justify-center gap-2 rounded-2xl border px-5 text-sm font-bold shadow-sm transition ${
           variants.length > 1 && !selectedVariant
-            ? "cursor-not-allowed bg-slate-300"
-            : "bg-blue-600 hover:bg-blue-500"
+            ? "cursor-not-allowed border-slate-300 bg-slate-100 text-slate-400"
+            : onlinePurchaseEnabled
+              ? "border-slate-300 bg-white text-slate-900 hover:border-blue-300 hover:text-blue-600"
+              : "border-blue-600 bg-blue-600 text-white hover:bg-blue-500"
         }`}
       >
         <MessageCircle className="h-5 w-5" />
@@ -221,7 +272,9 @@ export function ProductCheckoutActions({
       </a>
 
       <p className="mt-3 text-center text-xs leading-5 text-slate-500">
-        Atendimento direto para confirmar a compatibilidade antes da compra.
+        {onlinePurchaseEnabled
+          ? "Pague com segurança pelo Mercado Pago ou confirme pelo WhatsApp."
+          : "Atendimento direto para confirmar a compatibilidade antes da compra."}
       </p>
     </div>
   );
