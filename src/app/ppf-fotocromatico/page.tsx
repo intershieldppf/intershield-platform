@@ -147,17 +147,24 @@ export default function PpfFotocromaticoPage() {
           </div>
         </section>
 
-        <section className="border-b border-slate-100 bg-white">
-          <div className="mx-auto grid max-w-[1240px] divide-y divide-slate-100 px-6 sm:grid-cols-2 sm:divide-x sm:divide-y-0 sm:px-8 lg:grid-cols-4 lg:px-10">
+        <section className="border-b border-slate-100 bg-white py-5">
+          <div className="mx-auto grid max-w-[1240px] grid-cols-2 gap-3 px-5 sm:px-8 lg:grid-cols-4 lg:px-10">
             {[
               ["01", "Proteção física"],
               ["02", "Efeito adaptativo"],
               ["03", "Brilho premium"],
               ["04", "Aplicação especializada"],
             ].map(([number, label]) => (
-              <div key={label} className="flex items-center gap-4 px-5 py-6 first:pl-0 last:pr-0">
-                <span className="text-xs font-bold tracking-[0.18em] text-blue-600">{number}</span>
-                <p className="text-sm font-bold text-slate-800">{label}</p>
+              <div
+                key={label}
+                className="group flex min-h-20 items-center gap-3 rounded-[18px] border border-slate-200 bg-slate-50 px-4 py-3 transition hover:border-blue-200 hover:bg-blue-50/60"
+              >
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-blue-600 text-xs font-bold text-white shadow-lg shadow-blue-950/15">
+                  {number}
+                </span>
+                <p className="text-sm font-bold leading-5 text-slate-800">
+                  {label}
+                </p>
               </div>
             ))}
           </div>
@@ -313,21 +320,21 @@ export default function PpfFotocromaticoPage() {
 
         <section
           id="entenda-a-tecnologia"
-          className="scroll-mt-24 bg-white py-20 sm:py-24"
+          className="scroll-mt-32 bg-white py-16 sm:py-24 lg:scroll-mt-24"
         >
-          <div className="mx-auto max-w-[1240px] px-6 sm:px-8 lg:px-10">
-            <div className="grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
-              <figure className="mx-auto w-full max-w-[560px] overflow-hidden rounded-[30px] border border-slate-200 bg-[#030816] shadow-[0_32px_80px_-46px_rgba(15,23,42,0.7)] lg:mx-0">
+          <div className="mx-auto max-w-[1240px] px-5 sm:px-8 lg:px-10">
+            <div className="grid items-center gap-10 lg:grid-cols-[0.88fr_1.12fr] lg:gap-16">
+              <figure className="mx-auto w-full max-w-[540px] overflow-hidden rounded-[28px] border border-slate-200 bg-[#030816] shadow-[0_32px_90px_-50px_rgba(15,23,42,0.8)] lg:mx-0">
                 <div className="flex items-center justify-between gap-4 border-b border-white/10 px-5 py-4 sm:px-6">
                   <div>
-                    <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-blue-400">
+                    <p className="text-xs font-bold uppercase tracking-[0.2em] text-blue-400">
                       Demonstração real
                     </p>
                     <p className="mt-1 text-sm font-bold text-white">
-                      Veja o material reagindo à luz
+                      O material reagindo à luz
                     </p>
                   </div>
-                  <span className="rounded-full border border-blue-400/25 bg-blue-500/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.15em] text-blue-300">
+                  <span className="rounded-full border border-blue-400/25 bg-blue-500/10 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-blue-300">
                     33 segundos
                   </span>
                 </div>
@@ -347,75 +354,98 @@ export default function PpfFotocromaticoPage() {
                   Seu navegador não consegue reproduzir este vídeo.
                 </video>
 
-                <figcaption className="border-t border-white/10 px-5 py-4 text-xs leading-6 text-slate-400 sm:px-6">
-                  A intensidade e o tempo de transição podem variar conforme a incidência UV, a temperatura e o ambiente.
+                <figcaption className="border-t border-white/10 px-5 py-4 text-sm leading-6 text-slate-400 sm:px-6">
+                  A intensidade e o tempo de transição variam conforme luz UV,
+                  temperatura e ambiente.
                 </figcaption>
               </figure>
 
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.26em] text-blue-600">
+                <p className="text-xs font-bold uppercase tracking-[0.24em] text-blue-600">
                   Entenda a tecnologia
                 </p>
-                <h2 className="mt-4 text-4xl font-bold leading-tight tracking-[-0.04em] text-slate-950 sm:text-[52px]">
+                <h2 className="mt-4 text-4xl font-bold leading-[1.06] tracking-[-0.04em] text-slate-950 sm:text-[52px]">
                   A aparência muda. A proteção permanece.
                 </h2>
                 <p className="mt-6 text-base leading-8 text-slate-600">
-                  Compostos fotocromáticos respondem à radiação ultravioleta presente na luz solar. Com maior exposição, a tonalidade do filme se intensifica; quando a incidência diminui, o material retorna progressivamente ao estado mais claro.
-                </p>
-                <p className="mt-4 text-base leading-8 text-slate-600">
-                  O efeito não funciona como um interruptor. A velocidade e a intensidade da transição variam com luz, temperatura, clima e tempo de exposição — por isso cada ambiente pode produzir uma percepção diferente.
+                  Compostos fotocromáticos respondem à radiação ultravioleta.
+                  Com maior exposição, a tonalidade se intensifica; quando a
+                  incidência diminui, o material retorna progressivamente ao
+                  estado mais claro.
                 </p>
 
-                <div className="mt-8 grid gap-4 sm:grid-cols-2">
-                  <article className="rounded-[24px] border border-slate-200 bg-slate-50 p-6">
-                    <MoonStar className="h-6 w-6 text-slate-700" />
-                    <p className="mt-7 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">
+                <div className="relative mt-8 grid gap-4 sm:grid-cols-2">
+                  <article className="relative overflow-hidden rounded-[24px] border border-slate-200 bg-slate-50 p-6">
+                    <span className="flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-700 shadow-sm">
+                      <MoonStar className="h-5 w-5" />
+                    </span>
+                    <p className="mt-5 text-xs font-bold uppercase tracking-[0.18em] text-slate-500">
                       Menor exposição UV
                     </p>
-                    <h3 className="mt-3 text-xl font-bold tracking-[-0.03em] text-slate-950">
+                    <h3 className="mt-2 text-xl font-bold tracking-[-0.03em] text-slate-950">
                       Aparência mais clara
                     </h3>
-                    <p className="mt-3 text-sm leading-7 text-slate-600">
-                      Em locais cobertos, à sombra ou com pouca incidência solar, o tom tende a ficar mais discreto.
+                    <p className="mt-3 text-sm leading-6 text-slate-600">
+                      Em locais cobertos, à sombra ou com pouca luz solar, o tom
+                      tende a ficar mais discreto.
                     </p>
                   </article>
 
-                  <article className="rounded-[24px] border border-blue-500/20 bg-[#06112b] p-6 text-white">
-                    <SunMedium className="h-6 w-6 text-blue-400" />
-                    <p className="mt-7 text-[10px] font-bold uppercase tracking-[0.2em] text-blue-300">
+                  <article className="relative overflow-hidden rounded-[24px] border border-blue-400/25 bg-[linear-gradient(145deg,#020817_0%,#07152e_100%)] p-6 text-white shadow-[0_24px_60px_-40px_rgba(37,99,235,0.75)]">
+                    <div
+                      aria-hidden="true"
+                      className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-blue-400/70 to-transparent"
+                    />
+                    <span className="flex h-11 w-11 items-center justify-center rounded-2xl border border-blue-400/35 bg-blue-500/15 text-blue-300">
+                      <SunMedium className="h-5 w-5" />
+                    </span>
+                    <p className="mt-5 text-xs font-bold uppercase tracking-[0.18em] text-blue-300">
                       Maior exposição UV
                     </p>
-                    <h3 className="mt-3 text-xl font-bold tracking-[-0.03em] text-white">
+                    <h3 className="mt-2 text-xl font-bold tracking-[-0.03em] text-white">
                       Efeito camaleão ativo
                     </h3>
-                    <p className="mt-3 text-sm leading-7 text-slate-300">
-                      Sob luz solar mais intensa, a coloração ganha presença e transforma o visual do conjunto óptico.
+                    <p className="mt-3 text-sm leading-6 text-slate-300">
+                      Sob luz solar intensa, a coloração ganha presença e
+                      transforma o visual do conjunto óptico.
                     </p>
                   </article>
+                </div>
+
+                <div className="mt-5 flex items-start gap-3 rounded-[20px] border border-blue-100 bg-blue-50/70 px-4 py-4">
+                  <CircleAlert className="mt-0.5 h-5 w-5 shrink-0 text-blue-600" />
+                  <p className="text-sm leading-6 text-slate-700">
+                    O efeito é gradual, não instantâneo. A percepção muda com
+                    clima, temperatura, orientação do farol e tempo de exposição.
+                  </p>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        <section id="comparacao" className="scroll-mt-24 bg-slate-50 py-20 sm:py-24">
-          <div className="mx-auto max-w-[1240px] px-6 sm:px-8 lg:px-10">
-            <div className="grid gap-6 lg:grid-cols-[1fr_0.7fr] lg:items-end">
+        <section
+          id="comparacao"
+          className="scroll-mt-32 bg-slate-50 py-16 sm:py-24 lg:scroll-mt-24"
+        >
+          <div className="mx-auto max-w-[1240px] px-5 sm:px-8 lg:px-10">
+            <div className="grid gap-6 lg:grid-cols-[1fr_0.72fr] lg:items-end">
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.26em] text-blue-600">
-                  Antes e depois
+                <p className="text-xs font-bold uppercase tracking-[0.24em] text-blue-600">
+                  Comparação visual
                 </p>
-                <h2 className="mt-4 text-4xl font-bold tracking-[-0.04em] text-slate-950 sm:text-[52px]">
-                  Uma mudança visível, sem esconder o desenho do farol.
+                <h2 className="mt-4 text-4xl font-bold leading-[1.06] tracking-[-0.04em] text-slate-950 sm:text-[52px]">
+                  A tonalidade muda sem esconder o desenho do farol.
                 </h2>
               </div>
               <p className="text-base leading-8 text-slate-600 lg:justify-self-end">
-                A proposta é criar profundidade e personalidade mantendo a leitura das linhas originais do conjunto óptico.
+                O objetivo é acrescentar profundidade e personalidade,
+                preservando a leitura das linhas originais do conjunto óptico.
               </p>
             </div>
 
-            <figure className="mt-12 overflow-hidden rounded-[32px] border border-slate-200 bg-slate-950 shadow-[0_32px_80px_-46px_rgba(15,23,42,0.55)]">
-              <div className="relative aspect-[16/9]">
+            <figure className="mt-10 overflow-hidden rounded-[28px] border border-slate-200 bg-[#030816] shadow-[0_32px_90px_-50px_rgba(15,23,42,0.65)] sm:rounded-[34px]">
+              <div className="relative aspect-[4/3] sm:aspect-[16/9]">
                 <Image
                   src="/ppf-fotocromatico-antes-depois.webp"
                   alt="Comparativo do mesmo farol sem película e com PPF fotocromático fumê ativado"
@@ -423,15 +453,18 @@ export default function PpfFotocromaticoPage() {
                   sizes="(max-width: 1280px) 100vw, 1200px"
                   className="object-cover"
                 />
-                <div className="absolute left-4 top-4 rounded-full border border-white/30 bg-black/55 px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-white backdrop-blur sm:left-6 sm:top-6">
-                  Antes · sem película
-                </div>
-                <div className="absolute right-4 top-4 rounded-full border border-blue-300/35 bg-blue-700/75 px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-white backdrop-blur sm:right-6 sm:top-6">
-                  Depois · PPF ativado
+                <div className="absolute inset-x-3 bottom-3 flex items-center justify-between gap-3 sm:inset-x-6 sm:bottom-6">
+                  <span className="rounded-full border border-white/25 bg-black/65 px-3 py-2 text-[11px] font-bold uppercase tracking-[0.12em] text-white backdrop-blur sm:px-4 sm:text-xs">
+                    Sem película
+                  </span>
+                  <span className="rounded-full border border-blue-300/35 bg-blue-600/85 px-3 py-2 text-[11px] font-bold uppercase tracking-[0.12em] text-white backdrop-blur sm:px-4 sm:text-xs">
+                    PPF ativado
+                  </span>
                 </div>
               </div>
-              <figcaption className="border-t border-white/10 bg-[#030816] px-6 py-4 text-sm leading-6 text-slate-400">
-                Simulação visual do efeito fotocromático. A tonalidade real pode variar conforme o produto, o farol e as condições de luz.
+              <figcaption className="border-t border-white/10 px-5 py-4 text-sm leading-6 text-slate-400 sm:px-6">
+                Simulação visual. A tonalidade real varia conforme o produto, o
+                farol e as condições de luz.
               </figcaption>
             </figure>
           </div>
@@ -524,9 +557,9 @@ export default function PpfFotocromaticoPage() {
           </div>
         </section>
 
-        <section className="border-y border-blue-100 bg-[#f5f8ff] py-20 sm:py-24">
-          <div className="mx-auto grid max-w-[1240px] items-center gap-12 px-6 sm:px-8 lg:grid-cols-[0.82fr_1.18fr] lg:gap-16 lg:px-10">
-            <figure className="mx-auto w-full max-w-[520px] overflow-hidden rounded-[30px] border border-blue-100 bg-white shadow-[0_32px_80px_-46px_rgba(37,99,235,0.45)] lg:mx-0">
+        <section className="border-y border-blue-100 bg-[#f5f8ff] py-16 sm:py-24">
+          <div className="mx-auto grid max-w-[1240px] items-center gap-10 px-5 sm:px-8 lg:grid-cols-[0.82fr_1.18fr] lg:gap-16 lg:px-10">
+            <figure className="mx-auto w-full max-w-[500px] overflow-hidden rounded-[28px] border border-blue-100 bg-white shadow-[0_32px_90px_-50px_rgba(37,99,235,0.5)] lg:mx-0">
               <div className="relative aspect-[9/16]">
                 <Image
                   src="/ppf-fotocromatico-revitalizacao.webp"
@@ -535,56 +568,79 @@ export default function PpfFotocromaticoPage() {
                   sizes="(max-width: 1024px) 90vw, 500px"
                   className="object-cover"
                 />
-                <div className="absolute left-4 top-4 rounded-full border border-white/30 bg-slate-950/80 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.16em] text-white backdrop-blur sm:left-5 sm:top-5">
+                <div className="absolute left-4 top-4 rounded-full border border-white/30 bg-slate-950/80 px-3 py-2 text-[11px] font-bold uppercase tracking-[0.12em] text-white backdrop-blur sm:left-5 sm:top-5 sm:px-4">
                   Antes · lente desgastada
                 </div>
-                <div className="absolute left-4 top-[52%] rounded-full border border-blue-200/50 bg-blue-600/90 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.16em] text-white backdrop-blur sm:left-5">
-                  Depois · lente revitalizada
+                <div className="absolute left-4 top-[52%] rounded-full border border-blue-200/50 bg-blue-600/90 px-3 py-2 text-[11px] font-bold uppercase tracking-[0.12em] text-white backdrop-blur sm:left-5 sm:px-4">
+                  Depois · revitalizada
                 </div>
               </div>
-              <figcaption className="border-t border-slate-100 bg-white px-5 py-4 text-xs leading-6 text-slate-500">
-                Comparativo real de revitalização. O resultado varia conforme o nível de desgaste e o processo indicado para cada lente.
+              <figcaption className="border-t border-slate-100 bg-white px-5 py-4 text-sm leading-6 text-slate-500">
+                Resultado variável conforme o desgaste e o processo indicado
+                para cada lente.
               </figcaption>
             </figure>
 
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.26em] text-blue-600">
+              <p className="text-xs font-bold uppercase tracking-[0.24em] text-blue-600">
                 Preparação antes do PPF
               </p>
               <h2 className="mt-4 text-4xl font-bold leading-[1.06] tracking-[-0.04em] text-slate-950 sm:text-[52px]">
-                O PPF protege. A revitalização recupera o que já foi desgastado.
+                Primeiro recuperar. Depois proteger.
               </h2>
               <p className="mt-6 text-base leading-8 text-slate-600">
-                A película acompanha e preserva a condição atual do farol. Por isso, se a lente estiver opaca, amarelada, sem brilho ou com marcas de desgaste, ela deve ser revitalizada antes da aplicação. Um polimento profissional adequado cria uma base mais transparente e uniforme, favorecendo o brilho e o acabamento final do PPF.
+                O PPF preserva a condição atual do farol. Se a lente estiver
+                opaca, amarelada ou marcada, a revitalização profissional deve
+                ser feita antes da aplicação.
               </p>
 
-              <div className="mt-8 grid gap-4 sm:grid-cols-3">
-                {[
-                  ["01", "Avaliar", "Identificar opacidade, amarelamento e marcas na lente."],
-                  ["02", "Revitalizar", "Executar o polimento correto quando houver desgaste."],
-                  ["03", "Proteger", "Aplicar o PPF somente sobre a superfície pronta e limpa."],
-                ].map(([number, title, text]) => (
-                  <article key={number} className="rounded-[22px] border border-blue-100 bg-white p-5">
-                    <span className="text-xs font-bold tracking-[0.18em] text-blue-600">{number}</span>
-                    <h3 className="mt-5 text-lg font-bold tracking-[-0.02em] text-slate-950">{title}</h3>
-                    <p className="mt-2 text-sm leading-6 text-slate-600">{text}</p>
-                  </article>
-                ))}
+              <div className="relative mt-8">
+                <div
+                  aria-hidden="true"
+                  className="absolute bottom-8 left-5 top-8 w-px bg-gradient-to-b from-blue-200 via-blue-500 to-blue-200 sm:left-6"
+                />
+                <div className="grid gap-4">
+                  {[
+                    ["01", "Avaliar a lente", "Identificar opacidade, amarelamento, trincas e marcas."],
+                    ["02", "Revitalizar quando necessário", "Executar o polimento correto para recuperar transparência e uniformidade."],
+                    ["03", "Aplicar sobre a base pronta", "Limpar, descontaminar e instalar o PPF na superfície preparada."],
+                  ].map(([number, title, text]) => (
+                    <article
+                      key={number}
+                      className="relative flex items-start gap-4 rounded-[22px] border border-blue-100 bg-white p-4 shadow-[0_18px_50px_-42px_rgba(37,99,235,0.55)] sm:p-5"
+                    >
+                      <span className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-4 border-white bg-blue-600 text-xs font-bold text-white shadow-md sm:h-12 sm:w-12">
+                        {number}
+                      </span>
+                      <div className="pt-1">
+                        <h3 className="text-lg font-bold tracking-[-0.02em] text-slate-950">
+                          {title}
+                        </h3>
+                        <p className="mt-1 text-sm leading-6 text-slate-600">
+                          {text}
+                        </p>
+                      </div>
+                    </article>
+                  ))}
+                </div>
               </div>
 
-              <div className="mt-6 flex items-start gap-3 rounded-[22px] border border-blue-200 bg-blue-600 px-5 py-5 text-white shadow-[0_18px_45px_-30px_rgba(37,99,235,0.8)]">
-                <CircleAlert className="mt-0.5 h-5 w-5 shrink-0 text-blue-100" />
-                <p className="text-sm leading-7">
-                  <strong>Farol em bom estado não precisa de polimento.</strong> Quando a lente está íntegra, a preparação correta consiste em limpeza e descontaminação completas, evitando desgaste desnecessário da superfície.
+              <div className="mt-5 flex items-start gap-3 rounded-[20px] border border-emerald-200 bg-emerald-50 px-4 py-4">
+                <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600" />
+                <p className="text-sm leading-6 text-slate-700">
+                  <strong className="font-bold text-slate-950">
+                    Farol íntegro não precisa de polimento.
+                  </strong>{" "}
+                  Limpeza e descontaminação corretas são suficientes.
                 </p>
               </div>
             </div>
           </div>
         </section>
 
-        <section className="bg-[#030816] py-20 text-white sm:py-24">
-          <div className="mx-auto grid max-w-[1240px] items-center gap-12 px-6 sm:px-8 lg:grid-cols-[1.08fr_0.92fr] lg:gap-16 lg:px-10">
-            <div className="relative aspect-[3/2] overflow-hidden rounded-[30px] border border-white/10 bg-slate-900">
+        <section className="bg-[#030816] py-16 text-white sm:py-24">
+          <div className="mx-auto grid max-w-[1240px] items-center gap-10 px-5 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:px-10">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-[28px] border border-white/10 bg-slate-900 shadow-[0_30px_80px_-48px_rgba(37,99,235,0.55)]">
               <Image
                 src="/ppf-fotocromatico-aplicacao.webp"
                 alt="Aplicação profissional de PPF em um farol automotivo com espátula"
@@ -592,100 +648,148 @@ export default function PpfFotocromaticoPage() {
                 sizes="(max-width: 1024px) 100vw, 650px"
                 className="object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-white/5" />
-              <div className="absolute bottom-5 left-5 rounded-full border border-white/20 bg-black/55 px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-white backdrop-blur">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-white/5" />
+              <div className="absolute bottom-4 left-4 rounded-full border border-white/20 bg-black/60 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.14em] text-white backdrop-blur sm:bottom-5 sm:left-5">
                 Aplicação ilustrativa
               </div>
             </div>
 
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.26em] text-blue-400">
+              <p className="text-xs font-bold uppercase tracking-[0.24em] text-blue-400">
                 Instalação profissional recomendada
               </p>
-              <h2 className="mt-4 text-4xl font-bold leading-tight tracking-[-0.04em] text-white sm:text-[50px]">
-                Farol não é aplicação de peça pré-cortada.
+              <h2 className="mt-4 text-4xl font-bold leading-[1.06] tracking-[-0.04em] text-white sm:text-[50px]">
+                A qualidade final depende da aplicação.
               </h2>
               <p className="mt-6 text-base leading-8 text-slate-300">
-                Diferente dos kits para peças internas, este material chega em manta. O profissional precisa medir, posicionar, conformar e recortar o PPF diretamente para cada farol, respeitando curvas, bordas e o formato específico da lente.
+                Como o material chega em manta, o profissional precisa medir,
+                posicionar, conformar e recortar o PPF para cada farol,
+                respeitando curvas, bordas e o formato da lente.
               </p>
 
-              <div className="mt-7 space-y-4">
+              <div className="mt-7 grid gap-3 sm:grid-cols-2">
                 {[
-                  "Medição e melhor aproveitamento da manta",
-                  "Controle de tensão nas curvas complexas do farol",
-                  "Recorte seguro e acabamento preciso das bordas",
-                  "Avaliação da lente e revitalização, quando necessária",
-                  "Superfície descontaminada e completamente limpa",
+                  "Medição e aproveitamento da manta",
+                  "Controle de tensão nas curvas",
+                  "Recorte seguro das bordas",
+                  "Avaliação e limpeza da lente",
                 ].map((item) => (
-                  <div key={item} className="flex items-start gap-3 text-sm leading-6 text-slate-300">
+                  <div
+                    key={item}
+                    className="flex min-h-16 items-start gap-3 rounded-[18px] border border-white/10 bg-white/[0.045] px-4 py-4 text-sm leading-6 text-slate-300"
+                  >
                     <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-blue-400" />
                     <span>{item}</span>
                   </div>
                 ))}
               </div>
 
-              <p className="mt-7 border-l-2 border-blue-500 pl-4 text-sm font-semibold leading-7 text-white">
-                Recomendamos fortemente a instalação por um profissional com experiência em PPF automotivo. É a escolha mais segura para obter uniformidade, boa fixação e acabamento correto.
-              </p>
-
+              <div className="mt-6 rounded-[20px] border border-blue-400/25 bg-blue-500/10 px-5 py-5">
+                <p className="text-sm font-bold text-white">
+                  Por que recomendamos um profissional?
+                </p>
+                <p className="mt-2 text-sm leading-6 text-slate-300">
+                  Para obter uniformidade, boa fixação e acabamento correto sem
+                  comprometer a lente ou o próprio material.
+                </p>
+              </div>
             </div>
           </div>
         </section>
 
-        <section className="border-y border-slate-100 bg-slate-50 py-20 sm:py-24">
-          <div className="mx-auto grid max-w-[1240px] gap-12 px-6 sm:px-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-start lg:px-10">
+        <section className="border-y border-slate-100 bg-slate-50 py-16 sm:py-24">
+          <div className="mx-auto grid max-w-[1240px] gap-10 px-5 sm:px-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-start lg:gap-14 lg:px-10">
             <div className="lg:sticky lg:top-28">
-              <p className="text-xs font-bold uppercase tracking-[0.26em] text-blue-600">
+              <p className="text-xs font-bold uppercase tracking-[0.24em] text-blue-600">
                 Informações do material
               </p>
-              <h2 className="mt-4 text-4xl font-bold tracking-[-0.04em] text-slate-950 sm:text-[48px]">
-                Tecnologia com especificação clara.
+              <h2 className="mt-4 text-4xl font-bold leading-[1.06] tracking-[-0.04em] text-slate-950 sm:text-[48px]">
+                Especificação clara, sem letras miúdas.
               </h2>
               <p className="mt-5 text-base leading-8 text-slate-600">
-                Números ajudam na escolha, mas o resultado final também depende da preparação da lente, da instalação, do uso e da conservação.
+                Consulte as características principais antes de definir a
+                metragem e planejar a instalação.
               </p>
+
+              <div className="mt-7 grid grid-cols-2 gap-3">
+                <div className="rounded-[20px] border border-blue-100 bg-blue-50 p-4">
+                  <p className="text-xs font-bold uppercase tracking-[0.15em] text-blue-600">
+                    Espessura
+                  </p>
+                  <p className="mt-2 text-xl font-bold text-slate-950">
+                    165 micras
+                  </p>
+                </div>
+                <div className="rounded-[20px] border border-blue-100 bg-blue-50 p-4">
+                  <p className="text-xs font-bold uppercase tracking-[0.15em] text-blue-600">
+                    Largura
+                  </p>
+                  <p className="mt-2 text-xl font-bold text-slate-950">
+                    30 cm
+                  </p>
+                </div>
+              </div>
             </div>
 
-            <div className="overflow-hidden rounded-[28px] border border-slate-200 bg-white">
-              {specifications.map(([label, value]) => (
+            <div className="overflow-hidden rounded-[26px] border border-slate-200 bg-white shadow-[0_28px_80px_-58px_rgba(15,23,42,0.5)]">
+              {specifications.map(([label, value], index) => (
                 <div
                   key={label}
-                  className="grid gap-2 border-b border-slate-100 px-6 py-5 last:border-b-0 sm:grid-cols-[0.85fr_1.15fr] sm:items-center sm:px-8"
+                  className="grid gap-2 border-b border-slate-100 px-5 py-4 last:border-b-0 sm:grid-cols-[0.85fr_1.15fr] sm:items-center sm:px-7"
                 >
-                  <p className="text-sm font-medium text-slate-500">{label}</p>
-                  <p className="text-base font-bold text-slate-900 sm:text-right">{value}</p>
+                  <div className="flex items-center gap-3">
+                    <span className="text-[11px] font-bold tracking-[0.16em] text-blue-500">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <p className="text-sm font-medium text-slate-500">
+                      {label}
+                    </p>
+                  </div>
+                  <p className="text-base font-bold text-slate-900 sm:text-right">
+                    {value}
+                  </p>
                 </div>
               ))}
-              <p className="border-t border-slate-100 bg-slate-50 px-6 py-4 text-xs leading-6 text-slate-500 sm:px-8">
-                *Durabilidade estimada conforme informação do material. Pode variar por clima, exposição, manutenção, condições da lente e qualidade da instalação.
+              <p className="border-t border-slate-100 bg-slate-50 px-5 py-4 text-sm leading-6 text-slate-500 sm:px-7">
+                *A durabilidade estimada varia conforme clima, exposição,
+                manutenção, condição da lente e qualidade da instalação.
               </p>
             </div>
           </div>
         </section>
 
-        <section className="bg-white py-20 sm:py-24">
-          <div className="mx-auto max-w-[1240px] px-6 sm:px-8 lg:px-10">
-            <div className="rounded-[32px] border border-blue-500/20 bg-[#030816] px-7 py-10 text-white sm:px-10 lg:px-12 lg:py-12">
-              <div className="grid gap-8 lg:grid-cols-[auto_1fr] lg:gap-8">
-                <CircleAlert className="h-8 w-8 text-blue-400" />
+        <section className="bg-white py-16 sm:py-24">
+          <div className="mx-auto max-w-[1240px] px-5 sm:px-8 lg:px-10">
+            <div className="relative overflow-hidden rounded-[28px] border border-amber-300/25 bg-[linear-gradient(145deg,#090d18_0%,#15120a_100%)] px-6 py-8 text-white shadow-[0_32px_90px_-54px_rgba(15,23,42,0.8)] sm:rounded-[34px] sm:px-10 sm:py-11 lg:px-12">
+              <div className="pointer-events-none absolute -right-28 -top-28 h-72 w-72 rounded-full border border-amber-300/10" />
+              <div className="relative grid gap-6 lg:grid-cols-[auto_1fr] lg:gap-8">
+                <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-amber-300/25 bg-amber-400/10 text-amber-300">
+                  <CircleAlert className="h-6 w-6" />
+                </span>
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-[0.22em] text-blue-300">
+                  <p className="text-xs font-bold uppercase tracking-[0.2em] text-amber-300">
                     Uso responsável e legislação
                   </p>
-                  <h2 className="mt-4 text-3xl font-bold tracking-[-0.035em] text-white sm:text-[42px]">
-                    Antes de aplicar, verifique onde o veículo será utilizado.
+                  <h2 className="mt-4 max-w-4xl text-3xl font-bold leading-tight tracking-[-0.035em] text-white sm:text-[42px]">
+                    Verifique a regulamentação antes de comprar e aplicar.
                   </h2>
                   <p className="mt-5 max-w-4xl text-base leading-8 text-slate-300">
-                    No Brasil, o art. 10, inciso II, da Resolução CONTRAN nº 970/2022 veda a colocação de películas ou materiais não originais do fabricante nos dispositivos de iluminação ou sinalização de veículos em circulação. A alteração também não pode comprometer cor, intensidade ou eficiência luminosa do farol.
+                    No Brasil, o art. 10, inciso II, da Resolução CONTRAN nº
+                    970/2022 veda películas ou materiais não originais nos
+                    dispositivos de iluminação ou sinalização de veículos em
+                    circulação. A alteração não pode comprometer cor,
+                    intensidade ou eficiência luminosa.
                   </p>
                   <p className="mt-4 max-w-4xl text-base leading-8 text-slate-300">
-                    Confirme a regulamentação aplicável antes da compra e da instalação. Para projetos de exposição, uso privado ou fora de vias públicas, consulte previamente as condições adequadas de aplicação.
+                    Para projetos de exposição, uso privado ou fora de vias
+                    públicas, confirme previamente as condições adequadas de
+                    aplicação.
                   </p>
                   <a
                     href="https://www.gov.br/transportes/pt-br/assuntos/transito/conteudo-contran/resolucoes/resolucao9702022.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-7 inline-flex items-center gap-2 text-sm font-bold text-blue-300 transition hover:text-white"
+                    className="mt-7 inline-flex min-h-12 items-center gap-3 rounded-xl border border-amber-300/25 bg-amber-400/10 px-5 text-sm font-bold text-amber-200 transition hover:border-amber-200/50 hover:bg-amber-400/15 hover:text-white"
                   >
                     Consultar a resolução oficial
                     <ArrowRight className="h-4 w-4" />
@@ -696,56 +800,97 @@ export default function PpfFotocromaticoPage() {
           </div>
         </section>
 
-        <section className="border-t border-slate-100 bg-slate-50 py-20 sm:py-24">
-          <div className="mx-auto grid max-w-[1240px] gap-10 px-6 sm:px-8 lg:grid-cols-[0.7fr_1.3fr] lg:px-10">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-[0.26em] text-blue-600">
+        <section className="border-t border-slate-100 bg-slate-50 py-16 sm:py-24">
+          <div className="mx-auto grid max-w-[1240px] gap-9 px-5 sm:px-8 lg:grid-cols-[0.7fr_1.3fr] lg:gap-14 lg:px-10">
+            <div className="lg:sticky lg:top-28 lg:self-start">
+              <p className="text-xs font-bold uppercase tracking-[0.24em] text-blue-600">
                 Dúvidas importantes
               </p>
-              <h2 className="mt-4 text-4xl font-bold tracking-[-0.04em] text-slate-950 sm:text-[48px]">
+              <h2 className="mt-4 text-4xl font-bold leading-[1.06] tracking-[-0.04em] text-slate-950 sm:text-[48px]">
                 Saiba antes de aplicar.
               </h2>
+              <p className="mt-5 text-base leading-8 text-slate-600">
+                Toque em uma pergunta para consultar a resposta. As orientações
+                evitam expectativas incorretas sobre o produto e a instalação.
+              </p>
             </div>
 
-            <div className="grid gap-4">
-              {questions.map((question) => (
-                <article key={question.title} className="rounded-[22px] border border-slate-200 bg-white p-6 sm:p-7">
-                  <div className="flex items-start gap-4">
-                    <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-blue-600" />
-                    <div>
-                      <h3 className="text-lg font-bold tracking-[-0.02em] text-slate-950">
-                        {question.title}
-                      </h3>
-                      <p className="mt-3 text-sm leading-7 text-slate-600">{question.text}</p>
-                    </div>
+            <div className="grid gap-3">
+              {questions.map((question, index) => (
+                <details
+                  key={question.title}
+                  className="group overflow-hidden rounded-[20px] border border-slate-200 bg-white shadow-sm open:border-blue-200 open:shadow-[0_18px_50px_-42px_rgba(37,99,235,0.6)]"
+                >
+                  <summary className="flex cursor-pointer list-none items-center gap-4 px-5 py-5 marker:hidden sm:px-6">
+                    <span className="text-xs font-bold tracking-[0.16em] text-blue-500">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <h3 className="min-w-0 flex-1 text-base font-bold leading-6 tracking-[-0.015em] text-slate-950 sm:text-lg">
+                      {question.title}
+                    </h3>
+                    <span
+                      aria-hidden="true"
+                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-slate-200 text-lg text-slate-500 transition duration-300 group-open:rotate-45 group-open:border-blue-200 group-open:bg-blue-50 group-open:text-blue-600"
+                    >
+                      +
+                    </span>
+                  </summary>
+                  <div className="border-t border-slate-100 px-5 py-5 sm:px-6">
+                    <p className="text-sm leading-7 text-slate-600">
+                      {question.text}
+                    </p>
                   </div>
-                </article>
+                </details>
               ))}
             </div>
           </div>
         </section>
 
-        <section className="bg-white py-20 sm:py-24">
-          <div className="mx-auto max-w-[1240px] px-6 sm:px-8 lg:px-10">
-            <div className="relative overflow-hidden rounded-[34px] bg-blue-600 px-7 py-12 text-white sm:px-10 lg:px-14 lg:py-14">
+        <section className="bg-white py-16 sm:py-24">
+          <div className="mx-auto max-w-[1240px] px-5 sm:px-8 lg:px-10">
+            <div className="relative overflow-hidden rounded-[28px] bg-[linear-gradient(135deg,#1264f5_0%,#1748c7_100%)] px-6 py-10 text-white shadow-[0_32px_90px_-48px_rgba(37,99,235,0.75)] sm:rounded-[34px] sm:px-10 lg:px-14 lg:py-13">
               <div className="pointer-events-none absolute -right-28 -top-28 h-80 w-80 rounded-full border border-white/20" />
-              <div className="relative grid gap-9 lg:grid-cols-[1fr_auto] lg:items-center">
+              <div className="pointer-events-none absolute -bottom-36 right-40 h-72 w-72 rounded-full bg-white/10 blur-3xl" />
+
+              <div className="relative grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
                 <div className="max-w-3xl">
-                  <h2 className="text-3xl font-bold tracking-[-0.035em] text-white sm:text-[44px]">
+                  <p className="text-xs font-bold uppercase tracking-[0.2em] text-blue-100">
+                    Atendimento direto
+                  </p>
+                  <h2 className="mt-3 text-3xl font-bold leading-tight tracking-[-0.035em] text-white sm:text-[44px]">
                     Precisa calcular a metragem para o seu projeto?
                   </h2>
                   <p className="mt-4 max-w-2xl text-base leading-8 text-blue-100">
-                    Envie o modelo e o ano do veículo. Nossa equipe orienta sobre a quantidade de material e os cuidados antes da compra. Para a aplicação, procure um profissional experiente em PPF.
+                    Envie o modelo e o ano do veículo. Nossa equipe orienta
+                    sobre a quantidade de material e os cuidados antes da
+                    compra.
                   </p>
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {["Orientação de metragem", "Compatibilidade", "Atendimento humano"].map(
+                      (item) => (
+                        <span
+                          key={item}
+                          className="rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-semibold text-white"
+                        >
+                          {item}
+                        </span>
+                      ),
+                    )}
+                  </div>
                 </div>
+
                 <a
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex h-12 min-w-[240px] items-center justify-center gap-3 rounded-xl bg-white px-6 text-sm font-bold text-blue-700 transition hover:bg-blue-50"
+                  className="inline-flex min-h-13 min-w-[250px] items-center justify-center gap-3 rounded-xl bg-white px-6 text-sm font-bold text-blue-700 shadow-lg shadow-blue-950/20 transition hover:-translate-y-0.5 hover:bg-blue-50"
                 >
-                  <PlatformIcon name="whatsapp" className="h-5 w-5 text-[#25D366]" />
+                  <PlatformIcon
+                    name="whatsapp"
+                    className="h-5 w-5 text-[#159f50]"
+                  />
                   Consultar metragem
+                  <ArrowRight className="h-4 w-4" />
                 </a>
               </div>
             </div>
