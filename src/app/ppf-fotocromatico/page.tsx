@@ -163,60 +163,150 @@ export default function PpfFotocromaticoPage() {
           </div>
         </section>
 
-        <section className="border-b border-slate-100 bg-white py-16 sm:py-20">
-          <div className="mx-auto grid max-w-[1240px] items-center gap-10 px-6 sm:px-8 lg:grid-cols-[0.82fr_1.18fr] lg:gap-16 lg:px-10">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-[0.26em] text-blue-600">
-                Formato de venda
-              </p>
-              <h2 className="mt-4 text-4xl font-bold leading-tight tracking-[-0.04em] text-slate-950 sm:text-[50px]">
-                Não é kit pré-cortado.
-              </h2>
-              <p className="mt-5 text-base leading-8 text-slate-600">
-                O PPF fotocromático é fornecido em manta com <strong className="font-bold text-slate-950">30 cm de largura fixa</strong>. Você escolhe o comprimento necessário em metros, de acordo com o projeto.
-              </p>
-              <div className="mt-6 flex items-start gap-3 rounded-2xl border border-blue-100 bg-blue-50 px-5 py-4 text-sm leading-7 text-slate-700">
-                <Scissors className="mt-1 h-5 w-5 shrink-0 text-blue-600" />
-                <p>O recorte no formato do farol é realizado pelo instalador durante a aplicação.</p>
-              </div>
-            </div>
+        <section className="border-b border-slate-100 bg-slate-50 py-14 sm:py-20">
+          <div className="mx-auto max-w-[1240px] px-5 sm:px-8 lg:px-10">
+            <div className="overflow-hidden rounded-[28px] border border-blue-100 bg-white shadow-[0_30px_90px_-58px_rgba(37,99,235,0.55)] sm:rounded-[34px]">
+              <div className="grid lg:grid-cols-[0.86fr_1.14fr]">
+                <div className="relative p-6 sm:p-9 lg:p-11">
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-x-12 top-0 h-px bg-gradient-to-r from-transparent via-blue-500/60 to-transparent"
+                  />
 
-            <div className="overflow-hidden rounded-[30px] bg-[#030816] p-6 text-white shadow-[0_30px_80px_-50px_rgba(37,99,235,0.8)] sm:p-8">
-              <div className="flex items-center justify-between gap-5 border-b border-white/10 pb-6">
-                <div>
-                  <p className="text-xs font-bold uppercase tracking-[0.2em] text-blue-300">
-                    Largura da manta
+                  <p className="text-xs font-bold uppercase tracking-[0.24em] text-blue-600">
+                    Formato de venda
                   </p>
-                  <p className="mt-2 text-3xl font-bold tracking-[-0.04em]">0,30 metro</p>
-                </div>
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-600">
-                  <Ruler className="h-6 w-6" />
-                </span>
-              </div>
+                  <h2 className="mt-4 max-w-[520px] text-4xl font-bold leading-[1.05] tracking-[-0.04em] text-slate-950 sm:text-[48px]">
+                    Manta de 30 cm, no comprimento que você precisa.
+                  </h2>
+                  <p className="mt-5 max-w-[540px] text-base leading-8 text-slate-600">
+                    O PPF fotocromático é enviado com{" "}
+                    <strong className="font-bold text-slate-950">
+                      30 cm de largura fixa
+                    </strong>
+                    . No pedido, você escolhe o comprimento em metros conforme o
+                    seu projeto.
+                  </p>
 
-              <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
-                {["0,30 × 1 m", "0,30 × 2 m", "0,30 × 3 m", "Mais metros"].map(
-                  (measure, index) => (
-                    <div
-                      key={measure}
-                      className={`rounded-2xl border px-4 py-5 ${
-                        index === 3
-                          ? "border-blue-400/30 bg-blue-500/15"
-                          : "border-white/10 bg-white/[0.04]"
-                      }`}
-                    >
-                      <p className="text-xs font-bold uppercase tracking-[0.16em] text-slate-400">
-                        {index === 3 ? "Sob medida" : "Opção"}
+                  <div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+                    <div className="rounded-[20px] border border-blue-100 bg-blue-50/70 p-4">
+                      <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-lg shadow-blue-950/15">
+                        <Ruler className="h-5 w-5" />
+                      </span>
+                      <p className="mt-4 text-xs font-bold uppercase tracking-[0.16em] text-blue-600">
+                        Medida fixa
                       </p>
-                      <p className="mt-2 text-base font-bold text-white">{measure}</p>
+                      <p className="mt-1 text-base font-bold text-slate-950">
+                        30 cm de largura
+                      </p>
                     </div>
-                  ),
-                )}
-              </div>
 
-              <p className="mt-5 text-sm leading-7 text-slate-400">
-                A largura permanece em 30 cm; o comprimento aumenta conforme a metragem selecionada no pedido.
-              </p>
+                    <div className="rounded-[20px] border border-slate-200 bg-slate-50 p-4">
+                      <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-950 text-white shadow-lg shadow-slate-950/15">
+                        <Scissors className="h-5 w-5" />
+                      </span>
+                      <p className="mt-4 text-xs font-bold uppercase tracking-[0.16em] text-slate-500">
+                        Acabamento final
+                      </p>
+                      <p className="mt-1 text-base font-bold text-slate-950">
+                        Recorte pelo instalador
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 flex items-start gap-3 rounded-[20px] border border-amber-200 bg-amber-50 px-4 py-4 text-slate-700">
+                    <CircleAlert className="mt-0.5 h-5 w-5 shrink-0 text-amber-600" />
+                    <p className="text-sm leading-6">
+                      <strong className="font-bold text-slate-950">
+                        Não é um kit pré-cortado.
+                      </strong>{" "}
+                      O formato do farol é medido e recortado durante a
+                      instalação.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="relative overflow-hidden bg-[linear-gradient(145deg,#020817_0%,#07152e_100%)] p-6 text-white sm:p-9 lg:p-11">
+                  <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full border border-blue-400/15" />
+                  <div className="pointer-events-none absolute -bottom-32 left-8 h-72 w-72 rounded-full bg-blue-600/10 blur-3xl" />
+
+                  <div className="relative">
+                    <div className="flex items-center justify-between gap-5 border-b border-white/10 pb-6">
+                      <div>
+                        <p className="text-xs font-bold uppercase tracking-[0.2em] text-blue-300">
+                          Escolha o comprimento
+                        </p>
+                        <p className="mt-2 text-3xl font-bold tracking-[-0.04em] text-white">
+                          Largura sempre em 30 cm
+                        </p>
+                      </div>
+                      <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-blue-400/30 bg-blue-500/15 text-blue-300 shadow-[0_0_28px_rgba(37,99,235,0.22)]">
+                        <Ruler className="h-6 w-6" />
+                      </span>
+                    </div>
+
+                    <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
+                      {[
+                        ["01", "30 cm × 1 m", "1 metro"],
+                        ["02", "30 cm × 2 m", "2 metros"],
+                        ["03", "30 cm × 3 m", "3 metros"],
+                        ["+", "Mais metros", "Sob consulta"],
+                      ].map(([number, measure, label], index) => (
+                        <div
+                          key={measure}
+                          className={`group relative min-h-[132px] overflow-hidden rounded-[18px] border p-4 transition duration-300 hover:-translate-y-1 ${
+                            index === 3
+                              ? "border-blue-400/45 bg-blue-500/15"
+                              : "border-white/10 bg-white/[0.045] hover:border-blue-400/35"
+                          }`}
+                        >
+                          <span className="text-xs font-bold tracking-[0.18em] text-blue-400">
+                            {number}
+                          </span>
+                          <p className="mt-5 text-base font-bold leading-6 text-white">
+                            {measure}
+                          </p>
+                          <p className="mt-1 text-xs font-medium text-slate-400">
+                            {label}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="mt-6 rounded-[20px] border border-white/10 bg-white/[0.045] p-4 sm:p-5">
+                      <div className="flex items-start gap-3">
+                        <Layers3 className="mt-0.5 h-5 w-5 shrink-0 text-blue-400" />
+                        <div>
+                          <p className="text-sm font-bold text-white">
+                            Como a metragem funciona
+                          </p>
+                          <p className="mt-1 text-sm leading-6 text-slate-300">
+                            A largura não muda. Cada unidade acrescenta
+                            comprimento à manta para atender projetos maiores.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mt-5 grid grid-cols-3 gap-2 text-center">
+                      {[
+                        ["1", "Escolha"],
+                        ["2", "O instalador mede"],
+                        ["3", "Recorte e aplique"],
+                      ].map(([number, label]) => (
+                        <div key={number} className="relative">
+                          <span className="mx-auto flex h-7 w-7 items-center justify-center rounded-full border border-blue-400/40 bg-blue-500/15 text-xs font-bold text-blue-300">
+                            {number}
+                          </span>
+                          <p className="mt-2 text-[11px] font-semibold leading-4 text-slate-400">
+                            {label}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
