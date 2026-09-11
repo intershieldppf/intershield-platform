@@ -137,8 +137,8 @@ export function VehicleBar({
       id="buscar-veiculo"
       className={
         hero || embedded
-          ? "scroll-mt-24 bg-transparent"
-          : "scroll-mt-24 border-b border-slate-100 bg-white"
+          ? "scroll-mt-32 lg:scroll-mt-24 bg-transparent"
+          : "scroll-mt-32 lg:scroll-mt-24 border-b border-slate-100 bg-white"
       }
     >
       <div

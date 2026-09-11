@@ -126,7 +126,7 @@ export function Header() {
       <div className="relative border-t border-slate-100 bg-white lg:hidden">
         <nav
           aria-label="Categorias principais"
-          className="flex h-[46px] touch-pan-x snap-x snap-proximity scroll-px-4 scroll-smooth items-center gap-6 overflow-x-auto overscroll-x-contain px-4 pr-12 text-[13px] font-semibold text-slate-600 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="flex h-[46px] touch-pan-x snap-x snap-mandatory scroll-px-4 scroll-smooth items-center gap-6 overflow-x-auto overscroll-x-contain px-4 pr-12 text-[13px] font-semibold text-slate-600 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {navItems.map((item) => {
             const current = isCurrentPage(item.href);

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { X } from "lucide-react";
 import type { NavItem } from "@/data/navigation";
@@ -68,12 +69,12 @@ export function MobileMenu({
     };
   }, [onClose, open]);
 
-  if (!open) {
+  if (!open || typeof document === "undefined") {
     return null;
   }
 
-  return (
-    <div className="fixed inset-0 z-[60] flex">
+  return createPortal(
+    <div className="fixed inset-0 z-[100] flex">
       <button
         type="button"
         aria-label="Fechar menu"
@@ -86,7 +87,7 @@ export function MobileMenu({
         role="dialog"
         aria-modal="true"
         aria-label="Menu de navegação"
-        className="relative ml-auto flex h-full w-[min(92vw,360px)] flex-col bg-white px-6 py-6 shadow-2xl"
+        className="relative ml-auto flex h-dvh w-full flex-col overflow-y-auto overscroll-contain bg-white px-6 py-6 shadow-2xl sm:w-[min(92vw,360px)]"
       >
         <div className="flex items-center justify-between">
           <p className="text-sm font-semibold uppercase tracking-[0.35em] text-slate-950">Menu</p>
@@ -135,6 +136,7 @@ export function MobileMenu({
           </a>
         ) : null}
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }

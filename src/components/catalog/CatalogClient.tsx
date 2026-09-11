@@ -284,7 +284,7 @@ export function CatalogClient({ products, initialQuery = "" }: CatalogClientProp
         </div>
       </section>
 
-      <section className="sticky top-[68px] z-40 border-b border-slate-200 bg-white/95 px-4 py-3 backdrop-blur-xl sm:px-8 lg:py-4">
+      <section className="sticky top-[106px] z-40 lg:top-[68px] border-b border-slate-200 bg-white/95 px-4 py-3 backdrop-blur-xl sm:px-8 lg:py-4">
         <div className="mx-auto max-w-7xl">
           <div className="flex gap-2">
             <div className="relative flex-1">
