@@ -437,39 +437,89 @@ export default function PpfFotocromaticoPage() {
           </div>
         </section>
 
-        <section className="bg-white py-20 sm:py-24">
-          <div className="mx-auto max-w-[1240px] px-6 sm:px-8 lg:px-10">
-            <div className="max-w-3xl">
-              <p className="text-xs font-bold uppercase tracking-[0.26em] text-blue-600">
-                Além da personalização
-              </p>
-              <h2 className="mt-4 text-4xl font-bold tracking-[-0.04em] text-slate-950 sm:text-[52px]">
-                O farol está na linha de frente do veículo.
-              </h2>
-              <p className="mt-5 text-base leading-8 text-slate-600">
-                Pedriscos, poeira, insetos, lavagens e exposição ambiental atingem diretamente a lente. O PPF adiciona uma camada protetora sobre essa superfície vulnerável e ajuda a preservar sua aparência.
-              </p>
-            </div>
+        <section className="bg-white py-16 sm:py-24">
+          <div className="mx-auto max-w-[1240px] px-5 sm:px-8 lg:px-10">
+            <div className="relative overflow-hidden rounded-[30px] bg-[linear-gradient(145deg,#020817_0%,#07152e_100%)] px-5 py-8 text-white shadow-[0_36px_100px_-58px_rgba(15,23,42,0.9)] sm:rounded-[36px] sm:px-9 sm:py-12 lg:px-12 lg:py-14">
+              <div className="pointer-events-none absolute -right-32 -top-40 h-96 w-96 rounded-full border border-blue-400/15" />
+              <div className="pointer-events-none absolute -bottom-48 left-1/4 h-96 w-96 rounded-full bg-blue-600/10 blur-3xl" />
+              <div
+                aria-hidden="true"
+                className="absolute inset-x-20 top-0 h-px bg-gradient-to-r from-transparent via-blue-400/60 to-transparent"
+              />
 
-            <div className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-              {benefits.map((benefit) => {
-                const BenefitIcon = benefit.icon;
+              <div className="relative grid gap-7 lg:grid-cols-[1.05fr_0.95fr] lg:items-end lg:gap-12">
+                <div className="max-w-3xl">
+                  <p className="text-xs font-bold uppercase tracking-[0.24em] text-blue-400">
+                    Além da personalização
+                  </p>
+                  <h2 className="mt-4 text-4xl font-bold leading-[1.05] tracking-[-0.04em] text-white sm:text-[50px]">
+                    Proteção para uma das áreas mais expostas do veículo.
+                  </h2>
+                </div>
 
-                return (
-                  <article
-                    key={benefit.title}
-                    className="rounded-[26px] border border-slate-200 bg-white p-7 transition hover:-translate-y-1 hover:border-blue-200 hover:shadow-[0_24px_60px_-38px_rgba(37,99,235,0.35)]"
-                  >
-                    <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-600 text-white">
-                      <BenefitIcon className="h-5 w-5" />
-                    </span>
-                    <h3 className="mt-6 text-xl font-bold tracking-[-0.025em] text-slate-950">
-                      {benefit.title}
-                    </h3>
-                    <p className="mt-3 text-sm leading-7 text-slate-600">{benefit.text}</p>
-                  </article>
-                );
-              })}
+                <div>
+                  <p className="text-base leading-8 text-slate-300">
+                    Pedriscos, poeira, insetos, lavagens e exposição ambiental
+                    atingem diretamente a lente. O PPF cria uma camada de
+                    proteção sem esconder o desenho original do farol.
+                  </p>
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {["Impactos leves", "Riscos superficiais", "Exposição diária"].map(
+                      (item) => (
+                        <span
+                          key={item}
+                          className="rounded-full border border-white/10 bg-white/[0.06] px-3 py-1.5 text-xs font-semibold text-slate-200"
+                        >
+                          {item}
+                        </span>
+                      ),
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <div className="relative mt-9 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                {benefits.map((benefit, index) => {
+                  const BenefitIcon = benefit.icon;
+                  const number = String(index + 1).padStart(2, "0");
+
+                  return (
+                    <article
+                      key={benefit.title}
+                      className="group relative flex min-h-[196px] flex-col overflow-hidden rounded-[22px] border border-white/10 bg-white/[0.045] p-5 transition duration-300 hover:-translate-y-1 hover:border-blue-400/40 hover:bg-blue-500/[0.08] sm:min-h-[220px] sm:p-6"
+                    >
+                      <div
+                        aria-hidden="true"
+                        className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-blue-400/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                      />
+
+                      <div className="flex items-start justify-between gap-4">
+                        <span className="flex h-11 w-11 items-center justify-center rounded-2xl border border-blue-400/35 bg-blue-500/15 text-blue-300 shadow-[0_0_26px_rgba(37,99,235,0.18)] transition duration-300 group-hover:border-blue-300/60 group-hover:bg-blue-500/25">
+                          <BenefitIcon className="h-5 w-5" strokeWidth={1.8} />
+                        </span>
+                        <span className="text-xs font-bold tracking-[0.18em] text-blue-400">
+                          {number}
+                        </span>
+                      </div>
+
+                      <h3 className="mt-5 text-lg font-bold leading-6 tracking-[-0.02em] text-white">
+                        {benefit.title}
+                      </h3>
+                      <p className="mt-3 text-sm leading-6 text-slate-300">
+                        {benefit.text}
+                      </p>
+                    </article>
+                  );
+                })}
+              </div>
+
+              <div className="relative mt-6 flex items-start gap-3 rounded-[20px] border border-blue-400/20 bg-blue-500/10 px-4 py-4 sm:items-center sm:px-5">
+                <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-blue-300 sm:mt-0" />
+                <p className="text-sm leading-6 text-slate-300">
+                  O PPF ajuda a preservar a condição atual da lente. Ele não
+                  recupera trincas, opacidade ou desgaste já existente.
+                </p>
+              </div>
             </div>
           </div>
         </section>
