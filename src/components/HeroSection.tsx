@@ -24,23 +24,14 @@ export function HeroSection() {
       >
         <Image
           src="/intershield-hero-bmw-night.webp"
-          alt=""
-          fill
-          priority
-          sizes="(min-width: 1280px) 48vw, (min-width: 1024px) 50vw, 100vw"
-          className="scale-110 object-cover object-center opacity-35 blur-xl"
-          aria-hidden="true"
-        />
-        <div className="absolute inset-0 bg-[#010817]/15" />
-        <Image
-          src="/intershield-hero-bmw-night.webp"
           alt="Interior de BMW com painel digital, central multimídia e console iluminado"
           fill
           priority
           quality={95}
-          sizes="(min-width: 1280px) 540px, (min-width: 1024px) 50vw, 100vw"
-          className="object-cover object-[58%_50%] contrast-[1.03] saturate-[1.04] lg:object-contain lg:object-right"
+          sizes="(min-width: 1280px) 48vw, (min-width: 1024px) 50vw, 100vw"
+          className="object-cover object-[57%_52%] brightness-[1.08] contrast-[1.06] saturate-[1.06]"
         />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#010817]/25 via-transparent to-black/10" />
       </div>
 
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(1,7,20,0.99)_0%,rgba(1,7,20,0.97)_38%,rgba(1,7,20,0.78)_55%,rgba(1,7,20,0.16)_78%,rgba(1,7,20,0.04)_100%)]" />
