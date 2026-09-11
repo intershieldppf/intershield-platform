@@ -60,7 +60,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/95 backdrop-blur-xl">
-      <div className="mx-auto flex h-[68px] max-w-[1320px] items-center gap-3 px-4 sm:gap-5 sm:px-6 lg:gap-7 lg:px-8">
+      <div className="mx-auto flex h-[60px] max-w-[1320px] items-center gap-2.5 px-4 sm:gap-4 sm:px-6 lg:h-[68px] lg:gap-7 lg:px-8">
         <div className="flex w-[48px] shrink-0 justify-start sm:w-[60px]">
           <HomeLogo label="Ir para o início do site" />
         </div>
@@ -101,16 +101,60 @@ export function Header() {
           Comprar pelo WhatsApp
         </a>
 
+        <a
+          href={whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Comprar pelo WhatsApp da InterShield"
+          className="ml-auto inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-emerald-200 bg-emerald-50 text-[#17a956] transition hover:border-emerald-300 hover:bg-emerald-100 lg:hidden"
+        >
+          <PlatformIcon name="whatsapp" className="h-[18px] w-[18px]" />
+        </a>
+
         <button
           type="button"
           aria-label="Abrir menu"
           aria-expanded={menuOpen}
           aria-controls="mobile-navigation"
           onClick={() => setMenuOpen(true)}
-          className="ml-auto inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 text-slate-950 transition hover:border-blue-300 hover:text-blue-600 lg:hidden"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-slate-950 transition hover:border-blue-300 hover:text-blue-600 lg:hidden"
         >
           <Menu className="h-5 w-5" />
         </button>
+      </div>
+
+      <div className="relative border-t border-slate-100 bg-white lg:hidden">
+        <nav
+          aria-label="Categorias principais"
+          className="flex h-[46px] touch-pan-x snap-x snap-proximity scroll-px-4 scroll-smooth items-center gap-6 overflow-x-auto overscroll-x-contain px-4 pr-12 text-[13px] font-semibold text-slate-600 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        >
+          {navItems.map((item) => {
+            const current = isCurrentPage(item.href);
+
+            return (
+              <Link
+                key={item.label}
+                href={item.href}
+                aria-current={current ? "page" : undefined}
+                className={`relative flex h-full shrink-0 snap-start items-center whitespace-nowrap transition-colors hover:text-blue-600 ${
+                  current ? "text-blue-600" : ""
+                }`}
+              >
+                {item.label}
+                <span
+                  aria-hidden="true"
+                  className={`absolute inset-x-0 bottom-0 h-0.5 rounded-full bg-blue-600 transition-opacity ${
+                    current ? "opacity-100" : "opacity-0"
+                  }`}
+                />
+              </Link>
+            );
+          })}
+        </nav>
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-white via-white/90 to-transparent"
+        />
       </div>
       <MobileMenu
         items={navItems}

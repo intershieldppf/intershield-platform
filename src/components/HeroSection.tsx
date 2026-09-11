@@ -11,7 +11,7 @@ export function HeroSection() {
   return (
     <section
       id="inicio"
-      className="relative min-h-[680px] overflow-hidden bg-[#010817] lg:min-h-[720px]"
+      className="relative min-h-[650px] overflow-hidden bg-[#010817] lg:min-h-[720px]"
     >
       <div
         className="absolute inset-y-0 right-0 w-full lg:w-[50%] xl:w-[48%]"
@@ -37,7 +37,7 @@ export function HeroSection() {
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(1,7,20,0.99)_0%,rgba(1,7,20,0.97)_38%,rgba(1,7,20,0.78)_55%,rgba(1,7,20,0.16)_78%,rgba(1,7,20,0.04)_100%)]" />
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(1,7,20,0.68)_0%,rgba(1,7,20,0.3)_42%,rgba(1,7,20,0.92)_100%)] lg:hidden" />
 
-      <div className="relative z-10 mx-auto flex min-h-[680px] max-w-[1440px] items-center px-5 py-14 sm:px-8 sm:py-16 lg:min-h-[720px] lg:px-16 xl:px-20">
+      <div className="relative z-10 mx-auto flex min-h-[650px] max-w-[1440px] items-center px-5 py-10 sm:px-8 sm:py-16 lg:min-h-[720px] lg:px-16 xl:px-20">
         <div className="w-full max-w-[760px]">
           <div className="inline-flex items-center rounded-full border border-blue-500/70 bg-blue-950/20 px-4 py-2">
             <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-blue-400">
@@ -45,7 +45,7 @@ export function HeroSection() {
             </span>
           </div>
 
-          <h1 className="mt-5 max-w-[720px] text-[38px] font-bold leading-[1.05] tracking-[-0.035em] text-white sm:text-[50px] lg:text-[62px]">
+          <h1 className="mt-5 max-w-[720px] text-[34px] font-bold leading-[1.05] tracking-[-0.035em] text-white sm:text-[50px] lg:text-[62px]">
             Proteção sob medida para cada detalhe do seu veículo
           </h1>
 
@@ -58,13 +58,13 @@ export function HeroSection() {
             <VehicleBar hero />
           </div>
 
-          <div className="mt-5 flex flex-wrap items-center gap-3">
+          <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
             <a
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Comprar pelo WhatsApp da InterShield"
-              className="inline-flex h-12 items-center justify-center gap-2.5 rounded-xl border border-white/15 bg-white px-5 text-[13px] font-semibold text-slate-950 shadow-sm transition hover:bg-slate-100"
+              className="inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-xl border border-white/15 bg-white px-5 text-[13px] font-semibold text-slate-950 shadow-sm transition hover:bg-slate-100 sm:w-auto"
             >
               <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#25D366] text-white">
                 <PlatformIcon name="whatsapp" className="h-4 w-4" />
@@ -74,21 +74,21 @@ export function HeroSection() {
 
             <Link
               href="/catalogo"
-              className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-white/25 bg-white/5 px-5 text-[13px] font-semibold text-white backdrop-blur-sm transition hover:border-blue-400 hover:bg-blue-500/15"
+              className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl border border-white/25 bg-white/5 px-5 text-[13px] font-semibold text-white backdrop-blur-sm transition hover:border-blue-400 hover:bg-blue-500/15 sm:w-auto"
             >
               Ver catálogo completo
               <span aria-hidden="true">→</span>
             </Link>
           </div>
 
-          <ul className="mt-7 flex flex-wrap gap-x-6 gap-y-3 text-[12px] font-medium text-slate-200 sm:text-[13px]">
+          <ul className="mt-7 grid grid-cols-2 gap-x-4 gap-y-3 text-[12px] font-medium text-slate-200 sm:flex sm:flex-wrap sm:gap-x-6 sm:text-[13px]">
             {[
               "Corte computadorizado",
               "Kit completo nos produtos PPF",
               "Espátula de brinde nos adesivos",
               "Envio para todo o Brasil",
             ].map((benefit) => (
-              <li key={benefit} className="flex items-center gap-2">
+              <li key={benefit} className="flex items-start gap-2 sm:items-center">
                 <span
                   aria-hidden="true"
                   className="flex h-5 w-5 items-center justify-center rounded-full bg-blue-500/20 text-[11px] font-bold text-blue-300"
