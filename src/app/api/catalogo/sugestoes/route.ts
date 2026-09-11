@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { storefrontCatalog, storefrontProductSlug } from "@/data/storefront/catalog";
 import { checkRateLimit, rateLimitResponse } from "@/lib/security/rateLimit";
+import { PRICES_UNDER_CONSULTATION } from "@/lib/storefrontPricing";
 
 function normalizeText(value: string) {
   return value
@@ -65,7 +66,7 @@ export async function GET(request: NextRequest) {
       id: product.id,
       slug: storefrontProductSlug(product),
       title: product.title,
-      price: product.price,
+      price: PRICES_UNDER_CONSULTATION ? null : product.price,
       image: product.image,
       sku: product.sku,
       brand: product.brand,

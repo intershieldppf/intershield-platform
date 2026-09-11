@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { CreditCard, LoaderCircle, MapPin, MessageCircle, Store, Truck } from "lucide-react";
 
 import { formatPostalCode, normalizePostalCode, type ShippingQuote } from "@/lib/commerce/shipping";
+import { PRICES_UNDER_CONSULTATION } from "@/lib/storefrontPricing";
 
 type ProductCheckoutActionsProps = {
   productId: string;
@@ -168,8 +169,8 @@ export function ProductCheckoutActions({ productId, productTitle, sku, compatibi
         </form>
       ) : null}
 
-      <a href={whatsappUrl} target="_blank" rel="noreferrer" aria-disabled={variants.length > 1 && !selectedVariant} onClick={(event) => { if (variants.length > 1 && !selectedVariant) event.preventDefault(); }} className={`mt-5 inline-flex h-14 w-full items-center justify-center gap-2 rounded-2xl px-5 text-sm font-bold text-white shadow-sm transition ${variants.length > 1 && !selectedVariant ? "cursor-not-allowed bg-slate-300" : "bg-slate-950 hover:bg-slate-800"}`}><MessageCircle className="h-5 w-5" />Comprar pelo WhatsApp</a>
-      <p className="mt-3 text-center text-xs leading-5 text-slate-500">Atendimento direto para confirmar a compatibilidade antes da compra.</p>
+      <a href={whatsappUrl} target="_blank" rel="noreferrer" aria-disabled={variants.length > 1 && !selectedVariant} onClick={(event) => { if (variants.length > 1 && !selectedVariant) event.preventDefault(); }} className={`mt-5 inline-flex h-14 w-full items-center justify-center gap-2 rounded-2xl px-5 text-sm font-bold text-white shadow-sm transition ${variants.length > 1 && !selectedVariant ? "cursor-not-allowed bg-slate-300" : "bg-slate-950 hover:bg-slate-800"}`}><MessageCircle className="h-5 w-5" />{PRICES_UNDER_CONSULTATION ? "Consultar preço pelo WhatsApp" : "Comprar pelo WhatsApp"}</a>
+      <p className="mt-3 text-center text-xs leading-5 text-slate-500">{PRICES_UNDER_CONSULTATION ? "Atendimento direto para consultar o preço e confirmar a compatibilidade." : "Atendimento direto para confirmar a compatibilidade antes da compra."}</p>
     </div>
   );
 }

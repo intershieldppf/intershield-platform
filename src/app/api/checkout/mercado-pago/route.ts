@@ -12,6 +12,7 @@ import { calculateShippingQuotes } from "@/lib/commerce/serverShipping";
 import { normalizePostalCode } from "@/lib/commerce/shipping";
 import { createOrder, updateOrderByReference } from "@/lib/orders/orderStore";
 import { checkRateLimit, rateLimitResponse } from "@/lib/security/rateLimit";
+import { PRICES_UNDER_CONSULTATION } from "@/lib/storefrontPricing";
 
 export const runtime = "nodejs";
 
@@ -57,6 +58,10 @@ function json(data: unknown, status: number) {
 }
 
 export async function POST(request: Request) {
+  if (PRICES_UNDER_CONSULTATION) {
+    return json({ error: "Os preços estão temporariamente sob consulta." }, 503);
+  }
+
   const rateLimit = checkRateLimit(request, "checkout", 8, 60_000);
   if (!rateLimit.allowed) return rateLimitResponse(rateLimit.retryAfterSeconds);
 

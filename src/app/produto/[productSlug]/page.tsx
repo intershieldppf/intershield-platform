@@ -26,6 +26,10 @@ import {
   addStandardBenefitImage,
   getPurchaseBenefitKind,
 } from "@/lib/purchaseBenefits";
+import {
+  formatStorefrontPrice,
+  PRICES_UNDER_CONSULTATION,
+} from "@/lib/storefrontPricing";
 
 const WHATSAPP_NUMBER = "5531997146624";
 
@@ -66,15 +70,6 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   };
 }
 
-function formatPrice(price: number | null) {
-  if (price === null) return "Consulte";
-
-  return new Intl.NumberFormat("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  }).format(price);
-}
-
 export default async function ProductPage({ params }: ProductPageProps) {
   const { productSlug } = await params;
   const product = findStorefrontProductBySlug(productSlug);
@@ -92,6 +87,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const isPpfKit = purchaseBenefitKind === "ppf-kit";
 
   const checkoutEnabled =
+    !PRICES_UNDER_CONSULTATION &&
     process.env.CHECKOUT_ENABLED === "true" &&
     Boolean(process.env.MELHOR_ENVIO_TOKEN) &&
     Boolean(process.env.MERCADO_PAGO_ACCESS_TOKEN);
@@ -157,7 +153,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             : []),
         ],
         offers:
-          product.price !== null
+          !PRICES_UNDER_CONSULTATION && product.price !== null
             ? {
                 "@type": "Offer",
                 priceCurrency: "BRL",
@@ -235,7 +231,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
               <div className="mt-6 border-y border-slate-200 py-6">
                 <p className="text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
-                  {formatPrice(product.price)}
+                  {formatStorefrontPrice(product.price)}
                 </p>
                 <p className="mt-2 text-xs text-slate-500">SKU {product.sku ?? product.id}</p>
               </div>
@@ -440,7 +436,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                       {item.title}
                     </p>
                     <p className="mt-3 text-sm font-bold text-slate-950 sm:text-base">
-                      {formatPrice(item.price)}
+                      {formatStorefrontPrice(item.price)}
                     </p>
                   </div>
                 </Link>

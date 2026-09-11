@@ -16,15 +16,6 @@ type SearchSuggestionsProps = {
   onActiveIndexChange: (index: number) => void;
 };
 
-function formatPrice(price: number | null) {
-  if (price === null) return "Consulte";
-
-  return new Intl.NumberFormat("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  }).format(price);
-}
-
 export function SearchSuggestions({
   suggestions,
   onSelect,
@@ -88,7 +79,7 @@ export function SearchSuggestions({
 
               <div className="mt-1 flex items-center justify-between gap-3">
                 <p className="text-[13px] font-bold text-slate-950">
-                  {formatPrice(item.price)}
+                  {formatStorefrontPrice(item.price)}
                 </p>
                 <span className="shrink-0 text-[11px] font-semibold text-blue-600">
                   Ver produto →
@@ -102,3 +93,5 @@ export function SearchSuggestions({
   );
 }
 import Image from "next/image";
+
+import { formatStorefrontPrice } from "@/lib/storefrontPricing";

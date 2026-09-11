@@ -11,6 +11,10 @@ import {
   type StorefrontProduct,
 } from "@/data/storefront/catalog";
 import { getPurchaseBenefitKind } from "@/lib/purchaseBenefits";
+import {
+  formatStorefrontPrice,
+  PRICES_UNDER_CONSULTATION,
+} from "@/lib/storefrontPricing";
 
 const PAGE_SIZE = 24;
 const QUICK_FILTERS = [
@@ -122,15 +126,6 @@ function scoreProduct(product: StorefrontProduct, query: string) {
   }
 
   return score;
-}
-
-function formatPrice(price: number | null) {
-  if (price === null) return "Consulte";
-
-  return new Intl.NumberFormat("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  }).format(price);
 }
 
 function compatibilityLabel(product: StorefrontProduct) {
@@ -259,8 +254,12 @@ export function CatalogClient({ products, initialQuery = "" }: CatalogClientProp
           className="h-11 rounded-xl border border-slate-200 bg-white px-3 text-sm font-medium normal-case tracking-normal text-slate-900 outline-none focus:border-blue-500 disabled:bg-slate-50 disabled:text-slate-400"
         >
           <option value="destaques">Destaques</option>
-          <option value="menor-preco">Menor preço</option>
-          <option value="maior-preco">Maior preço</option>
+          {!PRICES_UNDER_CONSULTATION ? (
+            <>
+              <option value="menor-preco">Menor preço</option>
+              <option value="maior-preco">Maior preço</option>
+            </>
+          ) : null}
           <option value="az">A–Z</option>
         </select>
       </label>
@@ -448,7 +447,7 @@ export function CatalogClient({ products, initialQuery = "" }: CatalogClientProp
 
                       <div className="mt-auto pt-4">
                         <p className="text-lg font-bold tracking-tight text-slate-950 sm:text-xl">
-                          {formatPrice(product.price)}
+                          {formatStorefrontPrice(product.price)}
                         </p>
                         <p className="mt-1 truncate text-[10px] text-slate-400">
                           SKU {product.sku ?? product.id}
