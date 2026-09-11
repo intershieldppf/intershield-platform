@@ -93,7 +93,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   const checkoutEnabled =
     process.env.CHECKOUT_ENABLED === "true" &&
-    Boolean(process.env.MELHOR_ENVIO_TOKEN);
+    Boolean(process.env.MELHOR_ENVIO_TOKEN) &&
+    Boolean(process.env.MERCADO_PAGO_ACCESS_TOKEN);
 
   const relatedProducts = storefrontCatalog
     .filter(
