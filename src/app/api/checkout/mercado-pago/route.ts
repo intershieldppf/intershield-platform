@@ -10,6 +10,7 @@ import {
 } from "@/lib/commerce/mercadoPago";
 import { calculateShippingQuotes } from "@/lib/commerce/serverShipping";
 import { normalizePostalCode } from "@/lib/commerce/shipping";
+import { createOrder, updateOrderByReference } from "@/lib/orders/orderStore";
 import { checkRateLimit, rateLimitResponse } from "@/lib/security/rateLimit";
 
 export const runtime = "nodejs";
@@ -116,6 +117,32 @@ export async function POST(request: Request) {
   const storeUrl = getStoreUrl();
 
   try {
+    await createOrder({
+      reference: orderReference,
+      source: "site",
+      payment_status: "creating",
+      order_status: "awaiting_payment",
+      customer_name: data.customer.name,
+      customer_email: data.customer.email,
+      customer_phone: data.customer.phone,
+      customer_document: data.customer.document,
+      product_id: product.id,
+      sku: product.sku ?? product.id,
+      product_title: product.title,
+      variant: data.variant || null,
+      product_amount: Number(product.price.toFixed(2)),
+      shipping_type: data.deliveryType,
+      shipping_service: shippingName,
+      shipping_cost: Number(shippingCost.toFixed(2)),
+      postal_code: data.deliveryType === "shipping" ? data.postalCode : null,
+      address: data.deliveryType === "shipping" ? data.address : null,
+      notes: null,
+    });
+  } catch {
+    return json({ error: "Não foi possível registrar o pedido agora." }, 503);
+  }
+
+  try {
     const { preference } = getMercadoPagoClients();
     const result = await preference.create({
       body: {
@@ -199,8 +226,17 @@ export async function POST(request: Request) {
 
     if (!checkoutUrl) throw new Error("Checkout URL was not returned");
 
+    await updateOrderByReference(orderReference, {
+      preference_id: result.id ?? null,
+      payment_status: "pending",
+    });
+
     return json({ checkoutUrl, orderReference }, 201);
   } catch {
+    await updateOrderByReference(orderReference, {
+      payment_status: "creation_failed",
+      notes: "Falha ao criar a cobrança no Mercado Pago.",
+    }).catch(() => null);
     return json({ error: "Não foi possível iniciar o pagamento agora." }, 502);
   }
 }

@@ -39,6 +39,8 @@ export function checkoutIsConfigured() {
   return Boolean(
     process.env.CHECKOUT_ENABLED === "true" &&
       process.env.MERCADO_PAGO_ACCESS_TOKEN &&
-      process.env.MELHOR_ENVIO_TOKEN,
+      process.env.MELHOR_ENVIO_TOKEN &&
+      process.env.SUPABASE_URL &&
+      process.env.SUPABASE_SERVICE_ROLE_KEY,
   );
 }

@@ -4,6 +4,7 @@ import {
 } from "mercadopago";
 
 import { getMercadoPagoClients } from "@/lib/commerce/mercadoPago";
+import { updateOrderByReference } from "@/lib/orders/orderStore";
 
 export const runtime = "nodejs";
 
@@ -40,7 +41,25 @@ export async function POST(request: Request) {
   if (event.type === "payment" && String(event.data?.id ?? "") === dataId) {
     try {
       const { payment } = getMercadoPagoClients();
-      await payment.get({ id: dataId });
+      const result = await payment.get({ id: dataId });
+      const reference = result.external_reference;
+
+      if (reference?.startsWith("IS-")) {
+        const paymentStatus = result.status ?? "unknown";
+        const orderStatus =
+          paymentStatus === "approved"
+            ? "new"
+            : paymentStatus === "cancelled" || paymentStatus === "rejected"
+              ? "cancelled"
+              : "awaiting_payment";
+
+        await updateOrderByReference(reference, {
+          payment_id: String(result.id ?? dataId),
+          payment_status: paymentStatus,
+          order_status: orderStatus,
+          paid_at: result.date_approved ?? null,
+        });
+      }
     } catch {
       return new Response(null, { status: 502 });
     }
