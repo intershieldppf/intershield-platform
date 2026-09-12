@@ -14,7 +14,7 @@ export default async function AdminOrdersPage() {
       <div className="mx-auto max-w-[1500px]">
         <header className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div><p className="text-xs font-bold uppercase tracking-[0.2em] text-blue-600">InterShield · Administração</p><h1 className="mt-2 text-3xl font-bold tracking-tight">Pedidos</h1><p className="mt-1 text-sm text-slate-500">Pagamento, preparação e envio em uma única tela.</p></div>
-          <nav className="flex gap-2 text-sm font-bold"><Link href="/admin/importar" className="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-slate-700 hover:border-blue-300">Catálogo</Link><Link href="/admin/veiculos/imagens" className="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-slate-700 hover:border-blue-300">Imagens</Link></nav>
+          <nav className="flex flex-wrap gap-2 text-sm font-bold"><Link href="/admin/ads" className="rounded-xl bg-slate-950 px-4 py-2.5 text-white hover:bg-blue-600">Ads Shopee</Link><Link href="/admin/importar" className="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-slate-700 hover:border-blue-300">Catálogo</Link><Link href="/admin/veiculos/imagens" className="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-slate-700 hover:border-blue-300">Imagens</Link></nav>
         </header>
         <OrdersAdminClient initialOrders={orders} configured={configured} />
       </div>
