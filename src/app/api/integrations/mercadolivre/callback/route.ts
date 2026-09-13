@@ -20,6 +20,7 @@ function statusPage(title: string, message: string, status = 200) {
 }
 
 export async function GET(request: Request) {
+  let stage = "request_validation";
   const url = new URL(request.url);
   const code = url.searchParams.get("code");
   const state = url.searchParams.get("state");
@@ -40,6 +41,7 @@ export async function GET(request: Request) {
   }
 
   try {
+    stage = "oauth_state_validation";
     const oauthState = JSON.parse(
       decryptMarketplaceSecret(
         decodeURIComponent(cookieValue),
@@ -50,6 +52,7 @@ export async function GET(request: Request) {
       return statusPage("Autorização expirada", "Inicie a conexão novamente.", 400);
     }
 
+    stage = "token_exchange";
     const { clientId, clientSecret, redirectUri } = getMercadoLivreConfig();
     const tokenResponse = await fetch("https://api.mercadolibre.com/oauth/token", {
       method: "POST",
@@ -77,6 +80,7 @@ export async function GET(request: Request) {
       throw new Error("Invalid Mercado Livre token response");
     }
 
+    stage = "token_storage";
     await saveMercadoLivreTokens(tokens);
     const response = statusPage(
       "Mercado Livre conectado",
@@ -91,7 +95,11 @@ export async function GET(request: Request) {
       ...(process.env.NODE_ENV === "production" ? { domain: ".intershield.com.br" } : {}),
     });
     return response;
-  } catch {
+  } catch (error) {
+    console.error("Mercado Livre OAuth callback failed", {
+      stage,
+      message: error instanceof Error ? error.message : "Unknown error",
+    });
     return statusPage(
       "Falha ao conectar o Mercado Livre",
       "A configuração não foi concluída. Revise as credenciais e tente novamente.",
