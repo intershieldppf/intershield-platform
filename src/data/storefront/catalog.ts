@@ -3,6 +3,8 @@ import catalog2 from "./catalog-2.json";
 import catalog3 from "./catalog-3.json";
 import catalog4 from "./catalog-4.json";
 
+import { calculateStorefrontPrice } from "@/lib/storefrontPricing";
+
 export type StorefrontProduct = {
   id: string;
   title: string;
@@ -142,7 +144,7 @@ function mapRow(row: RawCatalogRow): StorefrontProduct {
   return {
     id,
     title,
-    price,
+    price: calculateStorefrontPrice(price),
     image: `https://http2.mlstatic.com/${image}`,
     sku,
     brand: inferBrand(title, brand),
