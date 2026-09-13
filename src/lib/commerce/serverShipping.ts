@@ -49,7 +49,7 @@ export async function calculateShippingQuotes(
     signal: AbortSignal.timeout(10_000),
   });
 
-  if (!response.ok) throw new Error("Shipping provider rejected the quote");
+  if (!response.ok) {\n    const providerError = await response.text();\n    console.error("Melhor Envio checkout quote request failed", {\n      status: response.status,\n      environment: process.env.MELHOR_ENVIO_ENV === "production" ? "production" : "sandbox",\n      response: providerError.slice(0, 500),\n    });\n    throw new Error("Shipping provider rejected the quote");\n  }
 
   return normalizeMelhorEnvioQuotes(await response.json());
 }
