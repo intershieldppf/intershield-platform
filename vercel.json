@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/mercadolivre-sync",
+      "schedule": "15 7 * * *"
+    }
+  ]
+}

@@ -18,7 +18,7 @@ import {
   updateMercadoLivreConnectionSyncMetadata,
 } from "./syncStore";
 
-export async function synchronizeMercadoLivre() {
+export async function synchronizeMercadoLivre(options?: { maximumItems?: number; maximumOrders?: number }) {
   const run = await startMercadoLivreSyncRun();
   let stage = "account";
   try {
@@ -28,13 +28,21 @@ export async function synchronizeMercadoLivre() {
     await setMercadoLivreSyncStage(run.id, "items", { accounts_synced: 1 });
 
     stage = "items";
-    const itemIds = await listMercadoLivreItemIds(String(account.id), accessToken);
+    const itemIds = await listMercadoLivreItemIds(
+      String(account.id),
+      accessToken,
+      options?.maximumItems ?? 1_000,
+    );
     const items = await getMercadoLivreItems(itemIds, accessToken);
     await saveMercadoLivreItems(items);
     await setMercadoLivreSyncStage(run.id, "orders", { items_synced: items.length });
 
     stage = "orders";
-    const orders = await listMercadoLivreOrders(String(account.id), accessToken);
+    const orders = await listMercadoLivreOrders(
+      String(account.id),
+      accessToken,
+      options?.maximumOrders ?? 500,
+    );
     await saveMercadoLivreOrders(orders);
     await updateMercadoLivreConnectionSyncMetadata(items.length, orders.length);
     await completeMercadoLivreSyncRun(run.id, { accounts_synced: 1, items_synced: items.length, orders_synced: orders.length });
@@ -46,4 +54,3 @@ export async function synchronizeMercadoLivre() {
     throw error;
   }
 }
-

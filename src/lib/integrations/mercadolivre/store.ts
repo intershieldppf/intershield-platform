@@ -204,4 +204,28 @@ export async function saveMercadoLivreNotification(
     },
   );
   await assertSuccess(response, "Saving Mercado Livre notification");
+  return eventKey;
+}
+
+export async function updateMercadoLivreNotificationStatus(
+  eventKey: string,
+  status: "processing" | "processed" | "failed",
+  processingError?: string,
+) {
+  const { url } = getSupabaseConfig();
+  const query = new URLSearchParams({
+    provider: `eq.${MERCADOLIVRE_PROVIDER}`,
+    event_key: `eq.${eventKey}`,
+  });
+  const response = await fetch(`${url}/rest/v1/marketplace_events?${query}`, {
+    method: "PATCH",
+    headers: supabaseHeaders({ Prefer: "return=minimal" }),
+    body: JSON.stringify({
+      status,
+      processing_error: processingError ? processingError.slice(0, 500) : null,
+      processed_at: status === "processed" || status === "failed" ? new Date().toISOString() : null,
+    }),
+    cache: "no-store",
+  });
+  await assertSuccess(response, "Updating Mercado Livre notification status");
 }

@@ -78,6 +78,16 @@ export function getMercadoLivreAccount(accessToken: string) {
   return mercadoLivreGet<MercadoLivreAccount>("/users/me", accessToken);
 }
 
+export function getMercadoLivreItem(itemId: string, accessToken: string) {
+  if (!/^[A-Z]{3}\d+$/.test(itemId)) throw new Error("Invalid Mercado Livre item id");
+  return mercadoLivreGet<MercadoLivreItem>(`/items/${itemId}`, accessToken);
+}
+
+export function getMercadoLivreOrder(orderId: string, accessToken: string) {
+  if (!/^\d+$/.test(orderId)) throw new Error("Invalid Mercado Livre order id");
+  return mercadoLivreGet<MercadoLivreOrder>(`/orders/${orderId}`, accessToken);
+}
+
 export async function listMercadoLivreItemIds(
   sellerId: string,
   accessToken: string,
@@ -134,4 +144,3 @@ export async function listMercadoLivreOrders(
   }
   return orders;
 }
-

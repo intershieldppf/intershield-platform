@@ -85,6 +85,11 @@ export function MercadoLivreDashboardClient({ initialDashboard }: { initialDashb
         </div>
       </section>
 
+      <section className="grid gap-4 rounded-[1.75rem] border border-emerald-200 bg-emerald-50 p-6 sm:grid-cols-[1fr_auto] sm:items-center">
+        <div><div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-emerald-700"><CheckCircle2 className="h-4 w-4" /> Atualização automática ativa</div><p className="mt-2 text-sm leading-6 text-emerald-950">Novos pedidos e alterações de anúncios são recebidos por notificação. Uma conferência completa também é executada diariamente.</p></div>
+        <div className="text-sm text-emerald-900 sm:text-right"><p className="font-bold">Último evento</p><p>{formatDate(dashboard.automation.lastEventAt)}</p><p className="mt-1 text-xs">{dashboard.automation.pending} pendente(s) · {dashboard.automation.failed} falha(s)</p></div>
+      </section>
+
       <div className="flex items-start gap-3 rounded-2xl border border-blue-200 bg-blue-50 p-4 text-sm text-blue-950"><CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0" /><p><strong>Modo seguro ativo.</strong> A integração apenas consulta e armazena dados. Alterações nos marketplaces só serão liberadas futuramente com sua aprovação explícita.</p></div>
     </div>
   );
@@ -97,4 +102,3 @@ function Metric({ icon: Icon, label, value, note }: { icon: typeof Package; labe
 function Detail({ label, value }: { label: string; value: string }) {
   return <div><dt className="text-xs font-bold uppercase tracking-[0.12em] text-slate-400">{label}</dt><dd className="mt-1 font-semibold text-slate-900">{value}</dd></div>;
 }
-
