@@ -22,6 +22,7 @@ type AccountRow = {
 
 type ItemStatRow = { status: string | null; available_quantity: number | null; sold_quantity: number | null };
 type OrderStatRow = { status: string | null; total_amount: number | null; date_created: string | null };
+type EventStatRow = { status: string; received_at: string; processed_at: string | null };
 type SyncRunRow = {
   id: string;
   status: "running" | "completed" | "failed";
@@ -234,16 +235,18 @@ export type MercadoLivreDashboard = {
   account: AccountRow | null;
   items: { total: number; active: number; paused: number; closed: number; stock: number; sold: number };
   orders: { total: number; paid: number; revenue: number; latestAt: string | null };
+  automation: { lastEventAt: string | null; processed: number; pending: number; failed: number };
   lastRun: SyncRunRow | null;
 };
 
 export async function getMercadoLivreDashboard(): Promise<MercadoLivreDashboard> {
   const providerFilter = `eq.${MERCADOLIVRE_PROVIDER}`;
-  const [connections, accounts, itemRows, orderRows, runs] = await Promise.all([
+  const [connections, accounts, itemRows, orderRows, eventRows, runs] = await Promise.all([
     queryRows<ConnectionSummary>("marketplace_connections", new URLSearchParams({ provider: providerFilter, select: "external_user_id,status,metadata,updated_at", limit: "1" })),
     queryRows<AccountRow>("marketplace_accounts", new URLSearchParams({ provider: providerFilter, select: "external_user_id,nickname,site_id,account_status,reputation_level,sales_completed,last_synced_at", order: "last_synced_at.desc", limit: "1" })).catch(() => []),
     queryRows<ItemStatRow>("marketplace_items", new URLSearchParams({ provider: providerFilter, select: "status,available_quantity,sold_quantity", limit: "1000" })).catch(() => []),
     queryRows<OrderStatRow>("marketplace_orders", new URLSearchParams({ provider: providerFilter, select: "status,total_amount,date_created", order: "date_created.desc", limit: "500" })).catch(() => []),
+    queryRows<EventStatRow>("marketplace_events", new URLSearchParams({ provider: providerFilter, select: "status,received_at,processed_at", order: "received_at.desc", limit: "1000" })).catch(() => []),
     queryRows<SyncRunRow>("marketplace_sync_runs", new URLSearchParams({ provider: providerFilter, select: "id,status,stage,accounts_synced,items_synced,orders_synced,error_message,started_at,completed_at", order: "started_at.desc", limit: "1" })).catch(() => []),
   ]);
   const connection = connections[0] ?? null;
@@ -268,7 +271,12 @@ export async function getMercadoLivreDashboard(): Promise<MercadoLivreDashboard>
       revenue: orderRows.reduce((sum, order) => sum + Number(order.total_amount ?? 0), 0),
       latestAt: orderRows[0]?.date_created ?? null,
     },
+    automation: {
+      lastEventAt: eventRows[0]?.received_at ?? null,
+      processed: eventRows.filter((event) => event.status === "processed").length,
+      pending: eventRows.filter((event) => event.status === "pending" || event.status === "processing").length,
+      failed: eventRows.filter((event) => event.status === "failed").length,
+    },
     lastRun: runs[0] ?? null,
   };
 }
-

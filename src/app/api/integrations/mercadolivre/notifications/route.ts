@@ -3,13 +3,15 @@ import { timingSafeEqual } from "node:crypto";
 import { after } from "next/server";
 
 import { getMercadoLivreConfig } from "@/lib/integrations/mercadolivre/config";
+import { processMercadoLivreNotification } from "@/lib/integrations/mercadolivre/events";
 import {
   type MercadoLivreNotification,
   saveMercadoLivreNotification,
+  updateMercadoLivreNotificationStatus,
 } from "@/lib/integrations/mercadolivre/store";
 
 export const runtime = "nodejs";
-export const maxDuration = 10;
+export const maxDuration = 30;
 
 function safeEqual(left: string, right: string) {
   const a = Buffer.from(left);
@@ -55,10 +57,18 @@ export async function POST(request: Request) {
   }
 
   after(async () => {
+    let eventKey: string | null = null;
     try {
-      await saveMercadoLivreNotification(notification, rawBody);
+      eventKey = await saveMercadoLivreNotification(notification, rawBody);
+      await updateMercadoLivreNotificationStatus(eventKey, "processing");
+      await processMercadoLivreNotification(notification);
+      await updateMercadoLivreNotificationStatus(eventKey, "processed");
     } catch (error) {
-      console.error("Failed to persist Mercado Livre notification", error);
+      const message = error instanceof Error ? error.message : "Unknown error";
+      if (eventKey) {
+        await updateMercadoLivreNotificationStatus(eventKey, "failed", message).catch(() => undefined);
+      }
+      console.error("Failed to process Mercado Livre notification", { message });
     }
   });
 
