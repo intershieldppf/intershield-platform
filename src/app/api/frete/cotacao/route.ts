@@ -106,6 +106,12 @@ export async function POST(request: Request) {
   }
 
   if (!response.ok) {
+    const providerError = await response.text();
+    console.error("Melhor Envio quote request failed", {
+      status: response.status,
+      environment: process.env.MELHOR_ENVIO_ENV === "production" ? "production" : "sandbox",
+      response: providerError.slice(0, 500),
+    });
     return json(
       { error: "Não foi possível consultar o frete agora. Tente novamente." },
       502,
