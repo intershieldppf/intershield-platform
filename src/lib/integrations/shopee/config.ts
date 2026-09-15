@@ -28,8 +28,8 @@ export function getShopeeConfig() {
 
   const apiBaseUrl =
     environment === "sandbox"
-      ? "https://partner.test-stable.shopeemobile.com"
-      : "https://partner.shopeemobile.com";
+      ? "https://openplatform.sandbox.test-stable.shopee.sg"
+      : "https://openplatform.shopee.com.br";
 
   return {
     partnerId,
