@@ -1,5 +1,7 @@
 import "server-only";
 
+import { createHash } from "node:crypto";
+
 export const SHOPEE_PROVIDER = "shopee" as const;
 export const SHOPEE_OAUTH_COOKIE = "intershield_shopee_oauth";
 
@@ -35,5 +37,22 @@ export function getShopeeConfig() {
     redirectUri: redirectUrl.toString(),
     environment,
     apiBaseUrl,
+  };
+}
+
+export function getShopeeSafeDiagnostics() {
+  const config = getShopeeConfig();
+
+  return {
+    environment: config.environment,
+    apiBaseUrl: config.apiBaseUrl,
+    partnerId: config.partnerId,
+    redirectUri: config.redirectUri,
+    partnerKeyLength: config.partnerKey.length,
+    partnerKeyFormat: /^[0-9a-f]+$/i.test(config.partnerKey) ? "hex" : "text",
+    partnerKeyFingerprint: createHash("sha256")
+      .update(config.partnerKey)
+      .digest("hex")
+      .slice(0, 12),
   };
 }
